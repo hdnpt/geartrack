@@ -1,9 +1,10 @@
 'use strict';
 
+const sprintf = require('sprintf')
 const request = require('request')
 const parser = require('cheerio')
 
-const URL = 'http://www.sky56.cn/track/track/result?tracking_number='
+const URL = 'http://www.sky56.cn/track/track/result?tracking_number=%s'
 
 const sky = {}
 
@@ -15,7 +16,7 @@ const sky = {}
  * @param callback(Error, SkyInfo)
  */
 sky.getInfo = function (id, callback) {
-    request(URL + id, function (error, response, body) {
+    request(sprintf(URL, id), function (error, response, body) {
         if (error || response.statusCode != 200) {
             callback(error)
             return
@@ -29,7 +30,7 @@ sky.getInfo = function (id, callback) {
             return
         }
 
-       let entity = createSkyEntity(json)
+       let entity = createSkyEntity(id, json)
         callback(null, entity)
     })
 }
@@ -38,7 +39,7 @@ sky.getInfo = function (id, callback) {
  * Create SkyInfo entity from json
  * @param json
  */
-function createSkyEntity(json) {
+function createSkyEntity(id, json) {
     let infos = json.message.split('<br/>')
     let messages = infos.splice(infos.length - 4,4)
     let table = messages[messages.length-1]
@@ -69,8 +70,9 @@ function createSkyEntity(json) {
     })
 
     return new SkyInfo({
+        id: id,
         'messages': parsedMessages,
-        'status': states
+        'status': states.reverse()
     })
 }
 
@@ -80,6 +82,7 @@ function createSkyEntity(json) {
  |--------------------------------------------------------------------------
  */
 function SkyInfo(obj) {
+    this.id = obj.id
     this.messages = obj.messages
     this.status = obj.status
 }

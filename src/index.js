@@ -2,25 +2,48 @@
 
 const correos = require('./correosTracker')
 const sky = require('./skyTracker')
+const adicional = require('./adicionalTracker')
 
-const id = 'PQ4F6P0702441170181750Z'
-const postalcode = 1750
+const trackID = process.argv[2]
+const postalcode = process.argv[3]
 
-//
-//correos.getInfo(id, postalcode, (err, correosInfo) => {
-//    if(err) {
-//        console.log(err.message);
-//        return
-//    }
-//
-//    console.log(correosInfo);
-//})
+if (process.argv.length < 4) {
+    console.log("Wrong arguments! Should be: id postalcode");
+    process.exit(1)
+}
 
-sky.getInfo(id, (err, skyInfo) => {
+// async
+sky.getInfo(trackID, (err, skyInfo) => {
     if (err) {
         console.log(err.message);
         return
     }
 
-    console.log(skyInfo);
+    console.log("\n===== Sky 56");
+    skyInfo.messages.forEach(m => console.log(m.date + " - " + m.message))
+    console.log("");
+    skyInfo.status.forEach(s => console.log(s.date + " - " + s.status))
 })
+
+//async
+correos.getInfo(trackID, postalcode, (err, correosInfo) => {
+    if (err) return
+
+    console.log("\n===== Correos Express");
+    console.log("Estado: " + correosInfo.state);
+    console.log("Ultima Atualizacao: " + correosInfo.lastUpdate);
+
+    console.log("");
+    correosInfo.states.forEach(s => console.log(s.date + " - " + s.info + " " + s.department))
+
+    adicional.getInfo(correosInfo.id, postalcode, (err, adicionalInfo) => {
+        if (err) return
+
+        console.log("\n===== Adicional PT");
+        console.log("Estado: " + adicionalInfo.status);
+        console.log("Sub Estado: " + adicionalInfo.sub_status);
+        console.log("Distribuidor: " + adicionalInfo.name);
+    })
+})
+
+
