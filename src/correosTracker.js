@@ -10,30 +10,33 @@ const correos = {}
 /**
  * Get correos info
  * Scraps the Correos Express website
+ * Async
  *
  * Design changes may break this code!!
  * @param id
  * @param postalcode
  * @param callback(Error, CorreosInfo)
  */
-correos.getInfo = function(id, postalcode, callback) {
+correos.getInfo = function (id, postalcode, callback) {
     request(URL, function (error, response, body) {
-        if(error || response.statusCode != 200) {
+        if (error || response.statusCode != 200) {
             callback(error)
             return
         }
 
-            let $ = parser.load(body)
-            let action = $('#homeSearchForm').attr('action')
-        
+        let $ = parser.load(body)
+        let action = $('#homeSearchForm').attr('action')
+
         obtainInfo(action, id, postalcode, callback)
     })
 }
 
 /**
  * Get info from correos page
+ *
  * @param action
  * @param id
+ * @param postalcode
  * @param cb
  */
 function obtainInfo(action, id, postalcode, cb) {
@@ -44,8 +47,14 @@ function obtainInfo(action, id, postalcode, cb) {
             zipCode: postalcode
         }
     }, function (error, response, body) {
-        if(error || response.statusCode != 200) {
+        if (error || response.statusCode != 200) {
             cb(error)
+            return
+        }
+
+        // Not found
+        if (body.indexOf('portlet-msg-error') != -1) {
+            cb(new Error("No data or invalid data provided!"))
             return
         }
 
@@ -63,8 +72,8 @@ function createCorreosEntity(html) {
 
     let states = []
     const fields = ['date', 'info', 'department']
-    $('.results-row').each(function(i, elem) {
-        if(i == 0) return
+    $('.results-row').each(function (i, elem) {
+        if (i == 0) return
 
         let state = {}
         $(this).children().each(function (s, e) {
@@ -92,10 +101,10 @@ function createCorreosEntity(html) {
 }
 
 /*
-|--------------------------------------------------------------------------
-| Entity
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Entity
+ |--------------------------------------------------------------------------
+ */
 function CorreosInfo(obj) {
     // Sent details
     this.id = obj.nenvio
