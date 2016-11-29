@@ -1,0 +1,20 @@
+{
+  "name": "geartrack",
+  "version": "0.0.0",
+  "description": "Gearbest tracking for spain priority line",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gearbest",
+    "tracking",
+    "shipping"
+  ],
+  "author": "Carlos Florencio <Carlos Florencio>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "request": "^2.79.0"
+  }
+}
