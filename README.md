@@ -17,6 +17,42 @@ When your parcel is already in spain:
 When your parcel is in Portugal:
 - Shipping info from Adicional.pt is displayed
 
+### As a npm package
+- `npm install geartrack --save`
+
+### API
+```javascript
+const geartrack = require('geartrack')
+
+// Get Sky 56 info (From hong kong)
+geartrack.sky.getInfo(id, (err, SkyInfo) => {
+	if(err) { return  }
+    
+    console.log(SkyInfo.status) // see SkyInfo entity for more fields
+})
+
+// Get correos express info (when the package is in spain)
+geartrack.correos.getInfo(id, postalcode, (err, CorreosInfo) => {
+	if(err) { return  }
+    
+    console.log(CorreosInfo.state) // see CorreosInfo entity for more fields
+    console.log(CorreosInfo.lastUpdate) 
+})
+
+// Get adicional.pt info (when the package is in portugal)
+geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
+	if(err) { return  }
+    
+    console.log(AdicionalInfo.status) // see AdicionalInfo entity for more fields
+    console.log(AdicionalInfo.distributor) 
+})
+
+
+```
+
+
+# Standalone app
+
 ### Requisits:
 - Node, npm
 
