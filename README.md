@@ -25,6 +25,7 @@ When your parcel is in Portugal:
 const geartrack = require('geartrack')
 
 // Get Sky 56 info (From hong kong)
+// ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
 geartrack.sky.getInfo(id, (err, SkyInfo) => {
 	if(err) { return  }
     
@@ -32,6 +33,8 @@ geartrack.sky.getInfo(id, (err, SkyInfo) => {
 })
 
 // Get correos express info (when the package is in spain)
+// ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
+// Postalcode is 4 digit like 1785
 geartrack.correos.getInfo(id, postalcode, (err, CorreosInfo) => {
 	if(err) { return  }
     
@@ -40,6 +43,9 @@ geartrack.correos.getInfo(id, postalcode, (err, CorreosInfo) => {
 })
 
 // Get adicional.pt info (when the package is in portugal)
+// This info if only obtained after the correos express info
+// ID is the provided from the Correos Express, CorreosInfo.id
+// Postalcode is 4 digit like 1785
 geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
 	if(err) { return  }
     
