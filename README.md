@@ -2,6 +2,7 @@
 
 >Track shippments from Gearbest with the Spain Priority Line method.
 
+>Online version: [https://geartrack.hdn.pt](https://geartrack.hdn.pt)
 
 ### Parcel Flow
 Your parcel should come from Hong Kong (multiple countries envolved here) -> Spain -> Portugal, with this app you can track exactly where your parcel is.
@@ -26,6 +27,7 @@ const geartrack = require('geartrack')
 
 // Get Sky 56 info (From hong kong)
 // ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
+// ID can be also from Netherlands Post surface mail NL14812386234607
 geartrack.sky.getInfo(id, (err, SkyInfo) => {
 	if(err) { return  }
     
@@ -69,15 +71,15 @@ geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
 
 ### Usage:
 ```
-ARGS should be in the format of: Tracking ID:Postal code (4 digits)
+ARGS should be the tracking id's
 Example:
-PQ4F6P0342389000181750V:1750
+PQ4F6P0342389000181750V
 
 Multiple (comma separated without space!):
-PQ4F6P0342389000181750V:1700,PQ4F6P034223400181750V:2453
+PQ4F6P0342389000181750V,NL1481238121223607
 
 Example:
-$ node geartrack.js PQ4F6P0342389000181750V:1750
+$ node geartrack.js PQ4F6P0342389000181750V
 ```
 
 ### Screen
@@ -87,6 +89,9 @@ $ node geartrack.js PQ4F6P0342389000181750V:1750
 - Info is displayed in multiple languages, english, spanish and portuguese :D
 
 - Website providing this info will be released soon.
+
+### Changelog
+- 14/12/2016 - Added Netherlands Post surface mail support
 
 ### License
 MIT

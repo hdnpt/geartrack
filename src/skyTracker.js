@@ -10,6 +10,7 @@ const sky = {}
 
 /**
  * Get Sky56 info
+ * Supports PQ... and NL... ids
  * Async
  *
  * @param id
@@ -30,13 +31,27 @@ sky.getInfo = function (id, callback) {
             return
         }
 
-       let entity = createSkyEntity(id, json)
+        let entity = null
+        switch(id.charAt(0)) {
+            case 'N': // Netherlands Post surface mail
+                entity = createNLSkyEntity(id, json)
+                break
+            default: // Spain express, correos line
+                entity = createSkyEntity(id, json)
+        }
+
         callback(null, entity)
     })
 }
 
+/*
+|--------------------------------------------------------------------------
+| Correos Line Parse
+|--------------------------------------------------------------------------
+*/
 /**
  * Create SkyInfo entity from json
+ * @param id
  * @param json
  */
 function createSkyEntity(id, json) {
@@ -76,15 +91,52 @@ function createSkyEntity(id, json) {
     })
 }
 
-/*
- |--------------------------------------------------------------------------
- | Entity
- |--------------------------------------------------------------------------
- */
+
 function SkyInfo(obj) {
     this.id = obj.id
     this.messages = obj.messages
     this.status = obj.status
+
+    this.isNL = () => {
+        return this.id.charAt(0) == 'N'
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Netherlands Post surface mail Parse
+|--------------------------------------------------------------------------
+*/
+function createNLSkyEntity(id, json) {
+    let infos = json.message.split('<br/>').filter(m => m.length != 0)
+
+    let parsedStatus = infos.map(message => {
+        let idx1 = message.indexOf(",")
+        let idx2 = message.indexOf("--", idx1+1)
+        let area = message.substr(0, idx1)
+        let status = message.substr(idx1+1, idx2 - idx1 - 1)
+        let date = message.substr(idx2 + 2)
+        return {
+            area: area,
+            status: status.trim().capitalizeFirstLetter(),
+            date: date
+        }
+    })
+
+    return new SkyInfo({
+        id: id,
+        'status': parsedStatus
+    })
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Utils
+|--------------------------------------------------------------------------
+*/
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 module.exports = sky
