@@ -108,7 +108,7 @@ function SkyInfo(obj) {
 |--------------------------------------------------------------------------
 */
 function createNLSkyEntity(id, json) {
-    let infos = json.message.split('<br/>').filter(m => m.length != 0)
+    let infos = json.message.replace('，', ',').split('<br/>').filter(m => m.length != 0)
 
     let parsedStatus = infos.map(message => {
         let idx1 = message.indexOf(",")
