@@ -18,7 +18,7 @@ const correos = {}
  * @param callback(Error, CorreosInfo)
  */
 correos.getInfo = function (id, postalcode, callback) {
-    request(URL, function (error, response, body) {
+    request(URL, {timeout: 30000}, function (error, response, body) {
         if (error || response.statusCode != 200) {
             callback(error)
             return
@@ -45,7 +45,8 @@ function obtainInfo(action, id, postalcode, cb) {
         form: {
             shippingNumber: id,
             zipCode: postalcode
-        }
+        },
+        timeout: 30000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(error)
