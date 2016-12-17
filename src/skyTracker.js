@@ -10,7 +10,7 @@ const sky = {}
 
 /**
  * Get Sky56 info
- * Supports PQ... and NL... ids
+ * Supports PQ... and NL... LVS.. ids
  * Async
  *
  * @param id
@@ -34,6 +34,7 @@ sky.getInfo = function (id, callback) {
         let entity = null
         switch(id.charAt(0)) {
             case 'N': // Netherlands Post surface mail
+            case 'L': // Bpost is the same
                 entity = createNLSkyEntity(id, json)
                 break
             default: // Spain express, correos line
