@@ -97,6 +97,8 @@ function createCorreosEntity(html) {
         'receiveraddress': $('#receiveraddress').val(),
         'weight': $('#weight').val(),
         'parcels': $('#parcels').val(),
+        'ref': $('#reference').val(),
+        'observations': $('#observations').val(),
         'states': states
     })
 }
@@ -130,7 +132,9 @@ function CorreosInfo(obj) {
     // Product Details
     this.product = {
         weight: obj.weight,
-        parcels: obj.parcels
+        parcels: obj.parcels,
+        ref: obj.ref,
+        observations: obj.observations
     }
 
     //States
