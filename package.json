@@ -6,10 +6,15 @@
   "keywords": [
     "gearbest",
     "tracking",
-    "shipping"
+    "shipping",
+    "correos",
+    "adicional",
+    "expresso24",
+    "sky56"
   ],
   "author": "Carlos Florencio <Carlos Florencio>",
   "license": "MIT",
+  "homepage": "https://geartrack.hdn.pt",
   "dependencies": {
     "cheerio": "^0.22.0",
     "request": "^2.79.0",

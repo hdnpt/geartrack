@@ -52,7 +52,7 @@ function createExpressoEntity(html) {
     $('table span').each(function (i, elem) {
         if(i >= 10 )
             data.push($(this).text().trim().replace(/\s\s+/g, ' '))
-    });
+    })
 
     return new ExpressoInfo({
         'guide': data[0],

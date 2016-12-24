@@ -82,7 +82,7 @@ function createCorreosEntity(html) {
         })
 
         states.push(state)
-    });
+    })
 
     return new CorreosInfo({
         'nenvio': $('#nenvio').val(),
