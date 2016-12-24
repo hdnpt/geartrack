@@ -46,7 +46,7 @@ geartrack.correos.getInfo(id, postalcode, (err, CorreosInfo) => {
 })
 
 // Get adicional.pt info (when the package is in portugal)
-// This info if only obtained after the correos express info
+// This info is only obtained after the correos express info
 // ID is the provided from the Correos Express, CorreosInfo.id
 // Postalcode is 4 digit like 1785
 geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
@@ -57,9 +57,9 @@ geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
 })
 
 // Get expresso24.pt info (when the package is in portugal)
-// This info if only obtained after the correos express info
-// ID is the provided from the Correos Express, CorreosInfo.id
-geartrack.expresso.getInfo(id, (err, ExpressoInfo) => {
+// This info is only obtained after the correos express info
+// ID is the provided from the Correos Express, CorreosInfo.product.ref
+geartrack.expresso24 .getInfo(id, (err, ExpressoInfo) => {
     if(err) { return  }
 
     console.log(ExpressoInfo.status) // see ExpressoInfo entity for more fields 
@@ -69,7 +69,9 @@ geartrack.expresso.getInfo(id, (err, ExpressoInfo) => {
 ```
 
 
-# Standalone app
+# Standalone app (DEPRECATED)
+Since there is an website providing this info, i will not mantain this console helper.
+I will remove this in the next updates.
 
 ### Requisits:
 - Node, npm
