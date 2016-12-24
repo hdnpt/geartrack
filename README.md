@@ -56,6 +56,15 @@ geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
     console.log(AdicionalInfo.distributor) 
 })
 
+// Get expresso24.pt info (when the package is in portugal)
+// This info if only obtained after the correos express info
+// ID is the provided from the Correos Express, CorreosInfo.id
+geartrack.expresso.getInfo(id, (err, ExpressoInfo) => {
+    	if(err) { return  }
+
+    console.log(ExpressoInfo.status) // see ExpressoInfo entity for more fields 
+})
+
 
 ```
 
