@@ -7,7 +7,7 @@
 ### Parcel Flow
 Your parcel should come from Hong Kong (multiple countries envolved here) -> Spain -> Portugal, with this app you can track exactly where your parcel is.
 
-This litle script provides shipping information from the [Sky56](http://www.sky56.cn/english/track/index), [Correos Express](https://www.correosexpress.com/web/correosexpress/home)  and [Adicional](http://www.adicional.pt/).
+This litle script provides shipping information from the [Sky56](http://www.sky56.cn/english/track/index), [Correos Express](https://www.correosexpress.com/web/correosexpress/home), [Adicional](http://www.adicional.pt/) and [Expresso24](http://www.expresso24.pt/index.php?action=pesquisaguias3).
 
 When comming from HK:
 - Shipping info from sky 56 is displayed
@@ -17,6 +17,7 @@ When your parcel is already in spain:
 
 When your parcel is in Portugal:
 - Shipping info from Adicional.pt is displayed
+- Shipping info from Expresso24.pt is also displayed.
 
 ### As a npm package
 - `npm install geartrack --save`
@@ -91,6 +92,8 @@ $ node geartrack.js PQ4F6P0342389000181750V
 - Website providing this info will be released soon.
 
 ### Changelog
+- 24/12/2016 - Added information about Expresso24.pt
+- 17/12/2016 - Added Bpost International mail support
 - 14/12/2016 - Added Netherlands Post surface mail support
 
 ### License
