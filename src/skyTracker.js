@@ -59,20 +59,8 @@ function createSkyEntity(id, json) {
     let infos = json.message.split('<br/>')
     let messages = infos.splice(infos.length - 4,4)
     let table = messages[messages.length-1]
-    let $ = parser.load(table)
 
-    let states = []
-    const fields = ['date', 'area', 'status']
-    $('tr').each(function (i) {
-        if(i == 0) return
-
-        let state = {}
-
-        $(this).children().each(function (s) {
-            state[fields[s]] = $(this).text()
-        })
-        states.push(state)
-    })
+    let states = parseStatusTable(table)
 
     let parsedMessages = infos.map(message => {
         let idx1 = message.indexOf(" ")
@@ -88,7 +76,7 @@ function createSkyEntity(id, json) {
     return new SkyInfo({
         id: id,
         'messages': parsedMessages,
-        'status': states.reverse()
+        'status': states
     })
 }
 
@@ -111,6 +99,17 @@ function SkyInfo(obj) {
 function createNLSkyEntity(id, json) {
     let infos = json.message.replace('，', ',').split('<br/>').filter(m => m.length != 0)
 
+    let messages = null
+
+    if(infos[0].indexOf("span") !== -1) { // title
+        infos.splice(0, 1) //remove first element
+    }
+
+    if(infos[0].indexOf("table") !== -1) {
+        let table = infos.splice(0, 1) //remove first element
+        messages = parseStatusTable(table[0])
+    }
+
     let parsedStatus = infos.map(message => {
         let idx1 = message.indexOf(",")
         let idx2 = message.indexOf("--", idx1+1)
@@ -126,7 +125,8 @@ function createNLSkyEntity(id, json) {
 
     return new SkyInfo({
         id: id,
-        'status': parsedStatus
+        status: parsedStatus,
+        messages: messages
     })
 }
 
@@ -138,6 +138,25 @@ function createNLSkyEntity(id, json) {
 */
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+function parseStatusTable(tableHtml) {
+    let $ = parser.load(tableHtml)
+
+    let states = []
+    const fields = ['date', 'area', 'status']
+    $('tr').each(function (i) {
+        if(i == 0) return
+
+        let state = {}
+
+        $(this).children().each(function (s) {
+            state[fields[s]] = $(this).text()
+        })
+        states.push(state)
+    })
+
+    return states.reverse()
 }
 
 module.exports = sky
