@@ -22,7 +22,8 @@ expresso.getInfo = function (id, callback) {
         form: {
             ref_cliente: id
         },
-        timeout: 30000
+        timeout: 30000,
+        encoding: 'latin1'
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             callback(error)
@@ -62,7 +63,7 @@ function createExpressoEntity(html) {
         'weight': data[4],
         'parcels': data[5],
         'receiver_name': data[6],
-        'address': data[7],
+        'address': parseAddress(data[7]),
         'refund': data[8],
         'ref': data[9],
     })
@@ -84,6 +85,15 @@ function ExpressoInfo(obj) {
     this.address = obj.address
     this.refund = obj.refund
     this.ref = obj.ref
+}
+
+/*
+|--------------------------------------------------------------------------
+| Utils
+|--------------------------------------------------------------------------
+*/
+function parseAddress(addr) {
+    return addr.replace(/(ATT .)/g, ' $1')
 }
 
 module.exports = expresso
