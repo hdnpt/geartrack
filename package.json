@@ -23,5 +23,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/iamfreee/geartrack.git"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }

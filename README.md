@@ -102,7 +102,13 @@ $ node geartrack.js PQ4F6P0342389000181750V
 
 - Website providing this info can be found at [https://geartrack.hdn.pt](https://geartrack.hdn.pt)
 
+### TODO
+- Replace callbacks with Promises
+- Better handling of timeouts
+- More tests and refactor the code
+
 ### Changelog
+- 31/12/2016 - Added information about Malasya Pos (SYB..)
 - 24/12/2016 - Added information about Expresso24.pt
 - 17/12/2016 - Added Bpost International mail support
 - 14/12/2016 - Added Netherlands Post surface mail support
