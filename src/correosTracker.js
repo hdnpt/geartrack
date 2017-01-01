@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request')
+const request = require('requestretry')
 const parser = require('cheerio')
 
 const URL = 'https://www.correosexpress.com/web/correosexpress/home'
@@ -18,7 +18,7 @@ const correos = {}
  * @param callback(Error, CorreosInfo)
  */
 correos.getInfo = function (id, postalcode, callback) {
-    request(URL, {timeout: 30000}, function (error, response, body) {
+    request(URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000}, function (error, response, body) {
         if (error || response.statusCode != 200) {
             callback(error)
             return

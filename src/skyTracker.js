@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf')
-const request = require('request')
+const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
 
 const URL = 'http://www.sky56.cn/track/track/result?tracking_number=%s'

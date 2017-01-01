@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request')
+const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const sprintf = require('sprintf')
 
 const URL = 'http://www.adicional.pt/contact/tracking.php?reference=%s&cp=%s'

@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request')
+const request = require('requestretry')
 const parser = require('cheerio')
 
 const URL = 'http://www.expresso24.pt/index.php?action=pesquisaguias3'
@@ -23,6 +23,8 @@ expresso.getInfo = function (id, callback) {
             ref_cliente: id
         },
         timeout: 30000,
+        maxAttempts: 3,
+        retryDelay: 1000,
         encoding: 'latin1'
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
