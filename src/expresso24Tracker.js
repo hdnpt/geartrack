@@ -39,6 +39,7 @@ expresso.getInfo = function (id, callback) {
         }
 
         const entity = createExpressoEntity(body)
+        entity.retries = response.attempts
         callback(null, entity)
     })
 }

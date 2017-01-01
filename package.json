@@ -12,6 +12,9 @@
     "expresso24",
     "sky56"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Carlos Florencio <Carlos Florencio>",
   "license": "MIT",
   "homepage": "https://geartrack.hdn.pt",

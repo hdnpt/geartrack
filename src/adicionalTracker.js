@@ -31,6 +31,7 @@ adicional.getInfo = function (id, postcode, callback) {
         }
 
        let entity = new AdicionalInfo(json[0])
+        entity.retries = response.attempts
         callback(null, entity)
     })
 }

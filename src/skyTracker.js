@@ -42,6 +42,7 @@ sky.getInfo = function (id, callback) {
                 entity = createSkyEntity(id, json)
         }
 
+        entity.retries = response.attempts
         callback(null, entity)
     })
 }

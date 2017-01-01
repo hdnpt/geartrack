@@ -60,6 +60,7 @@ function obtainInfo(action, id, postalcode, cb) {
         }
 
         const entity = createCorreosEntity(body)
+        entity.retries = response.attempts
         cb(null, entity)
     })
 }
