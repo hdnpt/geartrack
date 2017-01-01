@@ -5,11 +5,11 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/iamfreee/geartrack)
 [![David](https://img.shields.io/david/iamfreee/geartrack.svg)]()
 [![Known Vulnerabilities](https://snyk.io/test/github/iamfreee/geartrack/badge.svg)](https://snyk.io/test/github/iamfreee/geartrack)
-[![GitHub release](https://img.shields.io/github/release/iamfreee/geartrack.svg)]()
+[![GitHub release](https://img.shields.io/github/tag/iamfreee/geartrack.svg)]()
 [![license](https://img.shields.io/github/license/iamfreee/geartrack.svg)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://geartrack.hdn.pt/)
 
-## Track shippments from Gearbest with the Spain Priority Line method.
+## Track shippments from Gearbest with the Spain Priority Line method
 Online version: [https://geartrack.hdn.pt](https://geartrack.hdn.pt)
 
 ### Parcel Flow
