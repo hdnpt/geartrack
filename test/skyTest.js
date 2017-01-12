@@ -44,12 +44,12 @@ describe('Sky 56', function() {
             const id = 'PQ4F6P0702945760181750M'
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
-
+                
                 assert.equal(info.id, id)
                 assert.equal(info.messages.length, 6)
                 assert.equal(info.messages[0].message, 'Parcel departure in Shenzhen Sorting Centre')
 
-                assert.equal(info.status.length, 4)
+                assert.equal(info.status.length, 5)
                 assert.equal(info.status[0].status, 'Pre-registrado')
 
                 console.log(id + ' attempts: ' + info.retries)
