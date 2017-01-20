@@ -153,7 +153,12 @@ function parseStatusTable(tableHtml) {
         let state = {}
 
         $(this).children().each(function (s) {
-            state[fields[s]] = $(this).text()
+            let text = $(this).text()
+
+            if(text == 'En tr?nsito') //remove ?
+                text = 'En tránsito'
+
+            state[fields[s]] = text
         })
         states.push(state)
     })

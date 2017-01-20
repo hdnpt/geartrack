@@ -57,7 +57,21 @@ describe('Sky 56', function() {
             })
 
         });
+
+        it('should correct status en tra?nsito', function(done) {
+            const id = 'PQ4F6P0703673180181750T'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal('En tránsito', info.status[info.status.length-3].status)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
     });
+
 
     it('should fail to extract', function(done) {
         const id = '423423424'
