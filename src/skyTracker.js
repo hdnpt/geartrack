@@ -36,6 +36,7 @@ sky.getInfo = function (id, callback) {
             case 'N': // Netherlands Post surface mail
             case 'L': // Bpost is the same
             case 'S': // Malasya Pos
+            case 'G': // Switzerland Post Unregistered
                 entity = createNLSkyEntity(id, json)
                 break
             default: // Spain express, correos line
@@ -131,7 +132,6 @@ function createNLSkyEntity(id, json) {
         messages: messages
     })
 }
-
 
 /*
 |--------------------------------------------------------------------------

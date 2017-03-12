@@ -58,32 +58,50 @@ describe('Sky 56', function() {
 
         });
 
-        describe('#Bpost International', function() {
-            it('should extract the messages from the website with success', function(done) {
-                const id = 'LVS1376360000761593'
-                sky.getInfo(id, (err, info) => {
-                    assert.isNull(err)
-
-                    assert.equal(info.id, id)
-                    assert.equal(info.messages.length, 6)
-                    assert.equal(info.messages[1].status, 'Departure to country of destination')
-
-                    assert.equal(info.status.length, 7)
-                    assert.equal(info.status[0].status, 'Sealing')
-
-                    console.log(id + ' attempts: ' + info.retries)
-                    done()
-                })
-
-            });
-        });
-
         it('should correct status en tra?nsito', function(done) {
             const id = 'PQ4F6P0703673180181750T'
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
                 assert.equal('En tránsito', info.status[info.status.length-3].status)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+    });
+
+    describe('#Bpost International', function() {
+        it('should extract the messages from the website with success', function(done) {
+            const id = 'LVS1376360000761593'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.messages.length, 6)
+                assert.equal(info.messages[1].status, 'Departure to country of destination')
+
+                assert.equal(info.status.length, 7)
+                assert.equal(info.status[0].status, 'Sealing')
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+    });
+
+    describe('#Switzerland Post Unregistered', function() {
+        it('should extract the messages from the website with success', function(done) {
+            const id = 'GEGMY00054570'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.messages, null)
+
+                assert.equal(info.status.length, 7)
+                assert.equal(info.status[0].area, 'Electronic information')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
