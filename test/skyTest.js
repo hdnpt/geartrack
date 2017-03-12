@@ -39,12 +39,12 @@ describe('Sky 56', function() {
         });
     });
 
-    describe('#Priority Line', function() {
-        it('should extract the messages from the website with success', function(done) {
+    describe('#Priority Line', function () {
+        it('should extract the messages from the website with success', function (done) {
             const id = 'PQ4F6P0702945760181750M'
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
-                
+
                 assert.equal(info.id, id)
                 assert.equal(info.messages.length, 6)
                 assert.equal(info.messages[0].message, 'Parcel departure in Shenzhen Sorting Centre')
@@ -56,6 +56,26 @@ describe('Sky 56', function() {
                 done()
             })
 
+        });
+
+        describe('#Bpost International', function() {
+            it('should extract the messages from the website with success', function(done) {
+                const id = 'LVS1376360000761593'
+                sky.getInfo(id, (err, info) => {
+                    assert.isNull(err)
+
+                    assert.equal(info.id, id)
+                    assert.equal(info.messages.length, 6)
+                    assert.equal(info.messages[1].status, 'Departure to country of destination')
+
+                    assert.equal(info.status.length, 7)
+                    assert.equal(info.status[0].status, 'Sealing')
+
+                    console.log(id + ' attempts: ' + info.retries)
+                    done()
+                })
+
+            });
         });
 
         it('should correct status en tra?nsito', function(done) {
