@@ -108,6 +108,22 @@ describe('Sky 56', function() {
             })
 
         });
+
+        it('should extract the messages from the website with success', function(done) {
+            const id = 'SB3000050456'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.messages, null)
+
+                assert(info.status.length >= 5)
+                assert.equal(info.status[0].area, 'Electronic information')
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
     });
 
 
