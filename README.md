@@ -22,7 +22,7 @@ Sky56 supports:
 - **NL** Netherlands Post surface mail
 - **LV** Bpost International
 - **SY** Malasya Pos
-- **GE** Switzerland Post Unregistered
+- **GE, SB** Switzerland Post Unregistered
 
 ### Install
 - `npm install geartrack --save`
@@ -32,7 +32,7 @@ Sky56 supports:
 const geartrack = require('geartrack')
 
 // Get Sky 56 info
-// Supports these ids: PQ, NL, LV, SY, GE..
+// Supports these ids: PQ, NL, LV, SY, GE, SB..
 geartrack.sky.getInfo(id, (err, SkyInfo) => {
 	if(err) { return  }
     
@@ -71,6 +71,7 @@ geartrack.expresso24.getInfo(id, (err, ExpressoInfo) => {
 ```
 
 ### Changelog
+- 15/03/2017 - Added SB ids support
 - 12/03/2017 - Added support for Switzerland Post Unregistered
 - 01/01/2017 - Added replaced request with requestretry to retry failed requests 
 - 31/12/2016 - Added information about Malasya Pos (SYB..)
