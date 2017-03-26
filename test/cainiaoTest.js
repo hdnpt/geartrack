@@ -23,7 +23,7 @@ describe('Cainiao', function() {
 
 
         it('should fail to extract', function(done) {
-            const id = '423423424'
+            const id = '42e3423424'
             cainiao.getInfo(id, (err, info) => {
                 assert.isNotNull(err)
 

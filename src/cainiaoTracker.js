@@ -40,7 +40,7 @@ cainiao.getInfo = function (id, callback) {
         let val =  JSON.parse(entities.decode( $('#waybill_list_val_box').val()))
 
         // Not found
-        if (val.data[0].errorCode == "ORDER_NOT_FOUND") {
+        if (val.data[0].errorCode == "ORDER_NOT_FOUND" || val.data[0].errorCode == "RESULT_EMPTY") {
             callback(new Error("No data or invalid data provided!"))
             return
         }

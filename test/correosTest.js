@@ -7,20 +7,20 @@ describe('Correos Express', function() {
 
     describe('#Correos Express', function() {
         it('should extract the messages from the website with success', function(done) {
-            const id = 'PQ4F6P0702945760181750M', code = 1750
+            const id = 'PQ4F6P0704104480181750Q', code = 1750
             correos.getInfo(id, code, (err, info) => {
                 assert.isNull(err)
 
-                assert.equal(info.id, '2016122222240929')
+                assert.equal(info.id, '2017020321364036')
                 assert.equal(info.state, 'ENTREGADO')
-                assert.equal(info.received, '22/12/16')
+                assert.equal(info.received, '03/02/17')
                 assert.equal(info.sender.name, 'GLOBALEGROW.COM')
                 assert.equal(info.receiver.name, 'CARLOS FLORENCIO')
-                assert.equal(info.product.ref, 'ES14806990967805')
-                assert.equal(info.states.length, 11)
+                assert.equal(info.product.ref, 'ES14849763092829')
+                assert.equal(info.states.length, 6)
                 assert.equal(info.states[0].info, 'SIN RECEPCION: ENVIO GRABADO')
                 assert.equal(info.states[0].department, 'CENTRAL')
-                assert.equal(info.states[0].date, '22/12/16 22:24')
+                assert.equal(info.states[0].date, '03/02/17 21:36')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

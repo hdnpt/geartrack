@@ -100,7 +100,7 @@ describe('Sky 56', function() {
 
                 assert.equal(info.messages, null)
 
-                assert.equal(info.status.length, 7)
+                assert.equal(info.status.length, 9)
                 assert.equal(info.status[0].area, 'Electronic information')
 
                 console.log(id + ' attempts: ' + info.retries)
