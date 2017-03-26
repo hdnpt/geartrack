@@ -10,24 +10,30 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=plastic)](https://github.com/hdnpt/geartrack)
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://geartrack.hdn.pt/)
 
-## Track shippments from Gearbest with the Spain Priority Line method
+## API to track shippments from Gearbest & Aliexpress
 Online version: [https://geartrack.hdn.pt](https://geartrack.hdn.pt)
 
-### Parcel Flow
-Your parcel should come from China (multiple countries envolved here) -> Spain -> Portugal, with this app you can track exactly where your parcel is.
+This library scrapes the websites providers for shipping information.
 
-This litle script provides shipping information from the [Sky56](http://www.sky56.cn/english/track/index), [Correos Express](https://www.correosexpress.com/web/correosexpress/home), [Adicional](http://www.adicional.pt/) and [Expresso24](http://www.expresso24.pt/index.php?action=pesquisaguias3).
+## Supported Methods
 
-Sky56 supports:
-- **PQ** Spain Priority Line (Spain Express)
-- **NL** Netherlands Post surface mail
-- **LV** Bpost International
-- **SY** Malasya Pos
-- **GE, SB** Switzerland Post Unregistered
+### Gearbest supported ids
+- Sky56:
+    - **PQ** Spain Priority Line (Spain Express)
+    - **NL** Netherlands Post surface mail
+    - **LV** Bpost International
+    - **SY** Malasya Pos
+    - **GE, SB** Switzerland Post Unregistered
+- Correos Express
+- Adicional
+- Expresso24
 
-Some methods of Aliexpress added:
+### Aliexpress supported ids
 - Singpost & CTT
-- Malasya & CTT
+    - RF.....SG ids
+- Malasya (Cainiao) & CTT 
+    - RQ.....MY ids
+
 
 ### Install
 - `npm install geartrack --save`
@@ -87,10 +93,17 @@ geartrack.ctt.getInfo(id, (err, CttInfo) => {
 
     console.log(CttInfo.status) // see CttInfo entity for more fields 
 })
+
+// Get global.cainiao.com info (used in aliexpress buys)
+geartrack.cainiao.getInfo(id, (err, CainiaoInfo) => {
+    if(err) { return  }
+
+    console.log(CainiaoInfo.status) // see CainiaoInfo entity for more fields 
+})
 ```
 
 ### Changelog
-- 26/03/2017 - Added support for Singpost & CTT
+- 26/03/2017 - Added support for Singpost, CTT & Cainiao - Aliexpress
 - 15/03/2017 - Added SB ids support
 - 12/03/2017 - Added support for Switzerland Post Unregistered
 - 01/01/2017 - Added replaced request with requestretry to retry failed requests 
