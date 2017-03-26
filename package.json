@@ -21,7 +21,7 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
-    "htmltidy": "0.0.6",
+    "htmltidy2": "^0.1.4",
     "requestretry": "^1.12.0",
     "sprintf": "^0.1.5"
   },
