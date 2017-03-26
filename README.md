@@ -25,6 +25,10 @@ Sky56 supports:
 - **SY** Malasya Pos
 - **GE, SB** Switzerland Post Unregistered
 
+Some methods of Aliexpress added:
+- Singpost & CTT
+- Malasya & CTT
+
 ### Install
 - `npm install geartrack --save`
 
@@ -69,9 +73,24 @@ geartrack.expresso24.getInfo(id, (err, ExpressoInfo) => {
 
     console.log(ExpressoInfo.status) // see ExpressoInfo entity for more fields 
 })
+
+// Get www.singpost.com info (for aliexpress)
+geartrack.singpost.getInfo(id, (err, SingpostInfo) => {
+    if(err) { return  }
+
+    console.log(SingpostInfo.status) // see SingpostInfo entity for more fields 
+})
+
+// Get www.cttexpresso.pt info (used in aliexpress buys)
+geartrack.ctt.getInfo(id, (err, CttInfo) => {
+    if(err) { return  }
+
+    console.log(CttInfo.status) // see CttInfo entity for more fields 
+})
 ```
 
 ### Changelog
+- 26/03/2017 - Added support for Singpost & CTT
 - 15/03/2017 - Added SB ids support
 - 12/03/2017 - Added support for Switzerland Post Unregistered
 - 01/01/2017 - Added replaced request with requestretry to retry failed requests 

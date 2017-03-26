@@ -20,12 +20,13 @@
   "homepage": "https://geartrack.hdn.pt",
   "dependencies": {
     "cheerio": "^0.22.0",
+    "htmltidy": "0.0.6",
     "requestretry": "^1.12.0",
     "sprintf": "^0.1.5"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamfreee/geartrack.git"
+    "url": "https://github.com/hdnpt/geartrack.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
