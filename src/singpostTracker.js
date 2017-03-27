@@ -2,6 +2,7 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
+const moment = require('moment')
 
 const URL = 'http://www.singpost.com/track-items'
 
@@ -67,7 +68,7 @@ function createSingpostEntity(id, html) {
     let messages = []
     for(let i = 0; i < date.length; i++) {
         messages.push({
-            date: date[i],
+            date: moment(date[i], "DD-MM-YYYY").format(),
             status: status[i]
         })
     }

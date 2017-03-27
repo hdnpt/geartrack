@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const singpost = require('../src/singpostTracker')
+const moment = require('moment')
 
 describe('Singpost', function() {
     this.timeout(0)
@@ -12,8 +13,9 @@ describe('Singpost', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.messages[0].date, '25/01/2017')
                 assert.equal(info.messages[0].status, 'Product Delivered (Country code: PT)')
+                assert(moment(info.messages[0].date).isValid())
+                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '25/01/2017')
                 assert.equal(info.messages.length, 7)
 
                 console.log(id + ' attempts: ' + info.retries)

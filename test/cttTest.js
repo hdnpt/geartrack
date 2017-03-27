@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const singpost = require('../src/cttTracker')
+const moment = require('moment')
 
 describe('CTT', function() {
     this.timeout(0)
@@ -14,11 +15,18 @@ describe('CTT', function() {
                 assert.equal(info.id, id)
                 assert.equal(info.state.status, 'Objeto entregue')
                 assert.equal(info.messages.length, 7)
-                assert.equal(info.messages[0].day, 'quarta-feira, 25 Janeiro 2017')
                 assert.equal(info.messages[0].status.length, 2)
-                assert.equal(info.messages[0].status[0].hours, '12:26')
                 assert.equal(info.messages[0].status[0].status, 'Entregue')
                 assert.equal(info.messages[0].status[0].local, '2910 - SETUBAL')
+
+                assert(moment(info.state.date).isValid())
+                assert.equal(moment(info.state.date).format("DD/MM/YYYY"), '25/01/2017')
+
+                assert(moment(info.messages[0].day).isValid())
+                assert.equal(moment(info.messages[0].day).format("DD/MM/YYYY"), '25/01/2017')
+
+                assert(moment(info.messages[0].status[0].time).isValid())
+                assert.equal(moment(info.messages[0].status[0].time).format("DD/MM/YYYY HH:mm"), '25/01/2017 12:26')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -34,11 +42,19 @@ describe('CTT', function() {
                 assert.equal(info.id, id)
                 assert.equal(info.state.status, 'Objeto entregue')
                 assert.equal(info.messages.length, 4)
-                assert.equal(info.messages[0].day, 'sexta-feira, 13 Janeiro 2017')
                 assert.equal(info.messages[0].status.length, 2)
-                assert.equal(info.messages[0].status[0].hours, '10:00')
                 assert.equal(info.messages[0].status[0].status, 'Entregue')
                 assert.equal(info.messages[0].status[0].local, '4480 - VILA DO CONDE')
+
+
+                assert(moment(info.state.date).isValid())
+                assert.equal(moment(info.state.date).format("DD/MM/YYYY"), '13/01/2017')
+
+                assert(moment(info.messages[0].day).isValid())
+                assert.equal(moment(info.messages[0].day).format("DD/MM/YYYY"), '13/01/2017')
+
+                assert(moment(info.messages[0].status[0].time).isValid())
+                assert.equal(moment(info.messages[0].status[0].time).format("DD/MM/YYYY HH:mm"), '13/01/2017 10:00')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

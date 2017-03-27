@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const correos = require('../src/correosTracker')
+const moment = require('moment')
 
 describe('Correos Express', function() {
     this.timeout(0)
@@ -13,14 +14,14 @@ describe('Correos Express', function() {
 
                 assert.equal(info.id, '2017020321364036')
                 assert.equal(info.state, 'ENTREGADO')
-                assert.equal(info.received, '03/02/17')
+                assert.equal(moment(info.received).format("DD/MM/YY"), '03/02/17')
                 assert.equal(info.sender.name, 'GLOBALEGROW.COM')
                 assert.equal(info.receiver.name, 'CARLOS FLORENCIO')
                 assert.equal(info.product.ref, 'ES14849763092829')
                 assert.equal(info.states.length, 6)
                 assert.equal(info.states[0].info, 'SIN RECEPCION: ENVIO GRABADO')
                 assert.equal(info.states[0].department, 'CENTRAL')
-                assert.equal(info.states[0].date, '03/02/17 21:36')
+                assert.equal(moment(info.states[0].date).format("DD/MM/YY HH:mm"), '03/02/17 21:36')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

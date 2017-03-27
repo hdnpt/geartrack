@@ -2,6 +2,7 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
+const moment = require('moment')
 
 const URL = 'https://www.correosexpress.com/web/correosexpress/home'
 
@@ -79,7 +80,12 @@ function createCorreosEntity(html) {
 
         let state = {}
         $(this).children().each(function (s, e) {
-            state[fields[s]] = $(this).text().trim()
+            let text = $(this).text().trim()
+
+            if(s == 0)
+                text = moment(text, "DD/MM/YY HH:mm").format()
+
+            state[fields[s]] = text
         })
 
         states.push(state)
@@ -113,8 +119,8 @@ function CorreosInfo(obj) {
     // Sent details
     this.id = obj.nenvio
     this.state = obj.estado
-    this.received = obj.fecha
-    this.lastUpdate = obj.fechaEstado
+    this.received = moment(obj.fecha, "DD/MM/YY").format()
+    this.lastUpdate = moment(obj.fechaEstado, "DD/MM/YY HH:mm").format()
 
     // Sender Details
     this.sender = {

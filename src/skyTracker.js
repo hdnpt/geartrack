@@ -3,6 +3,7 @@
 const sprintf = require('sprintf')
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
+const moment = require('moment')
 
 const URL = 'http://www.sky56.cn/track/track/result?tracking_number=%s'
 
@@ -68,7 +69,7 @@ function createSkyEntity(id, json) {
     let parsedMessages = infos.map(message => {
         let idx1 = message.indexOf(" ")
         let idx2 = message.indexOf(" ", idx1+1)
-        let date = message.substr(0, idx2)
+        let date = moment(message.substr(0, idx2), "YYYY-MM-DD HH:mm:ss").format()
         let m = message.substr(idx2 + 1, message.length)
         return {
             date: date,
@@ -118,7 +119,7 @@ function createNLSkyEntity(id, json) {
         let idx2 = message.indexOf("--", idx1+1)
         let area = message.substr(0, idx1)
         let status = message.substr(idx1+1, idx2 - idx1 - 1)
-        let date = message.substr(idx2 + 2)
+        let date = moment(message.substr(idx2 + 2), "DD-MMM-YYYY hh:mm a").format()
         return {
             area: area,
             status: status.trim().capitalizeFirstLetter(),
@@ -157,6 +158,9 @@ function parseStatusTable(tableHtml) {
 
             if(text == 'En tr?nsito') //remove ?
                 text = 'En tránsito'
+
+            if(s == 0)
+                text = moment(text, "YYYY-MM-DD HH:mm:ss").format()
 
             state[fields[s]] = text
         })

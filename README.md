@@ -103,6 +103,7 @@ geartrack.cainiao.getInfo(id, (err, CainiaoInfo) => {
 ```
 
 ### Changelog
+- 27/03/2017 - Formated all dates to ISO format
 - 26/03/2017 - Added support for Singpost, CTT & Cainiao - Aliexpress
 - 15/03/2017 - Added SB ids support
 - 12/03/2017 - Added support for Switzerland Post Unregistered

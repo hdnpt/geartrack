@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const expresso = require('../src/expresso24Tracker')
+const moment = require('moment')
 
 describe('Expresso24', function() {
     this.timeout(0)
@@ -13,10 +14,12 @@ describe('Expresso24', function() {
 
                 assert.equal(info.guide, 'X6019011')
                 assert.equal(info.origin, 'GLOBALEGROW.COM')
-                assert.equal(info.date, '2016-12-22')
                 assert.equal(info.status, 'Entregue')
                 assert.equal(info.receiver_name, 'CARLOS FLORENCIO')
                 assert.equal(info.ref, id)
+
+                assert(moment(info.date).isValid())
+                assert.equal(moment(info.date).format("DD/MM/YYYY"), '22/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

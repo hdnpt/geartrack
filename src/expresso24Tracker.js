@@ -2,6 +2,7 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
+const moment = require('moment')
 
 const URL = 'http://www.expresso24.pt/index.php?action=pesquisaguias3'
 
@@ -61,7 +62,7 @@ function createExpressoEntity(html) {
     return new ExpressoInfo({
         'guide': data[0],
         'origin': data[1],
-        'date': data[2],
+        'date': moment(data[2], "YYYY-MM-DD").format(),
         'status': data[3],
         'weight': data[4],
         'parcels': data[5],

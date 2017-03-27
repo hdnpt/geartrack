@@ -2,6 +2,7 @@
 
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const sprintf = require('sprintf')
+const moment = require('moment')
 
 const URL = 'http://www.adicional.pt/contact/tracking.php?reference=%s&cp=%s'
 
@@ -42,10 +43,10 @@ adicional.getInfo = function (id, postcode, callback) {
  |--------------------------------------------------------------------------
  */
 function AdicionalInfo(obj) {
-    this.date_expedition = obj.DataExpedicao
+    this.date_expedition = moment(obj.DataExpedicao, "YYYY-MM-DD").format()
     this.service_type = obj.desc_tipo_servico
     this.sub_status = obj.Desc_SubStatus
-    this.updated = obj.data_status
+    this.updated = moment(obj.data_status, "YYYY-MM-DD HH:mm").format()
     this.status = obj.Desc_Status
     this.name = obj.nome
     this.distributor = obj.Distribuidor

@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const sky = require('../src/skyTracker')
+const moment = require('moment')
 
 describe('Sky 56', function() {
     this.timeout(0)
@@ -14,6 +15,9 @@ describe('Sky 56', function() {
                 assert.equal(info.id, id)
                 assert.equal(info.status[0].area, 'Electronic information')
                 assert.equal(info.status[1].area, 'Small package Center')
+
+                assert(moment(info.status[8].date).isValid())
+                assert.equal(moment(info.status[8].date).format("DD/MM/YYYY"), '06/01/2017')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -31,6 +35,9 @@ describe('Sky 56', function() {
                 assert.equal(info.id, id)
                 assert.equal(info.status[0].area, 'Electronic information')
                 assert.equal(info.status[1].area, 'Small package Center')
+
+                assert(moment(info.status[0].date).isValid())
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '09/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -51,6 +58,12 @@ describe('Sky 56', function() {
 
                 assert.equal(info.status.length, 5)
                 assert.equal(info.status[0].status, 'Pre-registrado')
+
+                assert(moment(info.messages[0].date).isValid())
+                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '02/12/2016')
+
+                assert(moment(info.status[0].date).isValid())
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '02/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -85,6 +98,12 @@ describe('Sky 56', function() {
                 assert.equal(info.status.length, 7)
                 assert.equal(info.status[0].status, 'Sealing')
 
+                assert(moment(info.messages[0].date).isValid())
+                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '23/02/2017')
+
+                assert(moment(info.status[6].date).isValid())
+                assert.equal(moment(info.status[6].date).format("DD/MM/YYYY"), '02/03/2017')
+
                 console.log(id + ' attempts: ' + info.retries)
                 done()
             })
@@ -102,6 +121,9 @@ describe('Sky 56', function() {
 
                 assert.equal(info.status.length, 9)
                 assert.equal(info.status[0].area, 'Electronic information')
+
+                assert(moment(info.status[0].date).isValid())
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '09/03/2017')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

@@ -4,7 +4,7 @@ const request = require('requestretry')
 const parser = require('cheerio')
 const Entities = require('html-entities').AllHtmlEntities;
 const entities = new Entities();
-const https = require('https')
+const moment = require('moment')
 
 const URL = 'https://global.cainiao.com/detail.htm?mailNoList='
 
@@ -55,11 +55,18 @@ cainiao.getInfo = function (id, callback) {
 /**
  * Create cainiao entity from html
  * @param id
- * @param html
+ * @param json
  */
 function createCainiaoEntity(id, json) {
 
-    return new CainiaoInfo(id, json.data[0].section2.detailList)
+    let msgs = json.data[0].section2.detailList.map(m => {
+        return {
+            status: m.desc,
+            date: moment(m.time, "YYYY-MM-DD HH:mm:ss").format()
+        }
+    })
+
+    return new CainiaoInfo(id, msgs)
 }
 
 /*

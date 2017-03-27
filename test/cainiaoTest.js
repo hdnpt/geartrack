@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const cainiao = require('../src/cainiaoTracker')
+const moment = require('moment')
 
 describe('Cainiao', function() {
     this.timeout(0)
@@ -13,7 +14,8 @@ describe('Cainiao', function() {
 
                 assert.equal(info.id, id)
                 assert.equal(info.messages.length, 16)
-                assert.equal(info.messages[0].desc, "Delivery success")
+                assert.equal(info.messages[0].status, "Delivery success")
+                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY HH:mm"), "13/01/2017 10:00")
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

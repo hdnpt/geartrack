@@ -2,7 +2,8 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const tidy = require('htmltidy2').tidy;
+const tidy = require('htmltidy2').tidy
+const moment = require('moment')
 
 const URL = 'http://www.cttexpresso.pt/feapl_2/app/open/cttexpresso/objectSearch/objectSearch.jspx?lang=def&objects='
 
@@ -60,8 +61,9 @@ function createCttEntity(id, html, cb) {
 
         let table = $('table.full-width tr').get(1).children.filter(e => e.type == 'tag')
 
+        let dayAndHours = table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim()
         let state = {
-            date: table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim(),
+            date: moment(dayAndHours, "YYYY/MM/DD HH:mm").format(),
             status: table[4].children[0].data.trim()
         }
 
@@ -69,21 +71,27 @@ function createCttEntity(id, html, cb) {
 
         let messages = []
         let day = ""
+        let dayUnformated = ""
         for(let i = 2; i < details.length; i++) {
             let tr = details[i]
             if(tr.attribs && tr.attribs.class == 'group') {
                 day = tr.children[1].children[0].data.trim()
+                dayUnformated = day.split(',')[1].trim()
+                day = moment(dayUnformated, "DD MMMM YYYY", 'pt').format()
                 messages.push({
                     day: day,
                     status: []
                 })
             } else {
                 if(tr.children.length == 11) {
-                    messages.filter(m => m.day == day)[0].status.push({
-                        hours: tr.children[1].children[0].data.trim(),
+                    let hours = tr.children[1].children[0].data.trim()
+                    let time = moment(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt').format()
+                    let add = {
+                        time: time,
                         status: tr.children[3].children[0].data.trim(),
                         local: tr.children[7].children[0].data.trim()
-                    })
+                    }
+                    messages.filter(m => m.day == day)[0].status.push(add)
                 }
             }
         }

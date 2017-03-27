@@ -1,6 +1,7 @@
 const assert = require('chai').assert
 
 const adicional = require('../src/adicionalTracker')
+const moment = require('moment')
 
 describe('Adicional', function() {
     this.timeout(0)
@@ -11,9 +12,9 @@ describe('Adicional', function() {
             adicional.getInfo(id, code, (err, info) => {
                 assert.isNull(err)
 
-                assert.equal(info.date_expedition, '2016-12-24')
+                assert.equal(moment(info.date_expedition).format("YYYY-MM-DD"), '2016-12-24')
                 assert.equal(info.service_type, 'ENTREGA')
-                assert.equal(info.updated, '2016-12-27 15:57')
+                assert.equal(moment(info.updated).format("YYYY-MM-DD HH:mm"), '2016-12-27 15:57')
                 assert.equal(info.status, 'DESCARTADO')
 
                 console.log(id + ' attempts: ' + info.retries)

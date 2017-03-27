@@ -22,6 +22,7 @@
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
     "htmltidy2": "^0.1.4",
+    "moment": "^2.18.1",
     "requestretry": "^1.12.0",
     "sprintf": "^0.1.5"
   },
