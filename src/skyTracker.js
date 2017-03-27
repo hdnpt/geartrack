@@ -73,7 +73,7 @@ function createSkyEntity(id, json) {
         let m = message.substr(idx2 + 1, message.length)
         return {
             date: date,
-            message: m.trim()
+            status: m.trim()
         }
     })
 

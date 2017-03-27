@@ -54,7 +54,7 @@ describe('Sky 56', function() {
 
                 assert.equal(info.id, id)
                 assert.equal(info.messages.length, 6)
-                assert.equal(info.messages[0].message, 'Parcel departure in Shenzhen Sorting Centre')
+                assert.equal(info.messages[0].status, 'Parcel departure in Shenzhen Sorting Centre')
 
                 assert.equal(info.status.length, 5)
                 assert.equal(info.status[0].status, 'Pre-registrado')
