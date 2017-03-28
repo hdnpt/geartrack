@@ -145,7 +145,7 @@ function CorreosInfo(obj) {
     }
 
     //States
-    this.states = obj.states
+    this.states = obj.states.reverse()
 }
 
 module.exports = correos

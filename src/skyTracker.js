@@ -79,7 +79,7 @@ function createSkyEntity(id, json) {
 
     return new SkyInfo({
         id: id,
-        'messages': parsedMessages,
+        'messages': parsedMessages.reverse(),
         'status': states
     })
 }
@@ -129,7 +129,7 @@ function createNLSkyEntity(id, json) {
 
     return new SkyInfo({
         id: id,
-        status: parsedStatus,
+        status: parsedStatus.reverse(),
         messages: messages
     })
 }

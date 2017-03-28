@@ -13,11 +13,11 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.status[0].area, 'Electronic information')
-                assert.equal(info.status[1].area, 'Small package Center')
+                assert.equal(info.status[0].area, 'PORTUGAL')
+                assert.equal(info.status[2].area, 'Transit Center')
 
                 assert(moment(info.status[8].date).isValid())
-                assert.equal(moment(info.status[8].date).format("DD/MM/YYYY"), '06/01/2017')
+                assert.equal(moment(info.status[8].date).format("DD/MM/YYYY"), '23/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -33,11 +33,11 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.status[0].area, 'Electronic information')
-                assert.equal(info.status[1].area, 'Small package Center')
+                assert.equal(info.status[0].area, 'PORTUGAL')
+                assert.equal(info.status[3].area, 'Exchange Bureau')
 
                 assert(moment(info.status[0].date).isValid())
-                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '09/12/2016')
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '24/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -54,13 +54,13 @@ describe('Sky 56', function() {
 
                 assert.equal(info.id, id)
                 assert.equal(info.messages.length, 6)
-                assert.equal(info.messages[0].status, 'Parcel departure in Shenzhen Sorting Centre')
+                assert.equal(info.messages[0].status, 'Information sent to Spain')
 
                 assert.equal(info.status.length, 5)
                 assert.equal(info.status[0].status, 'Pre-registrado')
 
                 assert(moment(info.messages[0].date).isValid())
-                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '02/12/2016')
+                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '09/12/2016')
 
                 assert(moment(info.status[0].date).isValid())
                 assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '02/12/2016')
@@ -96,13 +96,13 @@ describe('Sky 56', function() {
                 assert.equal(info.messages[1].status, 'Departure to country of destination')
 
                 assert.equal(info.status.length, 7)
-                assert.equal(info.status[0].status, 'Sealing')
+                assert.equal(info.status[0].status, 'The transfer of customs')
 
                 assert(moment(info.messages[0].date).isValid())
                 assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '23/02/2017')
 
                 assert(moment(info.status[6].date).isValid())
-                assert.equal(moment(info.status[6].date).format("DD/MM/YYYY"), '02/03/2017')
+                assert.equal(moment(info.status[6].date).format("DD/MM/YYYY"), '15/02/2017')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -120,10 +120,10 @@ describe('Sky 56', function() {
                 assert.equal(info.messages, null)
 
                 assert.equal(info.status.length, 9)
-                assert.equal(info.status[0].area, 'Electronic information')
+                assert.equal(info.status[0].area, 'PORTUGAL')
 
                 assert(moment(info.status[0].date).isValid())
-                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '09/03/2017')
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '24/03/2017')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -139,7 +139,7 @@ describe('Sky 56', function() {
                 assert.equal(info.messages, null)
 
                 assert(info.status.length >= 5)
-                assert.equal(info.status[0].area, 'Electronic information')
+                assert.equal(info.status[0].area, 'PORTUGAL')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

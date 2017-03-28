@@ -19,9 +19,9 @@ describe('Correos Express', function() {
                 assert.equal(info.receiver.name, 'CARLOS FLORENCIO')
                 assert.equal(info.product.ref, 'ES14849763092829')
                 assert.equal(info.states.length, 6)
-                assert.equal(info.states[0].info, 'SIN RECEPCION: ENVIO GRABADO')
-                assert.equal(info.states[0].department, 'CENTRAL')
-                assert.equal(moment(info.states[0].date).format("DD/MM/YY HH:mm"), '03/02/17 21:36')
+                assert.equal(info.states[0].info, 'ENTREGADO')
+                assert.equal(info.states[0].department, 'PORTUGAL - LISBOA')
+                assert.equal(moment(info.states[0].date).format("DD/MM/YY HH:mm"), '10/02/17 19:00')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
