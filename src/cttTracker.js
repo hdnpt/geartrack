@@ -2,7 +2,7 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const tidy = require('htmltidy2').tidy
+const tidy = require('htmltidy').tidy
 const moment = require('moment')
 
 const URL = 'http://www.cttexpresso.pt/feapl_2/app/open/cttexpresso/objectSearch/objectSearch.jspx?lang=def&objects='

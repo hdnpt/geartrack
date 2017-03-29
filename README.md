@@ -38,6 +38,13 @@ This library scrapes the websites providers for shipping information.
 ### Install
 - `npm install geartrack --save`
 
+### Using Docker to run tests
+- `docker build -t geartrack .`
+- `docker run geartrack`
+
+### Watchout
+- On linux 64bits - https://github.com/vavere/htmltidy/issues/11
+
 ### API
 ```javascript
 const geartrack = require('geartrack')
