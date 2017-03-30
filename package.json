@@ -10,7 +10,8 @@
     "correos",
     "adicional",
     "expresso24",
-    "sky56"
+    "sky56",
+    "directlink"
   ],
   "scripts": {
     "test": "mocha"
