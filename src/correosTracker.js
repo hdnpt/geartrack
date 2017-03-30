@@ -124,7 +124,7 @@ function CorreosInfo(obj) {
 
     // Sender Details
     this.sender = {
-        name: obj.sendername,
+        name: obj.sendername.replace('¿', ''),
         city: obj.sendercity,
         address: obj.senderaddress
     }
