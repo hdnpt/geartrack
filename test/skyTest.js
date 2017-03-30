@@ -85,18 +85,18 @@ describe('Sky 56', function() {
         //
         // });
 
-        it('should sort status by date', function(done) {
-            const id = 'PQ4F6P0702945760181750M'
-            sky.getInfo(id, (err, info) => {
-                assert.isNull(err)
-
-                assert.equal('Entregado', info.status[0].status)
-
-                console.log(id + ' attempts: ' + info.retries)
-                done()
-            })
-
-        });
+        // it('should sort status by date', function(done) {
+        //     const id = 'PQ4F6P0702945760181750M'
+        //     sky.getInfo(id, (err, info) => {
+        //         assert.isNull(err)
+        //
+        //         assert.equal('Entregado', info.status[0].status)
+        //
+        //         console.log(id + ' attempts: ' + info.retries)
+        //         done()
+        //     })
+        //
+        // });
     });
 
     describe('#Bpost International', function() {
