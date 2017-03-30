@@ -61,10 +61,10 @@ describe('Sky 56', function() {
 
 
                 assert.equal(info.status.length, 5)
-                assert.equal(info.status[0].status, 'Pre-registrado')
+                assert.equal(info.status[0].status, 'Entregado')
 
                 assert(moment(info.status[0].date).isValid())
-                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '02/12/2016')
+                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '30/12/2016')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -78,6 +78,19 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal('En tránsito', info.status[info.status.length-3].status)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
+        it('should sort status by date', function(done) {
+            const id = 'PQ4F6P0702945760181750M'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal('Entregado', info.status[0].status)
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

@@ -167,7 +167,12 @@ function parseStatusTable(tableHtml) {
         states.push(state)
     })
 
-    return states.reverse()
+    return states.sort((a, b) => {
+        let dateA = moment(a.date),
+            dateB = moment(b.date)
+
+        return dateA < dateB
+    })
 }
 
 module.exports = sky
