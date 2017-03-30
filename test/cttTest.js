@@ -122,6 +122,76 @@ describe('CTT', function() {
 
         });
 
+        it('Sweden - must pass', function(done) {
+            const id = 'RE845212395SE'
+            ctt.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.state.status, 'Objeto entregue')
+                assert.deepEqual(info.messages, [
+                    {
+                        "day": "2017-03-27T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-03-27T17:59:00+01:00",
+                                "status": "Entregue",
+                                "local": "4490 - POVOA DO VARZIM"
+                            },
+                            {
+                                "time": "2017-03-27T09:26:00+01:00",
+                                "status": "Em distribuição",
+                                "local": "4490 - POVOA DO VARZIM"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-03-16T00:00:00+00:00",
+                        "status": [
+                            {
+                                "time": "2017-03-16T09:31:00+00:00",
+                                "status": "Autorização de Saída pela Alfândega",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-02-15T00:00:00+00:00",
+                        "status": [
+                            {
+                                "time": "2017-02-15T14:49:00+00:00",
+                                "status": "Entrada em Armazém para Aplicação de Legislação",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-02-01T00:00:00+00:00",
+                        "status": [
+                            {
+                                "time": "2017-02-01T15:05:00+00:00",
+                                "status": "Receção internacional",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-01-19T00:00:00+00:00",
+                        "status": [
+                            {
+                                "time": "2017-01-19T08:12:00+00:00",
+                                "status": "Expedição internacional",
+                                "local": "Local não definido"
+                            }
+                        ]
+                    }
+                ])
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
         it('should fail to extract', function(done) {
             const id = '423423424'
             ctt.getInfo(id, (err, info) => {
