@@ -83,7 +83,7 @@ function obtainTexts(cb){
 function DirectLinkInfo(obj) {
     this.id = obj.tracking_no
     this.state = obj.status
-    this.states = obj.states
+    this.states = obj.states.reverse()
 }
 
 module.exports = directLink
