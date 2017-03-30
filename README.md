@@ -111,7 +111,7 @@ geartrack.cainiao.getInfo(id, (err, CainiaoInfo) => {
 
 // Get correos.es info (when the package is in spain)
 // ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
-geartrack.correoses.getInfo(id, (err, CorreosInfo) => {
+geartrack.correoses.getInfo(id, (err, CorreosESInfo) => {
 	if(err) { return  }
 
     console.log(CorreosESInfo.state) // see CorreosESInfo entity for more fields
