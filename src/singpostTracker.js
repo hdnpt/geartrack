@@ -35,7 +35,8 @@ singpost.getInfo = function (id, callback) {
         }
 
         // Not found
-        if (body.indexOf('Item status not found in the system.') != -1) {
+        if (body.indexOf('Item status not found in the system.') != -1 ||
+            body.indexOf('This function is currently unavailable.') != -1) {
             callback(new Error("No data or invalid data provided!"))
             return
         }
