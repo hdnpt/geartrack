@@ -27,6 +27,7 @@ This library scrapes the websites providers for shipping information.
 - Correos Express
 - Adicional
 - Expresso24
+- Correos.es
 
 ### Aliexpress supported ids
 - Singpost & CTT
@@ -107,9 +108,18 @@ geartrack.cainiao.getInfo(id, (err, CainiaoInfo) => {
 
     console.log(CainiaoInfo.status) // see CainiaoInfo entity for more fields 
 })
+
+// Get correos.es info (when the package is in spain)
+// ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
+geartrack.correoses.getInfo(id, (err, CorreosInfo) => {
+	if(err) { return  }
+
+    console.log(CorreosESInfo.state) // see CorreosESInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 30/03/2017 - Added support for correo.es
 - 27/03/2017 - Formated all dates to ISO format
 - 26/03/2017 - Added support for Singpost, CTT & Cainiao - Aliexpress
 - 15/03/2017 - Added SB ids support
