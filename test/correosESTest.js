@@ -20,7 +20,7 @@ describe('Correos ES', function() {
                 assert.equal(moment(info.states[0].date).format("DD/MM/YYYY"), '20/01/2017')
                 assert.equal(info.states[1].title, 'En proceso de entrega')
                 assert.equal(moment(info.states[1].date).format("DD/MM/YYYY"), '20/01/2017')
-                assert.equal(info.states[2].title, 'En tr�nsito')
+                assert.equal(info.states[2].title, 'En tránsito')
                 assert.equal(moment(info.states[2].date).format("DD/MM/YYYY"), '19/01/2017')
                 assert.equal(info.states[3].title, 'Admitido')
                 assert.equal(moment(info.states[3].date).format("DD/MM/YYYY"), '17/01/2017')
