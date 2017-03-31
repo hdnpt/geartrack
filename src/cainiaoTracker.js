@@ -2,9 +2,10 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const Entities = require('html-entities').AllHtmlEntities;
-const entities = new Entities();
+const Entities = require('html-entities').AllHtmlEntities
+const entities = new Entities()
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'https://global.cainiao.com/detail.htm?mailNoList='
 
@@ -32,7 +33,7 @@ cainiao.getInfo = function (id, callback) {
         gzip: true
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
@@ -41,13 +42,19 @@ cainiao.getInfo = function (id, callback) {
 
         // Not found
         if (val.data[0].errorCode == "ORDER_NOT_FOUND" || val.data[0].errorCode == "RESULT_EMPTY") {
-            callback(new Error("No data or invalid data provided!"))
+            callback(utils.getError('NO_DATA'))
             return
         }
 
-        const entity = createCainiaoEntity(id, val)
-        entity.retries = response.attempts
-        callback(null, entity)
+        try {
+            const entity = createCainiaoEntity(id, val)
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
+        }
+
     })
 }
 

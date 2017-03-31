@@ -3,6 +3,7 @@
 const request = require('requestretry')
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'https://www.correosexpress.com/web/correosexpress/home'
 
@@ -21,7 +22,7 @@ const correos = {}
 correos.getInfo = function (id, postalcode, callback) {
     request(URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000}, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
@@ -50,19 +51,25 @@ function obtainInfo(action, id, postalcode, cb) {
         timeout: 30000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(error)
+            cb(utils.getError('DOWN'))
             return
         }
 
         // Not found
         if (body.indexOf('portlet-msg-error') != -1) {
-            cb(new Error("No data or invalid data provided!"))
+            cb(utils.getError('NO_DATA'))
             return
         }
 
-        const entity = createCorreosEntity(body)
-        entity.retries = response.attempts
-        cb(null, entity)
+        try {
+            const entity = createCorreosEntity(body)
+            entity.retries = response.attempts
+            cb(null, entity)
+        } catch (error) {
+            console.log(error);
+            cb(utils.getError('PARSER'))
+        }
+
     })
 }
 

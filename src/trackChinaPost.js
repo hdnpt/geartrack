@@ -3,6 +3,7 @@
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'http://track-chinapost.com/result_china.php'
 
@@ -29,11 +30,11 @@ directLink.getInfo = function (id, callback, _try = 0) {
     }, function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            return callback(error)
+            return callback(utils.getError('DOWN'))
         }
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return callback(new Error('statuscode: ' + response.statusCode))
+            return callback(utils.getError('DOWN'))
         }
 
         if (body.indexOf('server is busy') != -1) {
@@ -41,16 +42,22 @@ directLink.getInfo = function (id, callback, _try = 0) {
         }
 
         if (body.indexOf('is invalid') != -1){
-            return callback(new Error("No data or invalid data provided!"))
+            return callback(utils.getError('NO_DATA'))
         }
 
-        const entity = createTrackChinaPostEntity(id, body)
-        if (!entity) {
-            return callback(new Error("No data or invalid data provided!"))
+        try {
+            const entity = createTrackChinaPostEntity(id, body)
+            if (!entity) {
+                return callback(utils.getError('NO_DATA'))
+            }
+            entity.retries = response.attempts
+            entity.busy_count = _try
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
         }
-        entity.retries = response.attempts
-        entity.busy_count = _try
-        callback(null, entity)
+
     })
 }
 

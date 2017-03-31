@@ -3,6 +3,7 @@
 const request = require('requestretry')
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const correos = {}
 
@@ -22,25 +23,32 @@ const URL = 'http://aplicacionesweb.correos.es/localizadorenvios/track.asp?numer
 correos.getInfo = function (id, callback) {
     let _URL = URL.replace('{{id}}', id)
 
-    request(_URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000, encoding: 'latin1'}, function (error, response, body) {
+    request(_URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000, encoding: 'latin1'},
+        function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            callback(new Error('statuscode: ' + response.statusCode))
+            callback(utils.getError('DOWN'))
             return
         }
 
-        const entity = createCorreosEsEntity(id, body)
-        if (!entity) {
-            callback(new Error("No data or invalid data provided!"))
-            return
+        try {
+            const entity = createCorreosEsEntity(id, body)
+            if (!entity) {
+                callback(utils.getError('NO_DATA'))
+                return
+            }
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
         }
-        entity.retries = response.attempts
-        callback(null, entity)
+
     })
 }
 

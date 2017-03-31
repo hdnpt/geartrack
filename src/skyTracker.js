@@ -4,6 +4,7 @@ const sprintf = require('sprintf')
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'http://www.sky56.cn/track/track/result?tracking_number=%s'
 
@@ -20,7 +21,7 @@ const sky = {}
 sky.getInfo = function (id, callback) {
     request(sprintf(URL, id), function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
@@ -28,24 +29,31 @@ sky.getInfo = function (id, callback) {
 
         // Not found
         if (json.message.indexOf('No result found for your query.') != -1) {
-            callback(new Error("No data or invalid data provided!"))
+            callback(utils.getError('NO_DATA'))
             return
         }
 
-        let entity = null
-        switch(id.charAt(0)) {
-            case 'N': // Netherlands Post surface mail
-            case 'L': // Bpost is the same
-            case 'S': // Malasya Pos
-            case 'G': // Switzerland Post Unregistered
-                entity = createNLSkyEntity(id, json)
-                break
-            default: // Spain express, correos line
-                entity = createSkyEntity(id, json)
+        try {
+            let entity = null
+            switch(id.charAt(0)) {
+                case 'N': // Netherlands Post surface mail
+                case 'L': // Bpost is the same
+                case 'S': // Malasya Pos
+                case 'G': // Switzerland Post Unregistered
+                    entity = createNLSkyEntity(id, json)
+                    break
+                default: // Spain express, correos line
+                    entity = createSkyEntity(id, json)
+                    break
+            }
+
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
         }
 
-        entity.retries = response.attempts
-        callback(null, entity)
     })
 }
 
