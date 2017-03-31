@@ -72,10 +72,10 @@ function createCorreosEsEntity(id, html) {
                     if(_class === 'txtDescripcionTabla'){
                         state['date'] = moment(_child.children[0].data.trim(), "DD/MM/YYYY").format()
                     } else if (_class === 'txtContenidoTabla' || _class === 'txtContenidoTablaOff'){
-                        state['title'] = _child.children[1].children[0].data.trim()
+                        state['state'] = _child.children[1].children[0].data.trim()
                         if (_child.children[1].attribs !== undefined && _child.children[1].attribs !== undefined
                             && _child.children[1].attribs.title) {
-                            state['info'] = _child.children[1].attribs.title.trim()
+                            state['title'] = _child.children[1].attribs.title.trim()
                         }
                     }
                 }
@@ -89,7 +89,7 @@ function createCorreosEsEntity(id, html) {
 
     return new CorreosESInfo({
         'id': id,
-        'state': states[states.length-1].title,
+        'state': states[states.length-1].state,
         'states': states.reverse()
     })
 }
