@@ -26,7 +26,7 @@ describe('TrackChinaPost', function() {
                     },
                     {
                         "date": "2017-03-29T17:35:17+01:00",
-                        "state": "leaving China Post Group city eCommerce dept. ，next station center"
+                        "state": "leaving China Post Group city eCommerce dept. ,next station center"
                     },
                     {
                         "date": "2017-03-29T17:32:10+01:00",

@@ -71,6 +71,7 @@ function createTrackChinaPostEntity(id, html) {
                     .replace(/\p{Han}+/,'')
                     .replace(/[\u3400-\u9FBF]/g, '')
                     .replace(/\s{2,}/g,' ')
+                    .replace('，', ',')
             }
             states.push(state)
         }
