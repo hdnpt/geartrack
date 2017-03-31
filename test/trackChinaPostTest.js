@@ -15,7 +15,7 @@ describe('TrackChinaPost', function () {
 
                 assert.equal(info.id, 'RF622875135CN')
                 assert.equal(info.state, 'Shanghai Transit Station export security scan')
-                assert.equal(moment(info.states[0].date).utc().format('DD/MM/YY HH:mm'), '31/03/17 13:44')
+                assert.equal(moment.utc(info.states[0].date).format('DD/MM/YY HH:mm'), '31/03/17 13:44')
                 assert.deepEqual(info.states, [
                     {
                         date: '2017-03-31T13:44:54Z',
