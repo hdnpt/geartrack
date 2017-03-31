@@ -3,8 +3,9 @@
 const sprintf = require('sprintf')
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Asia/Hong_Kong" // +8h
 
 const URL = 'http://www.sky56.cn/track/track/result?tracking_number=%s'
 
@@ -21,20 +22,18 @@ const sky = {}
 sky.getInfo = function (id, callback) {
     request(sprintf(URL, id), function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
+            return callback(utils.getError('DOWN'))
         }
 
         const json = JSON.parse(body)
 
         // Not found
         if (json.message.indexOf('No result found for your query.') != -1) {
-            callback(utils.getError('NO_DATA'))
-            return
+           return callback(utils.getError('NO_DATA'))
         }
 
+        let entity = null
         try {
-            let entity = null
             switch(id.charAt(0)) {
                 case 'N': // Netherlands Post surface mail
                 case 'L': // Bpost is the same
@@ -52,12 +51,12 @@ sky.getInfo = function (id, callback) {
             }
 
             entity.retries = response.attempts
-            callback(null, entity)
         } catch (error) {
             console.log(error);
-            callback(utils.getError('PARSER'))
+            return callback(utils.getError('PARSER'))
         }
 
+        callback(null, entity)
     })
 }
 
@@ -81,7 +80,7 @@ function createSkyEntity(id, json) {
     let parsedMessages = infos.map(message => {
         let idx1 = message.indexOf(" ")
         let idx2 = message.indexOf(" ", idx1+1)
-        let date = moment(message.substr(0, idx2), "YYYY-MM-DD HH:mm:ss").format()
+        let date = moment(message.substr(0, idx2), "YYYY-MM-DD HH:mm:ss").tz(zone).format()
         let m = message.substr(idx2 + 1, message.length)
         return {
             date: date,
@@ -131,7 +130,7 @@ function createNLSkyEntity(id, json) {
         let idx2 = message.indexOf("--", idx1+1)
         let area = message.substr(0, idx1)
         let status = message.substr(idx1+1, idx2 - idx1 - 1)
-        let date = moment(message.substr(idx2 + 2), "DD-MMM-YYYY hh:mm a").format()
+        let date = moment(message.substr(idx2 + 2), "DD-MMM-YYYY hh:mm a").tz(zone).format()
         return {
             area: area,
             status: status.trim().capitalizeFirstLetter(),
@@ -172,7 +171,7 @@ function parseStatusTable(tableHtml) {
                 text = 'En tránsito'
 
             if(s == 0)
-                text = moment(text, "YYYY-MM-DD HH:mm:ss").format()
+                text = moment(text, "YYYY-MM-DD HH:mm:ss").tz(zone).format()
 
             state[fields[s]] = text
         })
@@ -180,8 +179,8 @@ function parseStatusTable(tableHtml) {
     })
 
     return states.sort((a, b) => {
-        let dateA = moment(a.date),
-            dateB = moment(b.date)
+        let dateA = moment(a.date).tz(zone),
+            dateB = moment(b.date).tz(zone)
 
         return dateA < dateB
     })

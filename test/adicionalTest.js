@@ -1,7 +1,8 @@
 const assert = require('chai').assert
 
 const adicional = require('../src/adicionalTracker')
-const moment = require('moment')
+const moment = require('moment-timezone')
+moment.tz.setDefault("Europe/Lisbon")
 
 describe('Adicional', function() {
     this.timeout(0)

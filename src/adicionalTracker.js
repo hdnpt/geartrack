@@ -1,9 +1,10 @@
 'use strict';
 
-const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
+const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 3, retryDelay: 500})
 const sprintf = require('sprintf')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Europe/Lisbon"
 
 const URL = 'http://www.adicional.pt/contact/tracking.php?reference=%s&cp=%s'
 
@@ -18,29 +19,33 @@ const adicional = {}
  * @param callback(Error, AdicionalInfo)
  */
 adicional.getInfo = function (id, postcode, callback) {
-    request(sprintf(URL, id, postcode), function (error, response, body) {
-        if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
-        }
+    request(sprintf(URL, id, postcode),
+        function (error, response, body) {
+            if (error || response.statusCode != 200) {
+                callback(utils.getError('DOWN'))
+                return
+            }
 
-        const json = JSON.parse(body)
+            const json = JSON.parse(body)
 
-        // Not found
-        if (json.length == 0) {
-            callback(utils.getError('NO_DATA'))
-            return
-        }
+            // Not found
+            if (json.length == 0) {
+                callback(utils.getError('NO_DATA'))
+                return
+            }
 
-        try {
-            let entity = new AdicionalInfo(json[0])
-            entity.retries = response.attempts
+            let entity = null
+            try {
+                entity = new AdicionalInfo(json[0])
+                entity.retries = response.attempts
+
+            } catch (error) {
+                console.log(error);
+                return callback(utils.getError('PARSER'))
+            }
+
             callback(null, entity)
-        } catch (error) {
-            console.log(error);
-            callback(utils.getError('PARSER'))
-        }
-    })
+        })
 }
 
 /*
@@ -49,10 +54,10 @@ adicional.getInfo = function (id, postcode, callback) {
  |--------------------------------------------------------------------------
  */
 function AdicionalInfo(obj) {
-    this.date_expedition = moment(obj.DataExpedicao, "YYYY-MM-DD").format()
+    this.date_expedition = moment(obj.DataExpedicao, "YYYY-MM-DD").tz(zone).format()
     this.service_type = obj.desc_tipo_servico
     this.sub_status = obj.Desc_SubStatus
-    this.updated = moment(obj.data_status, "YYYY-MM-DD HH:mm").format()
+    this.updated = moment(obj.data_status, "YYYY-MM-DD HH:mm").tz(zone).format()
     this.status = obj.Desc_Status
     this.name = obj.nome
     this.distributor = obj.Distribuidor

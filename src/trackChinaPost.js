@@ -2,8 +2,9 @@
 
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Asia/Shanghai" // +8h
 
 const URL = 'http://track-chinapost.com/result_china.php'
 
@@ -18,8 +19,7 @@ const directLink = {}
  */
 directLink.getInfo = function (id, callback, _try = 0) {
     if(_try >= 3){
-        callback(new Error("No data beacause tracker server is busy, try again later!"))
-        return
+        return callback(utils.getError('BUSY'))
     }
     request.post({
         url: URL,
@@ -73,7 +73,7 @@ function createTrackChinaPostEntity(id, html) {
 
         if(elem.children !== undefined){
             let state = {
-                'date': moment.utc(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S").format(),
+                'date': moment(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S").tz(zone).format(),
                 'state': elem.children[3].children[0].data.trim()
                     .replace(/\p{Han}+/,'')
                     .replace(/[\u3400-\u9FBF]/g, '')

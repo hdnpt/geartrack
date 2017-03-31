@@ -4,8 +4,9 @@ const request = require('requestretry')
 const parser = require('cheerio')
 const Entities = require('html-entities').AllHtmlEntities
 const entities = new Entities()
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Asia/Kuala_Lumpur" // +8h
 
 const URL = 'https://global.cainiao.com/detail.htm?mailNoList='
 
@@ -23,7 +24,7 @@ const cainiao = {}
 cainiao.getInfo = function (id, callback) {
     request.get({
         url: URL + id,
-        timeout: 30000,
+        timeout: 20000,
         maxAttempts: 3,
         retryDelay: 500,
         pool: false,
@@ -38,7 +39,7 @@ cainiao.getInfo = function (id, callback) {
         }
 
         let $ = parser.load(body)
-        let val =  JSON.parse(entities.decode( $('#waybill_list_val_box').val()))
+        let val = JSON.parse(entities.decode($('#waybill_list_val_box').val()))
 
         // Not found
         if (val.data[0].errorCode == "ORDER_NOT_FOUND" || val.data[0].errorCode == "RESULT_EMPTY") {
@@ -46,15 +47,16 @@ cainiao.getInfo = function (id, callback) {
             return
         }
 
+        let entity = null
         try {
-            const entity = createCainiaoEntity(id, val)
+            entity = createCainiaoEntity(id, val)
             entity.retries = response.attempts
-            callback(null, entity)
         } catch (error) {
             console.log(error);
-            callback(utils.getError('PARSER'))
+            return callback(utils.getError('PARSER'))
         }
 
+        callback(null, entity)
     })
 }
 
@@ -69,7 +71,7 @@ function createCainiaoEntity(id, json) {
     let msgs = json.data[0].section2.detailList.map(m => {
         return {
             status: m.desc.replace('[-]', ''),
-            date: moment(m.time, "YYYY-MM-DD HH:mm:ss").format()
+            date: moment(m.time, "YYYY-MM-DD HH:mm:ss").tz(zone).format()
         }
     })
 
@@ -77,19 +79,19 @@ function createCainiaoEntity(id, json) {
 }
 
 /*
-|--------------------------------------------------------------------------
-| Entity
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Entity
+ |--------------------------------------------------------------------------
+ */
 function CainiaoInfo(id, messages) {
     this.id = id
     this.messages = messages
 }
 
 /*
-|--------------------------------------------------------------------------
-| Utils
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | Utils
+ |--------------------------------------------------------------------------
+ */
 
 module.exports = cainiao
