@@ -3,6 +3,7 @@
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const sprintf = require('sprintf')
 const moment = require('moment')
+const utils = require('./utils')
 
 const textsURL = 'https://tracking.directlink.com/javascript/timeline_struct.js.php?lang=en'
 const URL = 'https://tracking.directlink.com/responseStatus.php?json=1&site_cd=AC3&lang=en&postal_ref_no={{id}}'
@@ -21,38 +22,44 @@ directLink.getInfo = function (id, callback) {
         request(URL.replace('{{id}}', id), function (error, response, body) {
             if (error) {
                 console.log('error:', error)
-                callback(error)
+                callback(utils.getError('DOWN'))
                 return
             }
             if (response.statusCode != 200) {
                 console.log('response.statusCode: ', response.statusCode)
-                callback(new Error('statuscode: ' + response.statusCode))
+                callback(utils.getError('DOWN'))
                 return
             }
 
             if (body.length == 0) {
-                callback(new Error("No data or invalid data provided!"))
+                callback(utils.getError('NO_DATA'))
                 return
             }
 
-            const json = JSON.parse(body)
+            try {
+                const json = JSON.parse(body)
 
-            let states = []
+                let states = []
 
-            json['item_events'].forEach(function (elem){
-                states.push({
-                    'date': moment(elem[0], "YYYY/MM/DD HH:mm:ss").format(),
-                    'state': texts[parseInt(elem[1])]
+                json['item_events'].forEach(function (elem){
+                    states.push({
+                        'date': moment(elem[0], "YYYY/MM/DD HH:mm:ss").format(),
+                        'state': texts[parseInt(elem[1])]
+                    })
                 })
-            })
 
-            let entity = new DirectLinkInfo({
-                'tracking_no': json['tracking_no'],
-                'status': json['status'],
-                'states': states
-            })
-            entity.retries = response.attempts
-            callback(null, entity)
+                let entity = new DirectLinkInfo({
+                    'tracking_no': json['tracking_no'],
+                    'status': json['status'],
+                    'states': states
+                })
+                entity.retries = response.attempts
+                callback(null, entity)
+            } catch (error) {
+                console.log(error);
+                callback(utils.getError('PARSER'))
+            }
+
         })
     })
 }

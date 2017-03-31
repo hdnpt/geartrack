@@ -3,6 +3,7 @@
 const request = require('requestretry')
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'http://www.singpost.com/track-items'
 
@@ -30,20 +31,26 @@ singpost.getInfo = function (id, callback) {
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
         // Not found
         if (body.indexOf('Item status not found in the system.') != -1 ||
             body.indexOf('This function is currently unavailable.') != -1) {
-            callback(new Error("No data or invalid data provided!"))
+            callback(utils.getError('NO_DATA'))
             return
         }
 
-        const entity = createSingpostEntity(id, body)
-        entity.retries = response.attempts
-        callback(null, entity)
+        try {
+            const entity = createSingpostEntity(id, body)
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
+        }
+
     })
 }
 

@@ -3,6 +3,7 @@
 const request = require('requestretry')
 const parser = require('cheerio')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'http://www.expresso24.pt/index.php?action=pesquisaguias3'
 
@@ -29,19 +30,25 @@ expresso.getInfo = function (id, callback) {
         encoding: 'latin1'
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
         // Not found
         if (body.indexOf('Nenhuma guia encontrada com esta') != -1) {
-            callback(new Error("No data or invalid data provided!"))
+            callback(utils.getError('NO_DATA'))
             return
         }
 
-        const entity = createExpressoEntity(body)
-        entity.retries = response.attempts
-        callback(null, entity)
+        try {
+            const entity = createExpressoEntity(body)
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
+        }
+
     })
 }
 

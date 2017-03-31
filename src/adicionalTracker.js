@@ -3,6 +3,7 @@
 const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
 const sprintf = require('sprintf')
 const moment = require('moment')
+const utils = require('./utils')
 
 const URL = 'http://www.adicional.pt/contact/tracking.php?reference=%s&cp=%s'
 
@@ -19,7 +20,7 @@ const adicional = {}
 adicional.getInfo = function (id, postcode, callback) {
     request(sprintf(URL, id, postcode), function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(error)
+            callback(utils.getError('DOWN'))
             return
         }
 
@@ -27,13 +28,18 @@ adicional.getInfo = function (id, postcode, callback) {
 
         // Not found
         if (json.length == 0) {
-            callback(new Error("No data or invalid data provided!"))
+            callback(utils.getError('NO_DATA'))
             return
         }
 
-       let entity = new AdicionalInfo(json[0])
-        entity.retries = response.attempts
-        callback(null, entity)
+        try {
+            let entity = new AdicionalInfo(json[0])
+            entity.retries = response.attempts
+            callback(null, entity)
+        } catch (error) {
+            console.log(error);
+            callback(utils.getError('PARSER'))
+        }
     })
 }
 
