@@ -73,7 +73,7 @@ function createTrackChinaPostEntity(id, html) {
 
         if(elem.children !== undefined){
             let state = {
-                'date': moment(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S").format(),
+                'date': moment(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S").utc().format(),
                 'state': elem.children[3].children[0].data.trim()
                     .replace(/\p{Han}+/,'')
                     .replace(/[\u3400-\u9FBF]/g, '')
