@@ -2,8 +2,9 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Europe/Madrid" // +1h
 
 const correos = {}
 
@@ -25,31 +26,31 @@ correos.getInfo = function (id, callback) {
 
     request(_URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000, encoding: 'latin1'},
         function (error, response, body) {
-        if (error) {
-            console.log('error:', error)
-            callback(utils.getError('DOWN'))
-            return
-        }
-        if (response.statusCode != 200) {
-            console.log('response.statusCode: ', response.statusCode)
-            callback(utils.getError('DOWN'))
-            return
-        }
-
-        try {
-            const entity = createCorreosEsEntity(id, body)
-            if (!entity) {
-                callback(utils.getError('NO_DATA'))
-                return
+            if (error) {
+                console.log('error:', error)
+                return callback(utils.getError('DOWN'))
             }
-            entity.retries = response.attempts
-            callback(null, entity)
-        } catch (error) {
-            console.log(error);
-            callback(utils.getError('PARSER'))
-        }
+            if (response.statusCode != 200) {
+                console.log('response.statusCode: ', response.statusCode)
+                return callback(utils.getError('DOWN'))
+            }
 
-    })
+            let entity = null
+
+            try {
+                entity = createCorreosEsEntity(id, body)
+                if (!entity) {
+                    return callback(utils.getError('NO_DATA'))
+                }
+                entity.retries = response.attempts
+
+            } catch (error) {
+                console.log(error);
+                return callback(utils.getError('PARSER'))
+            }
+
+            callback(null, entity)
+        })
 }
 
 /**
@@ -64,22 +65,22 @@ function createCorreosEsEntity(id, html) {
 
     let states = []
     const fields = ['date', 'info']
-    if(table2.children.length === 0 ||
+    if (table2.children.length === 0 ||
         (table2.children[1] !== undefined
-            && table2.children[1].data !== undefined
-            && table2.children[1].data.trim() === 'fin tabla descripciones'))
+        && table2.children[1].data !== undefined
+        && table2.children[1].data.trim() === 'fin tabla descripciones'))
         return null;
 
     table2.children.forEach(function (elem) {
 
-        if(elem.attribs !== undefined && elem.attribs.class.trim() === 'txtCabeceraTabla'){
+        if (elem.attribs !== undefined && elem.attribs.class.trim() === 'txtCabeceraTabla') {
             let state = {}
             elem.children.forEach(function (_child) {
                 if (_child.attribs !== undefined && _child.attribs.class !== undefined) {
                     let _class = _child.attribs.class.trim()
-                    if(_class === 'txtDescripcionTabla'){
-                        state['date'] = moment(_child.children[0].data.trim(), "DD/MM/YYYY").format()
-                    } else if (_class === 'txtContenidoTabla' || _class === 'txtContenidoTablaOff'){
+                    if (_class === 'txtDescripcionTabla') {
+                        state['date'] = moment(_child.children[0].data.trim(), "DD/MM/YYYY").tz(zone).format()
+                    } else if (_class === 'txtContenidoTabla' || _class === 'txtContenidoTablaOff') {
                         state['state'] = _child.children[1].children[0].data.trim()
                         if (_child.children[1].attribs !== undefined && _child.children[1].attribs !== undefined
                             && _child.children[1].attribs.title) {
@@ -88,7 +89,7 @@ function createCorreosEsEntity(id, html) {
                     }
                 }
             })
-            if(Object.keys(state).length > 0){
+            if (Object.keys(state).length > 0) {
                 states.push(state)
             }
         }
@@ -97,7 +98,7 @@ function createCorreosEsEntity(id, html) {
 
     return new CorreosESInfo({
         'id': id,
-        'state': states[states.length-1].state,
+        'state': states[states.length - 1].state,
         'states': states.reverse()
     })
 }

@@ -2,8 +2,9 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Europe/Madrid" // +1h
 
 const URL = 'https://www.correosexpress.com/web/correosexpress/home'
 
@@ -61,15 +62,16 @@ function obtainInfo(action, id, postalcode, cb) {
             return
         }
 
+        let entity = null
         try {
-            const entity = createCorreosEntity(body)
+            entity = createCorreosEntity(body)
             entity.retries = response.attempts
-            cb(null, entity)
         } catch (error) {
             console.log(error);
-            cb(utils.getError('PARSER'))
+            return cb(utils.getError('PARSER'))
         }
 
+        cb(null, entity)
     })
 }
 
@@ -90,7 +92,7 @@ function createCorreosEntity(html) {
             let text = $(this).text().trim()
 
             if(s == 0)
-                text = moment(text, "DD/MM/YY HH:mm").format()
+                text = moment(text, "DD/MM/YY HH:mm").tz(zone).format()
 
             state[fields[s]] = text
         })
@@ -126,8 +128,8 @@ function CorreosInfo(obj) {
     // Sent details
     this.id = obj.nenvio
     this.state = obj.estado
-    this.received = moment(obj.fecha, "DD/MM/YY").format()
-    this.lastUpdate = moment(obj.fechaEstado, "DD/MM/YY HH:mm").format()
+    this.received = moment(obj.fecha, "DD/MM/YY").tz(zone).format()
+    this.lastUpdate = moment(obj.fechaEstado, "DD/MM/YY HH:mm").tz(zone).format()
 
     // Sender Details
     this.sender = {

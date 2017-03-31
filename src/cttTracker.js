@@ -3,8 +3,9 @@
 const request = require('requestretry')
 const parser = require('cheerio')
 const tidy = require('htmltidy').tidy
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Europe/Lisbon"
 
 const URL = 'http://www.cttexpresso.pt/feapl_2/app/open/cttexpresso/objectSearch/objectSearch.jspx?lang=def&objects='
 
@@ -27,14 +28,12 @@ ctt.getInfo = function (id, callback) {
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
+            return callback(utils.getError('DOWN'))
         }
 
         // Not found
         if (body.indexOf('Objeto não encontrado') != -1 || body.indexOf('Insira pelo menos 10 caracteres') != -1) {
-            callback(utils.getError('NO_DATA'))
-            return
+            return callback(utils.getError('NO_DATA'))
         }
 
         createCttEntity(id, body, (err, result) => {
@@ -52,11 +51,15 @@ ctt.getInfo = function (id, callback) {
  * Create ctt entity from html
  * @param id
  * @param html
+ * @param cb
  */
 function createCttEntity(id, html, cb) {
     tidy(html, function(err, htmlResult) {
         if(err)
             return cb(err)
+
+        let state = null
+        let messages = []
 
         try {
             let $ = parser.load(htmlResult)
@@ -64,14 +67,13 @@ function createCttEntity(id, html, cb) {
             let table = $('table.full-width tr').get(1).children.filter(e => e.type == 'tag')
 
             let dayAndHours = table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim()
-            let state = {
-                date: moment(dayAndHours, "YYYY/MM/DD HH:mm").format(),
+            state = {
+                date: moment(dayAndHours, "YYYY/MM/DD HH:mm").tz(zone).format(),
                 status: table[4].children[0].data.trim()
             }
 
             let details = $('#details_0').find('tr')
 
-            let messages = []
             let day = ""
             let dayUnformated = ""
             for(let i = 2; i < details.length; i++) {
@@ -79,7 +81,7 @@ function createCttEntity(id, html, cb) {
                 if(tr.attribs && tr.attribs.class == 'group') {
                     day = tr.children[1].children[0].data.trim()
                     dayUnformated = day.split(',')[1].trim()
-                    day = moment(dayUnformated, "DD MMMM YYYY", 'pt').format()
+                    day = moment(dayUnformated, "DD MMMM YYYY", 'pt').tz(zone).format()
                     messages.push({
                         day: day,
                         status: []
@@ -87,7 +89,7 @@ function createCttEntity(id, html, cb) {
                 } else {
                     if(tr.children.length == 11) {
                         let hours = tr.children[1].children[0].data.trim()
-                        let time = moment(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt').format()
+                        let time = moment(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt').tz(zone).format()
                         let add = {
                             time: time,
                             status: tr.children[3].children[0].data.trim(),
@@ -98,11 +100,11 @@ function createCttEntity(id, html, cb) {
                 }
             }
 
-            cb(null, new CttInfo(id, state, messages))
         } catch (error) {
-            cb(error)
+            return cb(error)
         }
 
+        cb(null, new CttInfo(id, state, messages))
     });
 
 }

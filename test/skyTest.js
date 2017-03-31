@@ -1,7 +1,8 @@
 const assert = require('chai').assert
 
 const sky = require('../src/skyTracker')
-const moment = require('moment')
+const moment = require('moment-timezone')
+moment.tz.setDefault("Asia/Hong_Kong") // +8h
 
 describe('Sky 56', function() {
     this.timeout(0)

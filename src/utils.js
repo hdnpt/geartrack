@@ -11,9 +11,10 @@ module.exports.getError = function (type) {
     let errors = {
         'NO_DATA': 'No info for that id yet. Or maybe the data provided was wrong.',
         'BUSY': 'The server providing the info is busy right now. Try again.',
+        'UNAVAILABLE': 'The server providing the info is unavailable right now. Try again later.',
         'EMPTY': 'The provider server was parsed correctly, but has no data to show. Try Again later.',
         'DOWN': 'The provider server is currently down. Try Again later.',
-        'PARSER': 'The provider website was changed his design. This api should be updated.'
+        'PARSER': 'Something went wrong when parsing the provider website.'
     }
 
     return new Error(type + ' - ' + errors[type])

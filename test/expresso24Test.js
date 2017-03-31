@@ -1,7 +1,8 @@
 const assert = require('chai').assert
 
 const expresso = require('../src/expresso24Tracker')
-const moment = require('moment')
+const moment = require('moment-timezone')
+moment.tz.setDefault("Europe/Lisbon")
 
 describe('Expresso24', function() {
     this.timeout(0)

@@ -1,7 +1,8 @@
 const assert = require('chai').assert
 
 const cainiao = require('../src/cainiaoTracker')
-const moment = require('moment')
+const moment = require('moment-timezone')
+moment.tz.setDefault("Asia/Kuala_Lumpur") // +8h
 
 describe('Cainiao', function() {
     this.timeout(0)

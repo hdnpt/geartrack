@@ -2,8 +2,9 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Asia/Singapore" // +8h
 
 const URL = 'http://www.singpost.com/track-items'
 
@@ -31,25 +32,28 @@ singpost.getInfo = function (id, callback) {
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
+           return callback(utils.getError('DOWN'))
         }
 
         // Not found
-        if (body.indexOf('Item status not found in the system.') != -1 ||
-            body.indexOf('This function is currently unavailable.') != -1) {
-            callback(utils.getError('NO_DATA'))
-            return
+        if (body.indexOf('Item status not found in the system.') != -1) {
+            return callback(utils.getError('NO_DATA'))
         }
 
+        if(body.indexOf('This function is currently unavailable.') != -1) {
+            return callback(utils.getError('UNAVAILABLE'))
+        }
+
+        let entity = null
         try {
-            const entity = createSingpostEntity(id, body)
+            entity = createSingpostEntity(id, body)
             entity.retries = response.attempts
-            callback(null, entity)
         } catch (error) {
             console.log(error);
-            callback(utils.getError('PARSER'))
+            return callback(utils.getError('PARSER'))
         }
+
+        callback(null, entity)
 
     })
 }
@@ -76,7 +80,7 @@ function createSingpostEntity(id, html) {
     let messages = []
     for(let i = 0; i < date.length; i++) {
         messages.push({
-            date: moment(date[i], "DD-MM-YYYY").format(),
+            date: moment(date[i], "DD-MM-YYYY").tz(zone).format(),
             status: status[i].replace(/ \(Country.+\)/ig, "").trim() // remove '(Country: PT)'
         })
     }

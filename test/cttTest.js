@@ -1,13 +1,14 @@
 const assert = require('chai').assert
 
 const ctt = require('../src/cttTracker')
-const moment = require('moment')
+const moment = require('moment-timezone')
+moment.tz.setDefault("Europe/Lisbon")
 
-describe('CTT', function() {
+describe('CTT', function () {
     this.timeout(0)
 
-    describe('#CTT', function() {
-        it('Singapura - must pass', function(done) {
+    describe('#CTT', function () {
+        it('Singapura - must pass', function (done) {
             const id = 'RF427233044SG'
             ctt.getInfo(id, (err, info) => {
                 assert.isNull(err)
@@ -34,7 +35,7 @@ describe('CTT', function() {
 
         });
 
-        it('Malasya Kuala Lumpur - must pass', function(done) {
+        it('Malasya Kuala Lumpur - must pass', function (done) {
             const id = 'RQ062471279MY'
             ctt.getInfo(id, (err, info) => {
                 assert.isNull(err)
@@ -61,7 +62,7 @@ describe('CTT', function() {
 
         });
 
-        it('China Post - must pass', function(done) {
+        it('China Post - must pass', function (done) {
             const id = 'RI937765505CN'
             ctt.getInfo(id, (err, info) => {
                 assert.isNull(err)
@@ -69,52 +70,52 @@ describe('CTT', function() {
                 assert.equal(info.id, id)
                 assert.equal(info.state.status, 'Objeto entregue')
                 assert.deepEqual(info.messages, [
-                        {
-                            "day": "2016-08-04T00:00:00+01:00",
-                            "status": [
-                                {
-                                    "time": "2016-08-04T17:59:00+01:00",
-                                    "status": "Entregue",
-                                    "local": "4480 - VILA DO CONDE"
-                                },
-                                {
-                                    "time": "2016-08-04T08:36:00+01:00",
-                                    "status": "Em distribuição",
-                                    "local": "4480 - VILA DO CONDE"
-                                }
-                            ]
-                        },
-                        {
-                            "day": "2016-07-29T00:00:00+01:00",
-                            "status": [
-                                {
-                                    "time": "2016-07-29T15:46:00+01:00",
-                                    "status": "Receção internacional",
-                                    "local": "LISBOA"
-                                }
-                            ]
-                        },
-                        {
-                            "day": "2016-07-26T00:00:00+01:00",
-                            "status": [
-                                {
-                                    "time": "2016-07-26T12:29:00+01:00",
-                                    "status": "Expedição internacional",
-                                    "local": "SHENZHEN"
-                                }
-                            ]
-                        },
-                        {
-                            "day": "2016-07-25T00:00:00+01:00",
-                            "status": [
-                                {
-                                    "time": "2016-07-25T20:45:00+01:00",
-                                    "status": "Aceitação",
-                                    "local": "Local não definido"
-                                }
-                            ]
-                        }
-                    ])
+                    {
+                        "day": "2016-08-04T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2016-08-04T17:59:00+01:00",
+                                "status": "Entregue",
+                                "local": "4480 - VILA DO CONDE"
+                            },
+                            {
+                                "time": "2016-08-04T08:36:00+01:00",
+                                "status": "Em distribuição",
+                                "local": "4480 - VILA DO CONDE"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-07-29T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2016-07-29T15:46:00+01:00",
+                                "status": "Receção internacional",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-07-26T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2016-07-26T12:29:00+01:00",
+                                "status": "Expedição internacional",
+                                "local": "SHENZHEN"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-07-25T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2016-07-25T20:45:00+01:00",
+                                "status": "Aceitação",
+                                "local": "Local não definido"
+                            }
+                        ]
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -122,7 +123,7 @@ describe('CTT', function() {
 
         });
 
-        it('Sweden - must pass', function(done) {
+        it('Sweden - must pass', function (done) {
             const id = 'RE845212395SE'
             ctt.getInfo(id, (err, info) => {
                 assert.isNull(err)
@@ -146,40 +147,40 @@ describe('CTT', function() {
                         ]
                     },
                     {
-                        "day": "2017-03-16T00:00:00+00:00",
+                        "day": "2017-03-16T00:00:00Z",
                         "status": [
                             {
-                                "time": "2017-03-16T09:31:00+00:00",
+                                "time": "2017-03-16T09:31:00Z",
                                 "status": "Autorização de Saída pela Alfândega",
                                 "local": "LISBOA"
                             }
                         ]
                     },
                     {
-                        "day": "2017-02-15T00:00:00+00:00",
+                        "day": "2017-02-15T00:00:00Z",
                         "status": [
                             {
-                                "time": "2017-02-15T14:49:00+00:00",
+                                "time": "2017-02-15T14:49:00Z",
                                 "status": "Entrada em Armazém para Aplicação de Legislação",
                                 "local": "LISBOA"
                             }
                         ]
                     },
                     {
-                        "day": "2017-02-01T00:00:00+00:00",
+                        "day": "2017-02-01T00:00:00Z",
                         "status": [
                             {
-                                "time": "2017-02-01T15:05:00+00:00",
+                                "time": "2017-02-01T15:05:00Z",
                                 "status": "Receção internacional",
                                 "local": "LISBOA"
                             }
                         ]
                     },
                     {
-                        "day": "2017-01-19T00:00:00+00:00",
+                        "day": "2017-01-19T00:00:00Z",
                         "status": [
                             {
-                                "time": "2017-01-19T08:12:00+00:00",
+                                "time": "2017-01-19T08:12:00Z",
                                 "status": "Expedição internacional",
                                 "local": "Local não definido"
                             }
@@ -192,7 +193,7 @@ describe('CTT', function() {
 
         });
 
-        it('should fail to extract', function(done) {
+        it('should fail to extract', function (done) {
             const id = '423423424'
             ctt.getInfo(id, (err, info) => {
                 assert.isNotNull(err)
@@ -202,6 +203,4 @@ describe('CTT', function() {
 
         });
     });
-
-
 });

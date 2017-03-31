@@ -2,8 +2,9 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const moment = require('moment')
 const utils = require('./utils')
+const moment = require('moment-timezone')
+const zone = "Europe/Lisbon"
 
 const URL = 'http://www.expresso24.pt/index.php?action=pesquisaguias3'
 
@@ -30,25 +31,24 @@ expresso.getInfo = function (id, callback) {
         encoding: 'latin1'
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
+            return callback(utils.getError('DOWN'))
         }
 
         // Not found
         if (body.indexOf('Nenhuma guia encontrada com esta') != -1) {
-            callback(utils.getError('NO_DATA'))
-            return
+            return callback(utils.getError('NO_DATA'))
         }
 
+        let entity = null
         try {
-            const entity = createExpressoEntity(body)
+            entity = createExpressoEntity(body)
             entity.retries = response.attempts
-            callback(null, entity)
         } catch (error) {
             console.log(error);
-            callback(utils.getError('PARSER'))
+            return callback(utils.getError('PARSER'))
         }
 
+        callback(null, entity)
     })
 }
 
@@ -69,7 +69,7 @@ function createExpressoEntity(html) {
     return new ExpressoInfo({
         'guide': data[0],
         'origin': data[1],
-        'date': moment(data[2], "YYYY-MM-DD").format(),
+        'date': moment(data[2], "YYYY-MM-DD").tz(zone).format(),
         'status': data[3],
         'weight': data[4],
         'parcels': data[5],
