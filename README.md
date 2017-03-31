@@ -36,6 +36,8 @@ This library scrapes the websites providers for shipping information.
     - RQ.....MY ids
 - Sweden & CTT
     - R......SE ids
+- China Post & CTT
+    - R......CN ids
 
 
 ### Install
@@ -126,10 +128,19 @@ geartrack.directlink.getInfo(id, (err, DirectLinkInfo) => {
 
     console.log(DirectLinkInfo.state) // see DirectLinkInfo entity for more fields
 })
+
+// Get track-chinapost.com info
+// ID is the provided from AliExpress R..CN
+geartrack.trackchinapost.getInfo(id, (err, TrackChinaPostInfo) => {
+	if(err) { return  }
+
+    console.log(TrackChinaPostInfo.state) // see TrackChinaPostInfo entity for more fields
+})
 ```
 
 ### Changelog
-- 31/03/2017 - Added support for Ali express ids through DirectLink
+- 31/03/2017 - Added support for R..CN Ali express ids through track-chinapost
+- 31/03/2017 - Added support for R..SE Ali express ids through DirectLink
 - 30/03/2017 - Added support for correo.es
 - 27/03/2017 - Formated all dates to ISO format
 - 26/03/2017 - Added support for Singpost, CTT & Cainiao - Aliexpress
