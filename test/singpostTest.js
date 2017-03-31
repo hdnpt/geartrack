@@ -13,7 +13,7 @@ describe('Singpost', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.messages[0].status, 'Product Delivered (Country code: PT)')
+                assert.equal(info.messages[0].status, 'Product Delivered')
                 assert(moment(info.messages[0].date).isValid())
                 assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '25/01/2017')
                 assert.equal(info.messages.length, 7)
