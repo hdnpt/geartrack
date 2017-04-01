@@ -8,7 +8,6 @@ describe('Singpost', function() {
     this.timeout(0)
 
     describe('#Singpost', function() {
-        // Not working at this time
         it('should extract the messages from the website with success', function(done) {
             const id = 'RF427233044SG'
             singpost.getInfo(id, (err, info) => {
