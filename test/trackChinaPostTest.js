@@ -2,13 +2,17 @@ const assert = require('chai').assert
 
 const trackChinaPost = require('../src/trackChinaPost')
 const moment = require('moment-timezone')
-moment.tz.setDefault("Asia/Shanghai") // +8h
+const zone = "Asia/Shanghai" // +8h
 
 describe('TrackChinaPost', function () {
     this.timeout(0)
 
     describe('#TrackChinaPost', function () {
         it('should extract the messages from the website with success', function (done) {
+            // Track china post may be busy
+            this.retries(3);
+
+
             const id = 'RF622875135CN'
             trackChinaPost.getInfo(id, (err, info) => {
                 assert.isNotNull(info)
