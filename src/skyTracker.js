@@ -179,8 +179,8 @@ function parseStatusTable(tableHtml) {
     })
 
     return states.sort((a, b) => {
-        let dateA = moment(a.date).tz(zone),
-            dateB = moment(b.date).tz(zone)
+        let dateA = moment(a.date),
+            dateB = moment(b.date)
 
         return dateA < dateB
     })

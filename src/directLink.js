@@ -51,10 +51,10 @@ directLink.getInfo = function (id, callback) {
                 })
 
                 states = states.sort((a, b) => {
-                    let dateA = moment(a.date).tz(zone),
-                        dateB = moment(b.date).tz(zone)
+                    let dateA = moment(a.date),
+                        dateB = moment(b.date)
 
-                    return dateA < dateB
+                    return dateA > dateB
                 })
 
                 entity = new DirectLinkInfo({

@@ -50,7 +50,7 @@ describe('DirectLink', function () {
                         "date": "2017-03-27T17:59:00+02:00",
                         "state": "Order delivered"
                     }
-                ])
+                ].reverse())
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
