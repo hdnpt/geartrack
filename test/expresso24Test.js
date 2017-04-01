@@ -20,7 +20,7 @@ describe('Expresso24', function() {
                 assert.equal(info.ref, id)
 
                 assert(moment(info.date).isValid())
-                assert.equal(moment(info.date).format("DD/MM/YYYY"), '22/12/2016')
+                assert.equal(info.date, '2016-12-22T00:00:00Z')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

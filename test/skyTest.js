@@ -14,11 +14,54 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.status[0].area, 'PORTUGAL')
-                assert.equal(info.status[2].area, 'Transit Center')
-
-                assert(moment(info.status[8].date).isValid())
-                assert.equal(moment(info.status[8].date).format("DD/MM/YYYY"), '23/12/2016')
+                assert.deepEqual(info.status, [
+                    {
+                        "area": "PORTUGAL",
+                        "status": "The transfer of customs",
+                        "date": "2017-01-06T23:37:00+08:00"
+                    },
+                    {
+                        "area": "PORTUGAL",
+                        "status": "Arrived",
+                        "date": "2017-01-06T19:57:00+08:00"
+                    },
+                    {
+                        "area": "Transit Center",
+                        "status": "Left hand navigation",
+                        "date": "2016-12-25T19:57:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported directly",
+                        "date": "2016-12-25T14:23:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported to open",
+                        "date": "2016-12-24T20:20:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Left",
+                        "date": "2016-12-23T12:20:00+08:00"
+                    },
+                    {
+                        "area": "Parcel centre",
+                        "status": "Sealing",
+                        "date": "2016-12-23T10:47:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Receive",
+                        "date": "2016-12-23T07:47:00+08:00"
+                    },
+                    {
+                        "area": "Electronic information",
+                        "status": "Receive",
+                        "date": "2016-12-23T05:47:00+08:00"
+                    }
+                ])
+                assert.deepEqual(info.messages, null)
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -34,11 +77,54 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.status[0].area, 'PORTUGAL')
-                assert.equal(info.status[3].area, 'Exchange Bureau')
-
-                assert(moment(info.status[0].date).isValid())
-                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '24/12/2016')
+                assert.deepEqual(info.status, [
+                    {
+                        "area": "PORTUGAL",
+                        "status": "The transfer of customs",
+                        "date": "2016-12-24T01:00:00+08:00"
+                    },
+                    {
+                        "area": "PORTUGAL",
+                        "status": "Arrived",
+                        "date": "2016-12-23T21:20:00+08:00"
+                    },
+                    {
+                        "area": "Transit Center",
+                        "status": "Left hand navigation",
+                        "date": "2016-12-11T21:20:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported directly",
+                        "date": "2016-12-11T15:46:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported to open",
+                        "date": "2016-12-10T21:43:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Left",
+                        "date": "2016-12-09T13:43:00+08:00"
+                    },
+                    {
+                        "area": "Parcel centre",
+                        "status": "Sealing",
+                        "date": "2016-12-09T12:10:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Receive",
+                        "date": "2016-12-09T09:10:00+08:00"
+                    },
+                    {
+                        "area": "Electronic information",
+                        "status": "Receive",
+                        "date": "2016-12-09T07:10:00+08:00"
+                    }
+                ])
+                assert.deepEqual(info.messages, null)
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -54,18 +140,59 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.messages.length, 6)
-                assert.equal(info.messages[0].status, 'Information sent to Spain')
-
-                assert(moment(info.messages[0].date).isValid())
-                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '09/12/2016')
-
-
-                // assert.equal(info.status.length, 5)
-                // assert.equal(info.status[0].status, 'Entregado')
-                //
-                // assert(moment(info.status[0].date).isValid())
-                // assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '30/12/2016')
+                assert.deepEqual(info.status, [
+                    {
+                        "date": "2016-12-30T00:00:00+08:00",
+                        "area": "",
+                        "status": "Entregado"
+                    },
+                    {
+                        "date": "2016-12-27T00:00:00+08:00",
+                        "area": "",
+                        "status": "En proceso de entrega"
+                    },
+                    {
+                        "date": "2016-12-23T00:00:00+08:00",
+                        "area": "",
+                        "status": "En tránsito"
+                    },
+                    {
+                        "date": "2016-12-19T00:00:00+08:00",
+                        "area": "",
+                        "status": "Admitido"
+                    },
+                    {
+                        "date": "2016-12-02T00:00:00+08:00",
+                        "area": "",
+                        "status": "Pre-registrado"
+                    }
+                ])
+                assert.deepEqual(info.messages, [
+                    {
+                        "date": "2016-12-09T12:11:00+08:00",
+                        "status": "Information sent to Spain"
+                    },
+                    {
+                        "date": "2016-12-08T03:45:00+08:00",
+                        "status": "United Kingdom Lonton Sorting Centre"
+                    },
+                    {
+                        "date": "2016-12-06T22:10:00+08:00",
+                        "status": "Parcel is leaving Hong Kong Airport"
+                    },
+                    {
+                        "date": "2016-12-05T10:00:00+08:00",
+                        "status": "Parcel departure arrive in HongKong Sorting Centre"
+                    },
+                    {
+                        "date": "2016-12-04T19:12:00+08:00",
+                        "status": "Parcel departure in Shenzhen Sorting Centre"
+                    },
+                    {
+                        "date": "2016-12-02T19:12:00+08:00",
+                        "status": "Parcel departure in Shenzhen Sorting Centre"
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -107,17 +234,77 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.messages.length, 6)
-                assert.equal(info.messages[1].status, 'Departure to country of destination')
 
-                assert.equal(info.status.length, 7)
-                assert.equal(info.status[0].status, 'The transfer of customs')
+                assert.deepEqual(info.status, [
+                    {
+                        "area": "PORTUGAL",
+                        "status": "The transfer of customs",
+                        "date": "2017-03-02T00:18:00+08:00"
+                    },
+                    {
+                        "area": "PORTUGAL",
+                        "status": "Arrived",
+                        "date": "2017-03-01T20:38:00+08:00"
+                    },
+                    {
+                        "area": "Transit Center",
+                        "status": "Left hand navigation",
+                        "date": "2017-02-17T20:38:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported directly",
+                        "date": "2017-02-17T15:04:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported to open",
+                        "date": "2017-02-16T21:01:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Left",
+                        "date": "2017-02-15T13:01:00+08:00"
+                    },
+                    {
+                        "area": "Parcel centre",
+                        "status": "Sealing",
+                        "date": "2017-02-15T11:28:00+08:00"
+                    }
+                ])
 
-                assert(moment(info.messages[0].date).isValid())
-                assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '23/02/2017')
-
-                assert(moment(info.status[6].date).isValid())
-                assert.equal(moment(info.status[6].date).format("DD/MM/YYYY"), '15/02/2017')
+                assert.deepEqual(info.messages, [
+                    {
+                        "date": "2017-02-23T20:17:29+08:00",
+                        "area": "",
+                        "status": "Your shipment has been delivered to the postal operator of the country of destination and will be delivered in the coming days."
+                    },
+                    {
+                        "date": "2017-02-22T09:41:02+08:00",
+                        "area": "",
+                        "status": "Departure to country of destination"
+                    },
+                    {
+                        "date": "2017-02-21T19:06:27+08:00",
+                        "area": "",
+                        "status": "Parcel is handled"
+                    },
+                    {
+                        "date": "2017-02-18T13:00:28+08:00",
+                        "area": "",
+                        "status": "Arrival at export hub"
+                    },
+                    {
+                        "date": "2017-02-17T09:41:28+08:00",
+                        "area": "",
+                        "status": "Item is ready for transport"
+                    },
+                    {
+                        "date": "2017-02-17T08:41:28+08:00",
+                        "area": "",
+                        "status": "Item is announced / bpost received the information"
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -132,13 +319,55 @@ describe('Sky 56', function() {
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
+                assert.equal(info.id, id)
                 assert.equal(info.messages, null)
-
-                assert.equal(info.status.length, 9)
-                assert.equal(info.status[0].area, 'PORTUGAL')
-
-                assert(moment(info.status[0].date).isValid())
-                assert.equal(moment(info.status[0].date).format("DD/MM/YYYY"), '24/03/2017')
+                assert.deepEqual(info.status, [
+                    {
+                        "area": "PORTUGAL",
+                        "status": "The transfer of customs",
+                        "date": "2017-03-24T14:44:00+08:00"
+                    },
+                    {
+                        "area": "PORTUGAL",
+                        "status": "Arrived",
+                        "date": "2017-03-24T11:04:00+08:00"
+                    },
+                    {
+                        "area": "Transit Center",
+                        "status": "Left hand navigation",
+                        "date": "2017-03-12T11:04:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported directly",
+                        "date": "2017-03-12T05:30:00+08:00"
+                    },
+                    {
+                        "area": "Exchange Bureau",
+                        "status": "Have been exported to open",
+                        "date": "2017-03-11T11:27:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Left",
+                        "date": "2017-03-10T03:27:00+08:00"
+                    },
+                    {
+                        "area": "Parcel centre",
+                        "status": "Sealing",
+                        "date": "2017-03-10T01:54:00+08:00"
+                    },
+                    {
+                        "area": "Small package Center",
+                        "status": "Receive",
+                        "date": "2017-03-09T22:54:00+08:00"
+                    },
+                    {
+                        "area": "Electronic information",
+                        "status": "Receive",
+                        "date": "2017-03-09T20:54:00+08:00"
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

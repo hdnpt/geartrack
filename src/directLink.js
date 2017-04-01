@@ -45,7 +45,7 @@ directLink.getInfo = function (id, callback) {
 
                 json['item_events'].forEach(function (elem){
                     states.push({
-                        'date': moment(elem[0], "YYYY/MM/DD HH:mm:ss").tz(zone).format(),
+                        'date': moment.tz(elem[0], "YYYY/MM/DD HH:mm:ss", zone).format(),
                         'state': texts[parseInt(elem[1])]
                     })
                 })

@@ -2,7 +2,7 @@ const assert = require('chai').assert
 
 const ctt = require('../src/cttTracker')
 const moment = require('moment-timezone')
-moment.tz.setDefault("Europe/Lisbon")
+const zone = "Europe/Lisbon"
 
 describe('CTT', function () {
     this.timeout(0)
@@ -15,20 +15,83 @@ describe('CTT', function () {
 
                 assert.equal(info.id, id)
                 assert.equal(info.state.status, 'Objeto entregue')
-                assert.equal(info.messages.length, 7)
-                assert.equal(info.messages[0].status.length, 2)
-                assert.equal(info.messages[0].status[0].status, 'Entregue')
-                assert.equal(info.messages[0].status[0].local, '2910 - SETUBAL')
-
-                assert(moment(info.state.date).isValid())
-                assert.equal(moment(info.state.date).format("DD/MM/YYYY"), '25/01/2017')
-
-                assert(moment(info.messages[0].day).isValid())
-                assert.equal(moment(info.messages[0].day).format("DD/MM/YYYY"), '25/01/2017')
-
-                assert(moment(info.messages[0].status[0].time).isValid())
-                assert.equal(moment(info.messages[0].status[0].time).format("DD/MM/YYYY HH:mm"), '25/01/2017 12:26')
-
+                assert.deepEqual(info.messages, [
+                    {
+                        "day": "2017-01-25T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2017-01-25T12:26:00Z",
+                                "status": "Entregue",
+                                "local": "2910 - SETUBAL"
+                            },
+                            {
+                                "time": "2017-01-25T08:04:00Z",
+                                "status": "Em distribuição",
+                                "local": "2910 - SETUBAL"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-01-24T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2017-01-24T03:10:00Z",
+                                "status": "Expedição",
+                                "local": "COCS - LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-01-20T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2017-01-20T15:47:00Z",
+                                "status": "Autorização de Saída pela Alfândega",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-12-17T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-12-17T11:32:00Z",
+                                "status": "Entrada em Armazém para Aplicação de Legislação",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-12-05T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-12-05T14:41:00Z",
+                                "status": "Para apresentação à Alfândega",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-12-02T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-12-02T07:34:00Z",
+                                "status": "Receção internacional",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-11-28T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-11-28T10:07:00Z",
+                                "status": "Expedição internacional",
+                                "local": "SINGAPORE SAL"
+                            }
+                        ]
+                    }
+                ])
                 console.log(id + ' attempts: ' + info.retries)
                 done()
             })
@@ -42,19 +105,53 @@ describe('CTT', function () {
 
                 assert.equal(info.id, id)
                 assert.equal(info.state.status, 'Objeto entregue')
-                assert.equal(info.messages.length, 4)
-                assert.equal(info.messages[0].status.length, 2)
-                assert.equal(info.messages[0].status[0].status, 'Entregue')
-                assert.equal(info.messages[0].status[0].local, '4480 - VILA DO CONDE')
-
-                assert(moment(info.state.date).isValid())
-                assert.equal(moment(info.state.date).format("DD/MM/YYYY"), '13/01/2017')
-
-                assert(moment(info.messages[0].day).isValid())
-                assert.equal(moment(info.messages[0].day).format("DD/MM/YYYY"), '13/01/2017')
-
-                assert(moment(info.messages[0].status[0].time).isValid())
-                assert.equal(moment(info.messages[0].status[0].time).format("DD/MM/YYYY HH:mm"), '13/01/2017 10:00')
+                assert.deepEqual(info.messages, [
+                    {
+                        "day": "2017-01-13T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2017-01-13T10:00:00Z",
+                                "status": "Entregue",
+                                "local": "4480 - VILA DO CONDE"
+                            },
+                            {
+                                "time": "2017-01-13T09:25:00Z",
+                                "status": "Em distribuição",
+                                "local": "4480 - VILA DO CONDE"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-01-10T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2017-01-10T17:45:00Z",
+                                "status": "Receção internacional",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-12-28T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-12-28T13:37:00Z",
+                                "status": "Expedição internacional",
+                                "local": "KUALA LUMP B"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2016-12-27T00:00:00Z",
+                        "status": [
+                            {
+                                "time": "2016-12-27T13:47:00Z",
+                                "status": "Aceitação",
+                                "local": "KUALA LUMP B"
+                            }
+                        ]
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

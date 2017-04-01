@@ -69,7 +69,7 @@ function createExpressoEntity(html) {
     return new ExpressoInfo({
         'guide': data[0],
         'origin': data[1],
-        'date': moment(data[2], "YYYY-MM-DD").tz(zone).format(),
+        'date': moment.tz(data[2], "YYYY-MM-DD", zone).format(),
         'status': data[3],
         'weight': data[4],
         'parcels': data[5],

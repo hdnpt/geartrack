@@ -2,7 +2,7 @@ const assert = require('chai').assert
 
 const correosES = require('../src/correosESTracker')
 const moment = require('moment-timezone')
-moment.tz.setDefault("Europe/Madrid") // +1h
+const zone = "Europe/Madrid" // +1h
 
 describe('Correos ES', function() {
     this.timeout(0)
@@ -16,17 +16,32 @@ describe('Correos ES', function() {
 
                 assert.equal(info.id, 'PQ4F6P0703673180181750T')
                 assert.equal(info.state, 'Entregado')
-                assert.equal(info.states.length, 5)
-                assert.equal(info.states[0].state, 'Entregado')
-                assert.equal(moment(info.states[0].date).format("DD/MM/YYYY"), '20/01/2017')
-                assert.equal(info.states[1].state, 'En proceso de entrega')
-                assert.equal(moment(info.states[1].date).format("DD/MM/YYYY"), '20/01/2017')
-                assert.equal(info.states[2].state, 'En tránsito')
-                assert.equal(moment(info.states[2].date).format("DD/MM/YYYY"), '19/01/2017')
-                assert.equal(info.states[3].state, 'Admitido')
-                assert.equal(moment(info.states[3].date).format("DD/MM/YYYY"), '17/01/2017')
-                assert.equal(info.states[4].state, 'Pre-registrado')
-                assert.equal(moment(info.states[4].date).format("DD/MM/YYYY"), '01/01/2017')
+                assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-01-20T00:00:00+01:00",
+                        "state": "Entregado"
+                    },
+                    {
+                        "date": "2017-01-20T00:00:00+01:00",
+                        "state": "En proceso de entrega",
+                        "title": "El  envío ya se encuentra en la localidad de destino y será entregado en breve."
+                    },
+                    {
+                        "date": "2017-01-19T00:00:00+01:00",
+                        "state": "En tránsito",
+                        "title": "El envío está en nuestra red postal y próximamente se realizará su entrega al destinatario o, en caso de que existiera un evento anterior denominado 'En proceso de devolución', la entrega se realizaría para entregar el envío al remitente."
+                    },
+                    {
+                        "date": "2017-01-17T00:00:00+01:00",
+                        "state": "Admitido",
+                        "title": "El envío ha sido depositado en Correos o en el país de origen del envío."
+                    },
+                    {
+                        "date": "2017-01-01T00:00:00+01:00",
+                        "state": "Pre-registrado",
+                        "title": "El remitente ha pre-registrado el envío en los sistemas de Correos."
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

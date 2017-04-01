@@ -80,7 +80,7 @@ function createSkyEntity(id, json) {
     let parsedMessages = infos.map(message => {
         let idx1 = message.indexOf(" ")
         let idx2 = message.indexOf(" ", idx1+1)
-        let date = moment(message.substr(0, idx2), "YYYY-MM-DD HH:mm:ss").tz(zone).format()
+        let date = moment.tz(message.substr(0, idx2), "YYYY-MM-DD HH:mm:ss", zone).format()
         let m = message.substr(idx2 + 1, message.length)
         return {
             date: date,
@@ -130,7 +130,7 @@ function createNLSkyEntity(id, json) {
         let idx2 = message.indexOf("--", idx1+1)
         let area = message.substr(0, idx1)
         let status = message.substr(idx1+1, idx2 - idx1 - 1)
-        let date = moment(message.substr(idx2 + 2), "DD-MMM-YYYY hh:mm a").tz(zone).format()
+        let date = moment.tz(message.substr(idx2 + 2), "DD-MMM-YYYY hh:mm a", zone).format()
         return {
             area: area,
             status: status.trim().capitalizeFirstLetter(),
@@ -171,7 +171,7 @@ function parseStatusTable(tableHtml) {
                 text = 'En tránsito'
 
             if(s == 0)
-                text = moment(text, "YYYY-MM-DD HH:mm:ss").tz(zone).format()
+                text = moment.tz(text, "YYYY-MM-DD HH:mm:ss", zone).format()
 
             state[fields[s]] = text
         })

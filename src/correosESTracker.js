@@ -79,7 +79,7 @@ function createCorreosEsEntity(id, html) {
                 if (_child.attribs !== undefined && _child.attribs.class !== undefined) {
                     let _class = _child.attribs.class.trim()
                     if (_class === 'txtDescripcionTabla') {
-                        state['date'] = moment(_child.children[0].data.trim(), "DD/MM/YYYY").tz(zone).format()
+                        state['date'] = moment.tz(_child.children[0].data.trim(), "DD/MM/YYYY", zone).format()
                     } else if (_class === 'txtContenidoTabla' || _class === 'txtContenidoTablaOff') {
                         state['state'] = _child.children[1].children[0].data.trim()
                         if (_child.children[1].attribs !== undefined && _child.children[1].attribs !== undefined

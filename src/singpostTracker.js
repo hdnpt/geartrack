@@ -80,7 +80,7 @@ function createSingpostEntity(id, html) {
     let messages = []
     for(let i = 0; i < date.length; i++) {
         messages.push({
-            date: moment(date[i], "DD-MM-YYYY").tz(zone).format(),
+            date: moment.tz(date[i], "DD-MM-YYYY", zone).format(),
             status: status[i].replace(/ \(Country.+\)/ig, "").trim() // remove '(Country: PT)'
         })
     }

@@ -92,7 +92,7 @@ function createCorreosEntity(html) {
             let text = $(this).text().trim()
 
             if(s == 0)
-                text = moment(text, "DD/MM/YY HH:mm").tz(zone).format()
+                text = moment.tz(text, "DD/MM/YY HH:mm", zone).format()
 
             state[fields[s]] = text
         })
@@ -128,8 +128,8 @@ function CorreosInfo(obj) {
     // Sent details
     this.id = obj.nenvio
     this.state = obj.estado
-    this.received = moment(obj.fecha, "DD/MM/YY").tz(zone).format()
-    this.lastUpdate = moment(obj.fechaEstado, "DD/MM/YY HH:mm").tz(zone).format()
+    this.received = moment.tz(obj.fecha, "DD/MM/YY", zone).format()
+    this.lastUpdate = moment.tz(obj.fechaEstado, "DD/MM/YY HH:mm", zone).format()
 
     // Sender Details
     this.sender = {

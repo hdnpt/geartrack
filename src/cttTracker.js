@@ -68,7 +68,7 @@ function createCttEntity(id, html, cb) {
 
             let dayAndHours = table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim()
             state = {
-                date: moment(dayAndHours, "YYYY/MM/DD HH:mm").tz(zone).format(),
+                date: moment.tz(dayAndHours, "YYYY/MM/DD HH:mm", zone).format(),
                 status: table[4].children[0].data.trim()
             }
 
@@ -81,7 +81,7 @@ function createCttEntity(id, html, cb) {
                 if(tr.attribs && tr.attribs.class == 'group') {
                     day = tr.children[1].children[0].data.trim()
                     dayUnformated = day.split(',')[1].trim()
-                    day = moment(dayUnformated, "DD MMMM YYYY", 'pt').tz(zone).format()
+                    day = moment.tz(dayUnformated, "DD MMMM YYYY", 'pt', zone).format()
                     messages.push({
                         day: day,
                         status: []
@@ -89,7 +89,7 @@ function createCttEntity(id, html, cb) {
                 } else {
                     if(tr.children.length == 11) {
                         let hours = tr.children[1].children[0].data.trim()
-                        let time = moment(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt').tz(zone).format()
+                        let time = moment.tz(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt', zone).format()
                         let add = {
                             time: time,
                             status: tr.children[3].children[0].data.trim(),

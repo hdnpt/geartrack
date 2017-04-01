@@ -1,7 +1,8 @@
 const assert = require('chai').assert
 
 const directLink = require('../src/directLink')
-const moment = require('moment')
+const moment = require('moment-timezone')
+const zone = "Europe/Stockholm"
 
 describe('DirectLink', function () {
     this.timeout(0)
@@ -16,9 +17,40 @@ describe('DirectLink', function () {
                 assert.equal(info.id, 'RE845212395SE')
                 assert.equal(info.state, 'Order delivered')
 
-                assert.equal(info.states.length, 8)
-                assert.equal(moment(info.states[0].date).format('DD/MM/YY'), "27/03/17")
-                assert.equal(info.states[0].state, "Order delivered")
+                assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-01-13T09:32:00+01:00",
+                        "state": "Item pre-advice received"
+                    },
+                    {
+                        "date": "2017-01-14T15:08:00+01:00",
+                        "state": "Item received for processing"
+                    },
+                    {
+                        "date": "2017-01-17T10:12:00+01:00",
+                        "state": "Order departed on flight from origin"
+                    },
+                    {
+                        "date": "2017-01-19T08:12:00+01:00",
+                        "state": "Order departed from sorting hub"
+                    },
+                    {
+                        "date": "2017-02-01T15:05:00+01:00",
+                        "state": "Order received into final destination country"
+                    },
+                    {
+                        "date": "2017-02-15T14:49:00+01:00",
+                        "state": "Order awaiting customs clearance"
+                    },
+                    {
+                        "date": "2017-03-16T09:31:00+01:00",
+                        "state": "Order customs cleared and lodged with local delivery agent"
+                    },
+                    {
+                        "date": "2017-03-27T17:59:00+02:00",
+                        "state": "Order delivered"
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

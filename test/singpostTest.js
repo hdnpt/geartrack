@@ -9,22 +9,48 @@ describe('Singpost', function() {
 
     describe('#Singpost', function() {
         // Not working at this time
-        // it('should extract the messages from the website with success', function(done) {
-        //     const id = 'RF427233044SG'
-        //     singpost.getInfo(id, (err, info) => {
-        //         assert.isNull(err)
-        //
-        //         assert.equal(info.id, id)
-        //         assert.equal(info.messages[0].status, 'Product Delivered')
-        //         assert(moment(info.messages[0].date).isValid())
-        //         assert.equal(moment(info.messages[0].date).format("DD/MM/YYYY"), '25/01/2017')
-        //         assert.equal(info.messages.length, 7)
-        //
-        //         console.log(id + ' attempts: ' + info.retries)
-        //         done()
-        //     })
-        //
-        // });
+        it('should extract the messages from the website with success', function(done) {
+            const id = 'RF427233044SG'
+            singpost.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.deepEqual(info.messages, [
+                    {
+                        "date": "2017-01-25T00:00:00+08:00",
+                        "status": "Product Delivered"
+                    },
+                    {
+                        "date": "2016-12-17T00:00:00+08:00",
+                        "status": "Held by Custom"
+                    },
+                    {
+                        "date": "2016-12-05T00:00:00+08:00",
+                        "status": "Held by Custom"
+                    },
+                    {
+                        "date": "2016-12-02T00:00:00+08:00",
+                        "status": "Arrival at Processing Center"
+                    },
+                    {
+                        "date": "2016-11-30T00:00:00+08:00",
+                        "status": "Arrival at Destination Post"
+                    },
+                    {
+                        "date": "2016-11-28T00:00:00+08:00",
+                        "status": "Despatched to overseas"
+                    },
+                    {
+                        "date": "2016-11-26T00:00:00+08:00",
+                        "status": "Received from Customer"
+                    }
+                ])
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
 
         it('should fail to extract', function(done) {
             const id = '423423424'
