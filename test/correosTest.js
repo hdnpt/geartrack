@@ -12,8 +12,8 @@ describe('Correos Express', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0704104480181750Q')
-                assert.equal(info.state, 'Entregado.')
-                assert.equal(info.state2, 'Su envío está entregado.')
+                assert.equal(info.state, 'Entregado')
+                assert.equal(info.state2, 'Su envío está entregado')
                 assert.equal(info.deliveryDate, undefined)
                 assert.deepEqual(info.states, [
                     {
@@ -60,9 +60,9 @@ describe('Correos Express', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0705248940181750G')
-                assert.equal(info.state, 'En ruta a localidad de destino.')
-                assert.equal(info.state2, 'Su envío está en uno de nuestro vehículos  siendo transportado a la localidad de destino.')
-                assert.equal(info.deliveryDate, '2017-01-03T00:00:00+01:00')
+                assert.equal(info.state, 'En ruta a localidad de destino')
+                assert.equal(info.state2, 'Su envío está en uno de nuestro vehículos  siendo transportado a la localidad de destino')
+                assert.equal(info.deliveryDate, '2017-04-03T00:00:00+02:00')
                 assert.deepEqual(info.states, [
                     {
                         "date": "2017-03-31T18:02:00+02:00",

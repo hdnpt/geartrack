@@ -79,9 +79,16 @@ function createCorreosEntity(html) {
     var deliveryDate = $('.status').get(0).children[4]
     if(deliveryDate !== undefined){
         deliveryDate = deliveryDate.data.trim()
-        deliveryDate = deliveryDate.substring(deliveryDate.indexOf(':') + 1)
-        deliveryDate = moment.tz(deliveryDate, 'DD MMM YYYY', 'es', zone).format()
+        deliveryDate = deliveryDate.substring(deliveryDate.indexOf(',') + 1)
+        deliveryDate = getDeliveryDate(deliveryDate.trim())
     }
+
+    var origin = $('.origin').get(0).children[0].data.trim()
+    var destiny = $('.destiny').get(0).children[0].data.trim()
+    origin = origin.substring(origin.indexOf(':') + 1).trim()
+    destiny = destiny.substring(destiny.indexOf(':') + 1).trim()
+
+
     var trs = $('table tbody tr')
     trs.each(function (i, elem) {
 
@@ -98,11 +105,27 @@ function createCorreosEntity(html) {
 
     return new CorreosInfo({
         id: id,
-        state: state,
-        state2: state2,
+        state: state.replace('.', ''),
+        state2: state2.replace('.', ''),
+        origin: origin,
+        destiny: destiny,
         deliveryDate: deliveryDate,
         states: states
     })
+}
+
+function getDeliveryDate(date) {
+    var monthsShort = 'ene_feb_mar_abr_may_jun_jul_ago_sep_oct_nov_dic'.split('_');
+
+    let d = date.split(' ')
+
+    let monthNumber = monthsShort.indexOf(d[1].toLowerCase()) + 1
+
+    if(monthNumber < 10)
+        monthNumber = '0' + monthNumber
+
+    let newDate = d[0] + '/' + monthNumber + '/' + d[2]
+    return moment.tz(newDate, 'DD/MM/YYYY', zone).format()
 }
 
 /*
