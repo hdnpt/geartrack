@@ -62,7 +62,7 @@ function AdicionalInfo(obj) {
     this.name = obj.nome
     this.distributor = obj.Distribuidor
     this.phone1 = obj.Phone1
-    this.phone2 = obj.Phone2
+    this.phone2 = obj.Phone2.trim()
     this.notes = obj.Notes
 }
 

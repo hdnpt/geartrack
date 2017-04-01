@@ -70,7 +70,7 @@ function createCainiaoEntity(id, json) {
 
     let msgs = json.data[0].section2.detailList.map(m => {
         return {
-            status: m.desc.replace('[-]', ''),
+            state: m.desc.replace('[-]', ''),
             date: moment.tz(m.time, "YYYY-MM-DD HH:mm:ss", zone).format()
         }
     })
@@ -85,7 +85,7 @@ function createCainiaoEntity(id, json) {
  */
 function CainiaoInfo(id, messages) {
     this.id = id
-    this.messages = messages
+    this.states = messages
 }
 
 /*

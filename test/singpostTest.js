@@ -14,34 +14,34 @@ describe('Singpost', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.deepEqual(info.messages, [
+                assert.deepEqual(info.states, [
                     {
                         "date": "2017-01-25T00:00:00+08:00",
-                        "status": "Product Delivered"
+                        "state": "Product Delivered"
                     },
                     {
                         "date": "2016-12-17T00:00:00+08:00",
-                        "status": "Held by Custom"
+                        "state": "Held by Custom"
                     },
                     {
                         "date": "2016-12-05T00:00:00+08:00",
-                        "status": "Held by Custom"
+                        "state": "Held by Custom"
                     },
                     {
                         "date": "2016-12-02T00:00:00+08:00",
-                        "status": "Arrival at Processing Center"
+                        "state": "Arrival at Processing Center"
                     },
                     {
                         "date": "2016-11-30T00:00:00+08:00",
-                        "status": "Arrival at Destination Post"
+                        "state": "Arrival at Destination Post"
                     },
                     {
                         "date": "2016-11-28T00:00:00+08:00",
-                        "status": "Despatched to overseas"
+                        "state": "Despatched to overseas"
                     },
                     {
                         "date": "2016-11-26T00:00:00+08:00",
-                        "status": "Received from Customer"
+                        "state": "Received from Customer"
                     }
                 ])
 
