@@ -9,6 +9,10 @@ describe('TrackChinaPost', function () {
 
     describe('#TrackChinaPost', function () {
         it('should extract the messages from the website with success', function (done) {
+            // Track china post may be busy
+            this.retries(3);
+
+
             const id = 'RF622875135CN'
             trackChinaPost.getInfo(id, (err, info) => {
                 assert.isNotNull(info)
