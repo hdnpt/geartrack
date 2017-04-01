@@ -45,19 +45,20 @@ directLink.getInfo = function (id, callback, _try = 0) {
             return callback(utils.getError('NO_DATA'))
         }
 
+        let entity = null
         try {
-            const entity = createTrackChinaPostEntity(id, body)
+            entity = createTrackChinaPostEntity(id, body)
             if (!entity) {
                 return callback(utils.getError('NO_DATA'))
             }
             entity.retries = response.attempts
             entity.busy_count = _try
-            callback(null, entity)
         } catch (error) {
             console.log(error);
-            callback(utils.getError('PARSER'))
+            return callback(utils.getError('PARSER'))
         }
 
+        callback(null, entity)
     })
 }
 

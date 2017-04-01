@@ -81,7 +81,7 @@ function createSingpostEntity(id, html) {
     for(let i = 0; i < date.length; i++) {
         messages.push({
             date: moment.tz(date[i], "DD-MM-YYYY", zone).format(),
-            status: status[i].replace(/ \(Country.+\)/ig, "").trim() // remove '(Country: PT)'
+            state: status[i].replace(/ \(Country.+\)/ig, "").trim() // remove '(Country: PT)'
         })
     }
 
@@ -95,7 +95,7 @@ function createSingpostEntity(id, html) {
 */
 function SingpostInfo(id, messages) {
     this.id = id
-    this.messages = messages
+    this.states = messages
 }
 
 /*
