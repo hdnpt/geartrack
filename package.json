@@ -1,6 +1,6 @@
 {
   "name": "geartrack",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Gearbest tracking for Spain Priority Line shipping method. Sky56->Correos->Adicional",
   "main": "index.js",
   "keywords": [
