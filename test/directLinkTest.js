@@ -1,8 +1,6 @@
 const assert = require('chai').assert
 
 const directLink = require('../src/directLink')
-const moment = require('moment-timezone')
-const zone = "Europe/Stockholm"
 
 describe('DirectLink', function () {
     this.timeout(0)

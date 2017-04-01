@@ -1,8 +1,6 @@
 const assert = require('chai').assert
 
 const correosES = require('../src/correosESTracker')
-const moment = require('moment-timezone')
-const zone = "Europe/Madrid" // +1h
 
 describe('Correos ES', function() {
     this.timeout(0)
