@@ -16,8 +16,12 @@ describe('TrackChinaPost', function () {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'RF622875135CN')
-                assert.equal(info.state, 'Shanghai Transit Station export security scan')
+                assert.equal(info.state, 'Shanghai Transit Station export customs cleared')
                 assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-04-01T02:14:49+08:00",
+                        "state": "Shanghai Transit Station export customs cleared"
+                    },
                     {
                         "date": "2017-03-31T14:44:54+08:00",
                         "state": "Shanghai Transit Station export security scan"

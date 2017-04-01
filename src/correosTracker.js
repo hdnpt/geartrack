@@ -6,7 +6,7 @@ const utils = require('./utils')
 const moment = require('moment-timezone')
 const zone = "Europe/Madrid" // +1h
 
-const URL = 'https://www.correosexpress.com/web/correosexpress/home'
+const URL = 'https://s.correosexpress.com/search'
 
 const correos = {}
 
@@ -21,17 +21,7 @@ const correos = {}
  * @param callback(Error, CorreosInfo)
  */
 correos.getInfo = function (id, postalcode, callback) {
-    request(URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000}, function (error, response, body) {
-        if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
-            return
-        }
-
-        let $ = parser.load(body)
-        let action = $('#homeSearchForm').attr('action')
-
-        obtainInfo(action, id, postalcode, callback)
-    })
+    obtainInfo(URL, id, postalcode, callback)
 }
 
 /**
@@ -46,8 +36,7 @@ function obtainInfo(action, id, postalcode, cb) {
     request.post({
         url: action,
         form: {
-            shippingNumber: id,
-            zipCode: postalcode
+            shippingNumber: id
         },
         timeout: 30000
     }, function (error, response, body) {
@@ -57,7 +46,7 @@ function obtainInfo(action, id, postalcode, cb) {
         }
 
         // Not found
-        if (body.indexOf('portlet-msg-error') != -1) {
+        if (body.indexOf('errorMessage') != -1) {
             cb(utils.getError('NO_DATA'))
             return
         }
@@ -83,39 +72,36 @@ function createCorreosEntity(html) {
     let $ = parser.load(html)
 
     let states = []
-    const fields = ['date', 'info', 'department']
-    $('.results-row').each(function (i, elem) {
-        if (i == 0) return
 
-        let state = {}
-        $(this).children().each(function (s, e) {
-            let text = $(this).text().trim()
+    var id = $('.shipping span').get(0).children[0].data.trim()
+    var state = $('.status').get(0).children[2].data.trim()
+    var state2 = $('.status-desc .status-message').get(0).children[0].data.trim()
+    var deliveryDate = $('.status').get(0).children[4]
+    if(deliveryDate !== undefined){
+        deliveryDate = deliveryDate.data.trim()
+        deliveryDate = deliveryDate.substring(deliveryDate.indexOf(':') + 1)
+        deliveryDate = moment.tz(deliveryDate, 'DD MMM YYYY', 'es', zone).format()
+    }
+    var trs = $('table tbody tr')
+    trs.each(function (i, elem) {
 
-            if(s == 0)
-                text = moment.tz(text, "DD/MM/YY HH:mm", zone).format()
+        if(elem.children !== undefined){
+            let state = {
+                'date': moment.tz(elem.children[1].children[0].data.trim(), ", DD/MM/YYYY HH:mm", 'es', zone).format(),
+                'state': elem.children[5].children[0].data.trim(),
+                'area': elem.children[3].children[0].data.trim()
+            }
+            states.push(state)
+        }
 
-            state[fields[s]] = text
-        })
-
-        states.push(state)
     })
 
     return new CorreosInfo({
-        'nenvio': $('#nenvio').val(),
-        'estado': $('#estado').val(),
-        'fecha': $('#fecha').val(),
-        'fechaEstado': $('#fechaEstado').val(),
-        'sendername': $('#sendername').val(),
-        'sendercity': $('#sendercity').val(),
-        'senderaddress': $('#senderaddress').val(),
-        'receivername': $('#receivername').val(),
-        'receivercity': $('#receivercity').val(),
-        'receiveraddress': $('#receiveraddress').val(),
-        'weight': $('#weight').val(),
-        'parcels': $('#parcels').val(),
-        'ref': $('#reference').val(),
-        'observations': $('#observations').val(),
-        'states': states
+        id: id,
+        state: state,
+        state2: state2,
+        deliveryDate: deliveryDate,
+        states: states
     })
 }
 
@@ -125,35 +111,10 @@ function createCorreosEntity(html) {
  |--------------------------------------------------------------------------
  */
 function CorreosInfo(obj) {
-    // Sent details
-    this.id = obj.nenvio
-    this.state = obj.estado
-    this.received = moment.tz(obj.fecha, "DD/MM/YY", zone).format()
-    this.lastUpdate = moment.tz(obj.fechaEstado, "DD/MM/YY HH:mm", zone).format()
-
-    // Sender Details
-    this.sender = {
-        name: obj.sendername.replace('¿', ''),
-        city: obj.sendercity,
-        address: obj.senderaddress
-    }
-
-    // Receiver Details
-    this.receiver = {
-        name: obj.receivername,
-        city: obj.receivercity,
-        address: obj.receiveraddress
-    }
-
-    // Product Details
-    this.product = {
-        weight: obj.weight,
-        parcels: obj.parcels,
-        ref: obj.ref,
-        observations: obj.observations
-    }
-
-    //States
+    this.id = obj.id
+    this.state = obj.state
+    this.state2 = obj.state2
+    this.deliveryDate = obj.deliveryDate
     this.states = obj.states.reverse()
 }
 
