@@ -7,7 +7,7 @@ describe('TrackChinaPost', function () {
 
     describe('#TrackChinaPost', function () {
         it('should extract the messages from the website with success', function (done) {
-            this.retries(3); // Track china post may be busy
+            this.retries(6); // Track china post may be busy
 
 
             const id = 'RF622875135CN'
@@ -55,7 +55,7 @@ describe('TrackChinaPost', function () {
         });
 
         it('should fail to extract', function (done) {
-            this.retries(3);
+            this.retries(6);
 
             const id = 'RE84521'
             trackChinaPost.getInfo(id, (err, info) => {

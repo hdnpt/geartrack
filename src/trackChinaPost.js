@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
+const request = require('requestretry').defaults({maxAttempts: 3, retryDelay: 1000})
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')
@@ -16,9 +16,10 @@ const directLink = {}
  *
  * @param id
  * @param callback(Error, DirectLinkInfo)
+ * @param _try
  */
 directLink.getInfo = function (id, callback, _try = 0) {
-    if(_try >= 3){
+    if (_try >= 4) {
         return callback(utils.getError('BUSY'))
     }
     request.post({
@@ -41,7 +42,7 @@ directLink.getInfo = function (id, callback, _try = 0) {
             return setTimeout(directLink.getInfo, 2000, id, callback, ++_try)
         }
 
-        if (body.indexOf('is invalid') != -1){
+        if (body.indexOf('is invalid') != -1) {
             return callback(utils.getError('NO_DATA'))
         }
 
@@ -72,13 +73,13 @@ function createTrackChinaPostEntity(id, html) {
 
     table.children.forEach(function (elem) {
 
-        if(elem.children !== undefined){
+        if (elem.children !== undefined) {
             let state = {
                 'date': moment.tz(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S", zone).format(),
                 'state': elem.children[3].children[0].data.trim()
-                    .replace(/\p{Han}+/,'')
+                    .replace(/\p{Han}+/, '')
                     .replace(/[\u3400-\u9FBF]/g, '')
-                    .replace(/\s{2,}/g,' ')
+                    .replace(/\s{2,}/g, ' ')
                     .replace('，', ',')
             }
             states.push(state)
@@ -99,7 +100,7 @@ function createTrackChinaPostEntity(id, html) {
  */
 function TrackChinaPostInfo(obj) {
     this.id = obj.id
-    this.state = obj.states[obj.states.length-1].state
+    this.state = obj.states[obj.states.length - 1].state
     this.states = obj.states.reverse()
 }
 
