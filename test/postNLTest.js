@@ -1,8 +1,6 @@
 const assert = require('chai').assert
 
 const postNL = require('../src/postNL')
-const moment = require('moment-timezone')
-const zone = 'Europe/Amsterdam'
 
 describe('PostNL', function () {
     this.timeout(0)

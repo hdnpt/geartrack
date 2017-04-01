@@ -1,8 +1,6 @@
 const assert = require('chai').assert
 
 const ctt = require('../src/cttTracker')
-const moment = require('moment-timezone')
-const zone = "Europe/Lisbon"
 
 describe('CTT', function () {
     this.timeout(0)

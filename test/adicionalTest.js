@@ -1,7 +1,6 @@
 const assert = require('chai').assert
 
 const adicional = require('../src/adicionalTracker')
-const moment = require('moment-timezone')
 
 describe('Adicional', function() {
     this.timeout(0)
