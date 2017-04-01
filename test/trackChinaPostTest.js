@@ -2,7 +2,7 @@ const assert = require('chai').assert
 
 const trackChinaPost = require('../src/trackChinaPost')
 const moment = require('moment-timezone')
-moment.tz.setDefault("Asia/Shanghai") // +8h
+const zone = "Asia/Shanghai" // +8h
 
 describe('TrackChinaPost', function () {
     this.timeout(0)

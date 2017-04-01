@@ -2,7 +2,7 @@ const assert = require('chai').assert
 
 const singpost = require('../src/singpostTracker')
 const moment = require('moment-timezone')
-moment.tz.setDefault("Asia/Singapore") // +8h
+const zone = "Asia/Singapore"
 
 describe('Singpost', function() {
     this.timeout(0)
