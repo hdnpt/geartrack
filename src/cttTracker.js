@@ -32,7 +32,8 @@ ctt.getInfo = function (id, callback) {
         }
 
         // Not found
-        if (body.indexOf('Objeto não encontrado') != -1 || body.indexOf('Insira pelo menos 10 caracteres') != -1) {
+        if (body.indexOf('Não foi possível obter mais informação sobre o objeto.') != -1 ||
+            body.indexOf('Insira pelo menos 10 caracteres') != -1) {
             return callback(utils.getError('NO_DATA'))
         }
 
