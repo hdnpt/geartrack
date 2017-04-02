@@ -85,6 +85,38 @@ describe('Cainiao', function() {
 
         });
 
+        it('China EMS ePacket - must pass', function(done) {
+            const id = 'LX299455986CN'
+            cainiao.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.deepEqual(info.states, [
+                    {
+                        "state": "Arrival at Sorting Center",
+                        "date": "2017-04-01T00:29:00+08:00"
+                    },
+                    {
+                        "state": "Despatch from Sorting Center",
+                        "date": "2017-03-31T23:26:00+08:00"
+                    },
+                    {
+                        "state": "Arrival at Sorting Center",
+                        "date": "2017-03-31T19:55:13+08:00"
+                    },
+                    {
+                        "state": "Posting",
+                        "date": "2017-03-31T17:19:00+08:00"
+                    }
+                ])
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
+
 
         it('should fail to extract', function(done) {
             const id = '42e3423424'
