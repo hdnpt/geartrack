@@ -70,7 +70,7 @@ function createCainiaoEntity(id, json) {
 
     let msgs = json.data[0].section2.detailList.map(m => {
         return {
-            state: m.desc.replace('[-]', ''),
+            state: m.desc.replace('[-]', '').replace(/\s*\[.*?\]\s*/, ''),
             date: moment.tz(m.time, "YYYY-MM-DD HH:mm:ss", zone).format()
         }
     })
