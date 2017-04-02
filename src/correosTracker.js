@@ -139,6 +139,8 @@ function CorreosInfo(obj) {
     this.state2 = obj.state2
     this.deliveryDate = obj.deliveryDate
     this.states = obj.states.reverse()
+    this.origin = obj.origin,
+    this.destiny = obj.destiny
 }
 
 module.exports = correos
