@@ -24,7 +24,7 @@ const URL = 'http://aplicacionesweb.correos.es/localizadorenvios/track.asp?numer
 correos.getInfo = function (id, callback) {
     let _URL = URL.replace('{{id}}', id)
 
-    request(_URL, {timeout: 30000, maxAttempts: 3, retryDelay: 1000, encoding: 'latin1'},
+    request(_URL, {timeout: 20000, maxAttempts: 3, retryDelay: 1000, encoding: 'latin1'},
         function (error, response, body) {
             if (error) {
                 console.log('error:', error)
