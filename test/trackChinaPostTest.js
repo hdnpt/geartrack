@@ -9,15 +9,22 @@ describe('TrackChinaPost', function () {
         it('should extract the messages from the website with success', function (done) {
             this.retries(6); // Track china post may be busy
 
-
             const id = 'RF622875135CN'
             trackChinaPost.getInfo(id, (err, info) => {
                 assert.isNotNull(info)
                 assert.isNull(err)
 
                 assert.equal(info.id, 'RF622875135CN')
-                assert.equal(info.state, 'Shanghai Transit Station export customs cleared')
+                assert.equal(info.state, "leaving Shanghai Int'l Airport going to next airport/seaport")
                 assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-04-02T12:41:30+08:00",
+                        "state": "leaving Shanghai Int'l Airport going to next airport/seaport"
+                    },
+                    {
+                        "date": "2017-04-02T12:16:00+08:00",
+                        "state": "arrive Shanghai Int'l Airport"
+                    },
                     {
                         "date": "2017-04-01T02:14:49+08:00",
                         "state": "Shanghai Transit Station export customs cleared"

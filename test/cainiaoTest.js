@@ -94,6 +94,14 @@ describe('Cainiao', function() {
                 assert.deepEqual(info.states, [
                     {
                         "state": "Arrival at Sorting Center",
+                        "date": "2017-04-02T04:55:00+08:00"
+                    },
+                    {
+                        "state": "Despatch from Sorting Center",
+                        "date": "2017-04-02T01:31:00+08:00"
+                    },
+                    {
+                        "state": "Arrival at Sorting Center",
                         "date": "2017-04-01T00:29:00+08:00"
                     },
                     {
