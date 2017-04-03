@@ -125,7 +125,7 @@ function getDeliveryDate(date) {
         monthNumber = '0' + monthNumber
 
     let newDate = d[0] + '/' + monthNumber + '/' + d[2]
-    return moment.tz(newDate, 'DD/MM/YYYY', zone).format()
+    return moment(newDate, 'DD/MM/YYYY').format()
 }
 
 /*

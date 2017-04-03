@@ -66,7 +66,7 @@ describe('Correos Express', function() {
                 assert.equal(info.state2, 'Su envío está en uno de nuestro vehículos  siendo transportado a la localidad de destino')
                 assert.equal(info.destiny, 'LISBOA')
                 assert.equal(info.origin, 'ASPE')
-                assert.equal(info.deliveryDate, '2017-04-03T00:00:00+02:00')
+                assert.equal(info.deliveryDate, '2017-04-03T00:00:00+01:00')
                 assert.deepEqual(info.states, [
                     {
                         "date": "2017-03-31T18:02:00+02:00",
