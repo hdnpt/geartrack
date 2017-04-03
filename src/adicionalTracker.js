@@ -56,7 +56,7 @@ adicional.getInfo = function (id, postcode, callback) {
 function AdicionalInfo(obj) {
     this.date_expedition = moment.tz(obj.DataExpedicao, "YYYY-MM-DD", zone).format()
     this.service_type = obj.desc_tipo_servico
-    this.sub_status = obj.Desc_SubStatus
+    this.sub_status = obj.Desc_SubStatus.trim()
     this.updated = moment.tz(obj.data_status, "YYYY-MM-DD HH:mm", zone).format()
     this.status = obj.Desc_Status
     this.name = obj.nome
