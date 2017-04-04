@@ -138,33 +138,33 @@ describe('Sky 56', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                // assert.deepEqual(info.status, [
-                //     {
-                //         "date": "2016-12-30T00:00:00+08:00",
-                //         "area": "",
-                //         "status": "Entregado"
-                //     },
-                //     {
-                //         "date": "2016-12-27T00:00:00+08:00",
-                //         "area": "",
-                //         "status": "En proceso de entrega"
-                //     },
-                //     {
-                //         "date": "2016-12-23T00:00:00+08:00",
-                //         "area": "",
-                //         "status": "En tránsito"
-                //     },
-                //     {
-                //         "date": "2016-12-19T00:00:00+08:00",
-                //         "area": "",
-                //         "status": "Admitido"
-                //     },
-                //     {
-                //         "date": "2016-12-02T00:00:00+08:00",
-                //         "area": "",
-                //         "status": "Pre-registrado"
-                //     }
-                // ])
+                assert.deepEqual(info.status, [
+                    {
+                        "date": "2016-12-30T00:00:00+08:00",
+                        "area": "",
+                        "status": "Entregado"
+                    },
+                    {
+                        "date": "2016-12-27T00:00:00+08:00",
+                        "area": "",
+                        "status": "En proceso de entrega"
+                    },
+                    {
+                        "date": "2016-12-23T00:00:00+08:00",
+                        "area": "",
+                        "status": "En tránsito"
+                    },
+                    {
+                        "date": "2016-12-19T00:00:00+08:00",
+                        "area": "",
+                        "status": "Admitido"
+                    },
+                    {
+                        "date": "2016-12-02T00:00:00+08:00",
+                        "area": "",
+                        "status": "Pre-registrado"
+                    }
+                ])
                 assert.deepEqual(info.messages, [
                     {
                         "date": "2016-12-09T12:11:00+08:00",
@@ -198,31 +198,31 @@ describe('Sky 56', function() {
 
         });
 
-        // it('should correct status en tra?nsito', function(done) {
-        //     const id = 'PQ4F6P0703673180181750T'
-        //     sky.getInfo(id, (err, info) => {
-        //         assert.isNull(err)
-        //
-        //         assert.equal('En tránsito', info.status[info.status.length-3].status)
-        //
-        //         console.log(id + ' attempts: ' + info.retries)
-        //         done()
-        //     })
-        //
-        // });
+        it('should correct status en tra?nsito', function(done) {
+            const id = 'PQ4F6P0703673180181750T'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
 
-        // it('should sort status by date', function(done) {
-        //     const id = 'PQ4F6P0702945760181750M'
-        //     sky.getInfo(id, (err, info) => {
-        //         assert.isNull(err)
-        //
-        //         assert.equal('Entregado', info.status[0].status)
-        //
-        //         console.log(id + ' attempts: ' + info.retries)
-        //         done()
-        //     })
-        //
-        // });
+                assert.equal('En tránsito', info.status[info.status.length-3].status)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
+        it('should sort status by date', function(done) {
+            const id = 'PQ4F6P0702945760181750M'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal('Entregado', info.status[0].status)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
     });
 
     describe('#Bpost International', function() {
