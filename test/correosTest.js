@@ -62,12 +62,26 @@ describe('Correos Express', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0705248940181750G')
-                assert.equal(info.state, 'En ruta a localidad de destino')
-                assert.equal(info.state2, 'Su envío está en uno de nuestro vehículos  siendo transportado a la localidad de destino')
-                assert.equal(info.destiny, 'LISBOA')
+                assert.equal(info.state, 'En almacén Ausente.')
+                assert.equal(info.state2, 'Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.')
+                assert.equal(info.destiny, 'RUA TITO MORAIS N 45 2ºD')
                 assert.equal(info.origin, 'ASPE')
-                assert.equal(info.deliveryDate, '2017-04-03T00:00:00+01:00')
                 assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-04-03T22:13:00+02:00",
+                        "state": "EN ALMACÉN. Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega. Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.",
+                        "area": "PORTUGAL - LISBOA"
+                    },
+                    {
+                        "date": "2017-04-03T20:57:00+02:00",
+                        "state": "SE MUESTRA LA INCIDENCIA. Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega. Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.",
+                        "area": "PORTUGAL - LISBOA"
+                    },
+                    {
+                        "date": "2017-04-03T10:46:00+02:00",
+                        "state": "EN REPARTO. Su envío se encuentra en reparto. Lo recibirá en la fecha de entrega prevista.",
+                        "area": "PORTUGAL - LISBOA"
+                    },
                     {
                         "date": "2017-03-31T18:02:00+02:00",
                         "state": "EN RUTA A LOCALIDAD DE DESTINO. Su envío está en uno de nuestro vehículos  siendo transportado a la localidad de destino.",

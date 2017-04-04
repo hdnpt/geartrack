@@ -93,28 +93,36 @@ describe('Cainiao', function() {
                 assert.equal(info.id, id)
                 assert.deepEqual(info.states, [
                     {
-                        "state": "Arrival at Sorting Center",
-                        "date": "2017-04-02T04:55:00+08:00"
-                    },
-                    {
+                        "date": "2017-04-03T10:16:32+08:00",
                         "state": "Despatch from Sorting Center",
-                        "date": "2017-04-02T01:31:00+08:00"
                     },
                     {
-                        "state": "Arrival at Sorting Center",
-                        "date": "2017-04-01T00:29:00+08:00"
+                        "date": "2017-04-03T00:10:00+08:00",
+                        "state": "International dispatch"
                     },
                     {
-                        "state": "Despatch from Sorting Center",
-                        "date": "2017-03-31T23:26:00+08:00"
+                        "date": "2017-04-02T04:55:00+08:00",
+                        "state": "Arrival at Sorting Center"
                     },
                     {
-                        "state": "Arrival at Sorting Center",
-                        "date": "2017-03-31T19:55:13+08:00"
+                        "date": "2017-04-02T01:31:00+08:00",
+                        "state": "Despatch from Sorting Center"
                     },
                     {
-                        "state": "Posting",
-                        "date": "2017-03-31T17:19:00+08:00"
+                        "date": "2017-04-01T00:29:00+08:00",
+                        "state": "Arrival at Sorting Center"
+                    },
+                    {
+                        "date": "2017-03-31T23:26:00+08:00",
+                        "state": "Despatch from Sorting Center"
+                    },
+                    {
+                        "date": "2017-03-31T19:55:13+08:00",
+                        "state": "Arrival at Sorting Center"
+                    },
+                    {
+                        "date": "2017-03-31T17:19:00+08:00",
+                        "state": "Posting"
                     }
                 ])
 

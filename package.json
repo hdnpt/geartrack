@@ -1,10 +1,11 @@
 {
   "name": "geartrack",
   "version": "2.1.5",
-  "description": "Gearbest tracking for Spain Priority Line shipping method. Sky56->Correos->Adicional",
+  "description": "Tracking providers for Gearbest and AliExpress Orders.",
   "main": "index.js",
   "keywords": [
     "gearbest",
+    "aliexpress",
     "tracking",
     "shipping",
     "correos",
@@ -22,7 +23,7 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
-    "htmltidy": "0.0.6",
+    "htmltidy2": "^0.2.1",
     "moment-timezone": "^0.5.11",
     "requestretry": "^1.12.0",
     "sprintf": "^0.1.5"
