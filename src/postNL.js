@@ -62,25 +62,14 @@ postNL.getInfo = function (id, callback, _try = 0) {
 function createPostNLEntity(id, html) {
 
     let $ = parser.load(html)
-
-    let table = $('#datatables tbody tr')
-
-    let states = []
-
-    table.each(function (i, elem) {
-
-        if(elem.children !== undefined){
-            let state = {
-                'date': moment.tz(elem.children[1].children[0].data.trim(), "DD-MM-YYYY HH:mm:ss.S", zone).format(),
-                'state': elem.children[3].children[0].data.trim()
-            }
-            if(elem.children[5] !== undefined){
-                state.area = elem.children[5].children[0].data.trim()
-            }
-            states.push(state)
-        }
-
-    })
+    let states = utils.tableParser(
+        $('#datatables tbody tr'),
+        {
+            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'DD-MM-YYYY HH:mm:ss.S', 'en', zone).format()}},
+            'state': { 'idx': 3, 'mandatory': true },
+            'area': { 'idx': 5 }
+        },
+        () => true)
 
     return new PostNLInfo({
         'id': id,
