@@ -5,7 +5,7 @@ const postNL = require('../src/postNL')
 describe('PostNL', function () {
     this.timeout(0)
 
-    describe('#TrackChinaPost', function () {
+    describe('#PostNLPost', function () {
         it('should extract the messages from the website with success', function (done) {
             const id = 'RS804446736NL'
             postNL.getInfo(id, (err, info) => {
