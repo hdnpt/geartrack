@@ -67,8 +67,8 @@ function createYanwenEntity(id, html) {
 
     if(!trs || trs.length == 0) return null;
 
-    let destiny = trs.get(0).children[3].children[0].children[0].data.trim()
-    let origin = trs.get(1).children[3].children[0].children[0].data.trim()
+    let destiny;
+    let origin;
 
     let states = utils.tableParser(
         trs,
@@ -76,11 +76,20 @@ function createYanwenEntity(id, html) {
             'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'YYYY-MM-DD HH:mm', zone).format()}},
             'state': { 'idx': 3, 'mandatory': true }
         },
-        () => {
-            if(skipLines > 0){
-                skipLines--;
-                return false;
-            }
+        (elem) => {
+            if(elem.children !== undefined
+                && elem.children[1].children !== undefined
+                && elem.children[1].children[0].children !== undefined
+                && elem.children[1].children[0].children[0].data != undefined)
+                if(elem.children[1].children[0].children[0].data.indexOf('Country') != -1){
+                    if(elem.children[1].children[0].children[0].data.indexOf('Origin') != -1){
+                        origin = elem.children[3].children[0].children[0].data.trim()
+                    } else {
+                        destiny = elem.children[3].children[0].children[0].data.trim()
+                    }
+                    return false;
+                }
+                return true;
             return true;
         })
 
