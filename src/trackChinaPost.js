@@ -67,25 +67,20 @@ function createTrackChinaPostEntity(id, html) {
 
     let $ = parser.load(html)
 
-    let table = $('table').get(2);
+    let states = utils.tableParser(
+        $('table').get(2).children,
+        {
+            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz(elem, "YYYY/MM/DD HH:mm:ss.S", zone).format()}},
+            'state': { 'idx': 3, 'mandatory': true, 'parser': elem => {
+                    return elem
+                        .replace(/\p{Han}+/, '')
+                        .replace(/[\u3400-\u9FBF]/g, '')
+                        .replace(/\s{2,}/g, ' ')
+                        .replace('，', ',')}
+                }
 
-    let states = []
-
-    table.children.forEach(function (elem) {
-
-        if (elem.children !== undefined) {
-            let state = {
-                'date': moment.tz(elem.children[1].children[0].data.trim(), "YYYY/MM/DD HH:mm:ss.S", zone).format(),
-                'state': elem.children[3].children[0].data.trim()
-                    .replace(/\p{Han}+/, '')
-                    .replace(/[\u3400-\u9FBF]/g, '')
-                    .replace(/\s{2,}/g, ' ')
-                    .replace('，', ',')
-            }
-            states.push(state)
-        }
-
-    })
+        },
+        elem => elem.children)
 
     return new TrackChinaPostInfo({
         'id': id,

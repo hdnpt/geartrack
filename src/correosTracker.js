@@ -71,8 +71,6 @@ function obtainInfo(action, id, postalcode, cb) {
 function createCorreosEntity(html) {
     let $ = parser.load(html)
 
-    let states = []
-
     var id = $('.shipping span').get(0).children[0].data.trim()
     var state = $('.status').get(0).children[2].data.trim()
     var state2 = $('.status-desc .status-message').get(0).children[0].data.trim()
@@ -88,20 +86,14 @@ function createCorreosEntity(html) {
     origin = origin.substring(origin.indexOf(':') + 1).trim()
     destiny = destiny.substring(destiny.indexOf(':') + 1).trim()
 
-
-    var trs = $('table tbody tr')
-    trs.each(function (i, elem) {
-
-        if(elem.children !== undefined){
-            let state = {
-                'date': moment.tz(elem.children[1].children[0].data.trim(), ", DD/MM/YYYY HH:mm", 'es', zone).format(),
-                'state': elem.children[5].children[0].data.trim(),
-                'area': elem.children[3].children[0].data.trim()
-            }
-            states.push(state)
-        }
-
-    })
+    let states = utils.tableParser(
+        $('table tbody tr'),
+        {
+            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, ', DD/MM/YYYY HH:mm', 'es', zone).format()}},
+            'state': { 'idx': 5, 'mandatory': true },
+            'area': { 'idx': 3 }
+        },
+        elem => true)
 
     return new CorreosInfo({
         id: id,

@@ -4,11 +4,11 @@ const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')
-const zone = "Europe/Amsterdam"
+const zone = "Asia/Shanghai" // +8h
 
-const URL = 'http://www.postnl.post/details/'
+const URL = 'http://track.yw56.com.cn/en-US'
 
-const postNL = {}
+const yanwen = {}
 
 /**
  * Get DirectLink info
@@ -17,14 +17,14 @@ const postNL = {}
  * @param id
  * @param callback(Error, DirectLinkInfo)
  */
-postNL.getInfo = function (id, callback, _try = 0) {
+yanwen.getInfo = function (id, callback, _try = 0) {
     if(_try >= 3){
         return callback(utils.getError('BUSY'))
     }
     request.post({
         url: URL,
         form: {
-            barcodes: id
+            InputTrackNumbers: id
         },
         timeout: 30000
     }, function (error, response, body) {
@@ -43,7 +43,7 @@ postNL.getInfo = function (id, callback, _try = 0) {
 
         let entity = null
         try {
-            entity = createPostNLEntity(id, body)
+            entity = createYanwenEntity(id, body)
             if (!entity) {
                 return callback(utils.getError('NO_DATA'))
             }
@@ -59,20 +59,35 @@ postNL.getInfo = function (id, callback, _try = 0) {
     })
 }
 
-function createPostNLEntity(id, html) {
+function createYanwenEntity(id, html) {
+    let skipLines = 2
 
     let $ = parser.load(html)
-    let states = utils.tableParser(
-        $('#datatables tbody tr'),
-        {
-            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'DD-MM-YYYY HH:mm:ss.S', 'en', zone).format()}},
-            'state': { 'idx': 3, 'mandatory': true },
-            'area': { 'idx': 5 }
-        },
-        () => true)
+    let trs = $('table tbody tr')
 
-    return new PostNLInfo({
+    if(!trs || trs.length == 0) return null;
+
+    let destiny = trs.get(0).children[3].children[0].children[0].data.trim()
+    let origin = trs.get(1).children[3].children[0].children[0].data.trim()
+
+    let states = utils.tableParser(
+        trs,
+        {
+            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'YYYY-MM-DD HH:mm', zone).format()}},
+            'state': { 'idx': 3, 'mandatory': true }
+        },
+        () => {
+            if(skipLines > 0){
+                skipLines--;
+                return false;
+            }
+            return true;
+        })
+
+    return new YanwenInfo({
         'id': id,
+        'origin': origin,
+        'destiny': destiny,
         'states': states
     })
 }
@@ -82,10 +97,12 @@ function createPostNLEntity(id, html) {
  | Entity
  |--------------------------------------------------------------------------
  */
-function PostNLInfo(obj) {
+function YanwenInfo(obj) {
     this.id = obj.id
+    this.origin = obj.origin
+    this.destiny = obj.destiny
     this.state = obj.states[0].state
     this.states = obj.states
 }
 
-module.exports = postNL
+module.exports = yanwen
