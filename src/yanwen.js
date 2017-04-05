@@ -60,8 +60,6 @@ yanwen.getInfo = function (id, callback, _try = 0) {
 }
 
 function createYanwenEntity(id, html) {
-    let skipLines = 2
-
     let $ = parser.load(html)
     let trs = $('table tbody tr')
 
@@ -80,9 +78,9 @@ function createYanwenEntity(id, html) {
             if(elem.children !== undefined
                 && elem.children[1].children !== undefined
                 && elem.children[1].children[0].children !== undefined
-                && elem.children[1].children[0].children[0].data != undefined)
-                if(elem.children[1].children[0].children[0].data.indexOf('Country') != -1){
-                    if(elem.children[1].children[0].children[0].data.indexOf('Origin') != -1){
+                && elem.children[1].children[0].children[0].data != undefined) {
+                if (elem.children[1].children[0].children[0].data.indexOf('Country') != -1) {
+                    if (elem.children[1].children[0].children[0].data.indexOf('Origin') != -1) {
                         origin = elem.children[3].children[0].children[0].data.trim()
                     } else {
                         destiny = elem.children[3].children[0].children[0].data.trim()
@@ -90,6 +88,7 @@ function createYanwenEntity(id, html) {
                     return false;
                 }
                 return true;
+            }
             return true;
         })
 
