@@ -5,7 +5,7 @@ const yanwen = require('../src/yanwen')
 describe('yanwen', function () {
     this.timeout(0)
 
-    describe('#YanwenPost', function () {
+    describe('#Yanwen', function () {
         it('should extract the messages from the website with success', function (done) {
             const id = '8001077530850'
             yanwen.getInfo(id, (err, info) => {
