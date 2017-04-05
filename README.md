@@ -36,6 +36,8 @@ This library scrapes the websites providers for shipping information.
     - R......CN ids
     - R......NL ids
 
+### Ebay
+- Yanwen
 
 ### Install
 - `npm install geartrack --save`
@@ -134,16 +136,25 @@ geartrack.trackchinapost.getInfo(id, (err, TrackChinaPostInfo) => {
     console.log(TrackChinaPostInfo.state) // see TrackChinaPostInfo entity for more fields
 })
 
-// Get track-chinapost.com info
+// Get postNL.com info
 // ID is the provided from AliExpress R..NL
 geartrack.postNL.getInfo(id, (err, PostNLInfo) => {
 	if(err) { return  }
 
     console.log(PostNLInfo.state) // see PostNLInfo entity for more fields
 })
+
+// Get Yanwen.com.cn info
+// ID is the provided from Ebay
+geartrack.yanwen.getInfo(id, (err, YanwenInfo) => {
+	if(err) { return  }
+
+    console.log(YanwenInfo.state) // see YanwenInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 05/04/2017 - Added support for ebay ids through yanwen.com.cn
 - 01/04/2017 - Added support for R..NL Ali express ids through postNL
 - 31/03/2017 - Added support for R..CN Ali express ids through track-chinapost
 - 31/03/2017 - Added support for R..SE Ali express ids through DirectLink
