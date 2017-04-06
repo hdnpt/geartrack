@@ -70,12 +70,14 @@ function createCainiaoEntity(id, json) {
 
     let msgs = json.data[0].section2.detailList.map(m => {
         return {
-            state: m.desc.replace('[-]', '').replace(/\s*\[.*?\]\s*/, ''),
+            state: fixStateName(m.desc),
             date: moment.tz(m.time, "YYYY-MM-DD HH:mm:ss", zone).format()
         }
     })
 
-    return new CainiaoInfo(id, msgs)
+    let destinyId = json.data[0].section2.mailNo || null
+
+    return new CainiaoInfo(id, msgs, destinyId)
 }
 
 /*
@@ -83,9 +85,10 @@ function createCainiaoEntity(id, json) {
  | Entity
  |--------------------------------------------------------------------------
  */
-function CainiaoInfo(id, messages) {
+function CainiaoInfo(id, messages, destinyId) {
     this.id = id
     this.states = messages
+    this.destinyId = destinyId
 }
 
 /*
@@ -93,5 +96,22 @@ function CainiaoInfo(id, messages) {
  | Utils
  |--------------------------------------------------------------------------
  */
+function fixStateName(state) {
+    let res = state.replace('[-]', '')
+
+    let matches = res.match(/\[(.*?)\]/);
+
+    if (matches) {
+        let submatch = matches[1]
+
+        if (submatch.length > 10) // we dont want long country names, is ugly
+            res = res.replace(/\s*\[.*?\]\s*/, '') // remove [all inside]
+    }
+
+    res = res.replace(']', "] ") // add space after ]
+    res = res.replace('交接成功', 'Successful transfer')
+
+    return res
+}
 
 module.exports = cainiao

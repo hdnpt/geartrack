@@ -5,7 +5,44 @@ const cainiao = require('../src/cainiaoTracker')
 describe('Cainiao', function() {
     this.timeout(0)
 
-    describe('#Cainiao', function() {
+    describe('#Cainiao', function () {
+        it('Yanwen LP WITH CTT ID.. - must pass', function (done) {
+            const id = 'LP00068434402473'
+            cainiao.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.destinyId, 'RQ083716873MY')
+                assert.isTrue(info.states.length >= 18)
+                let firstState = info.states[info.states.length - 1]
+                assert.equal(firstState.date, "2017-02-14T09:19:24+08:00")
+                assert.equal(firstState.state, "Shipment confirmation")
+
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+        });
+
+        it('Yanwen LP.. - must pass', function (done) {
+            const id = 'LP00071653567725'
+            cainiao.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.isTrue(info.states.length >= 7)
+                assert.isNull(info.destinyId)
+                let firstState = info.states[info.states.length - 1]
+                assert.equal(firstState.date, "2017-03-30T13:34:52+08:00")
+                assert.equal(firstState.state, "Shipment confirmation")
+
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
         it('Kuala Lumpur - must pass', function(done) {
             const id = 'RQ062471279MY'
             cainiao.getInfo(id, (err, info) => {
@@ -131,8 +168,6 @@ describe('Cainiao', function() {
             })
 
         });
-
-
 
         it('should fail to extract', function(done) {
             const id = '42e3423424'
