@@ -62,14 +62,19 @@ describe('Correos Express', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0705248940181750G')
-                assert.equal(info.state, 'En almacén Ausente.')
-                assert.equal(info.state2, 'Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.')
-                assert.equal(info.destiny, 'RUA TITO MORAIS N 45 2ºD')
+                assert.equal(info.state, 'Entregado')
+                assert.equal(info.state2, "Su envío está entregado")
+                assert.equal(info.destiny, 'LISBOA')
                 assert.equal(info.origin, 'ASPE')
                 assert.deepEqual(info.states, [
                     {
                         "date": "2017-04-03T22:13:00+02:00",
                         "state": "EN ALMACÉN. Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega. Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.",
+                        "area": "PORTUGAL - LISBOA"
+                    },
+                    {
+                        "date": "2017-04-03T22:13:00+02:00",
+                        "state": "ENTREGADO. Su envío está entregado.",
                         "area": "PORTUGAL - LISBOA"
                     },
                     {
