@@ -110,7 +110,33 @@ function YanwenInfo(obj) {
     this.origin = obj.origin
     this.destiny = obj.destiny
     this.state = obj.states[0].state
-    this.states = obj.states
+    this.states = obj.states.map(m => {
+        m.state = replaceState(m.state)
+        return m
+    }).sort((a, b) => {
+        let dateA = moment(a.date),
+            dateB = moment(b.date)
+
+        return dateA < dateB
+    })
 }
+
+/*
+|--------------------------------------------------------------------------
+| Utils
+|--------------------------------------------------------------------------
+*/
+
+function replaceState(state) {
+    state = state.replace('上海互换局 已出口直封', 'Shanghai Exchange Bureau has been export direct seal')
+    state = state.replace('上海互换局 已出口开拆', 'Shanghai Interchange has been opened for export')
+    state = state.replace('广商国际小包 已封发', 'Guangshang international package has been closed')
+    state = state.replace('广商国际小包 已收寄', 'Guangshang international package has been received')
+    state = state.replace('广商国际小包 离开，下一站【广商大宗】',
+        'Canton business international package to leave, the next stop [Canton business bulk]')
+
+    return state
+}
+
 
 module.exports = yanwen
