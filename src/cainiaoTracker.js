@@ -110,6 +110,7 @@ function fixStateName(state) {
 
     res = res.replace(']', "] ") // add space after ]
     res = res.replace('交接成功', 'Successful transfer')
+    res = res.replace('上海市', 'Shanghai')
     res = res.replace('电子信息已收到', 'Electronic information has been received')
     res = res.replace('[广州] 【广州互换局】已开拆', '[Guangzhou] In transit - Arrived at the waypoint')
     res = res.replace('[东莞] 【东莞市邮政局电商包裹局国际小包处理组】已封发(国内经转)', 
