@@ -5,6 +5,29 @@ const directLink = require('../src/directLink')
 describe('DirectLink', function () {
     this.timeout(0)
 
+    describe('#DirectLink - OrderNumber Q..XX', function () {
+        it('Sweden Gearbest - Shoud receive an order number and get the item number', function (done) {
+            const id = 'Q1845621341XX'
+            directLink.getItemNumber(id, (err, item) => {
+                assert.isNull(err)
+
+                assert.equal(item, 'RE845621341SE')
+
+                done()
+            })
+        });
+
+        it('should fail to extract', function (done) {
+            const id = 'Q18456342341XX'
+            directLink.getInfo(id, (err, info) => {
+                assert.isNotNull(err)
+
+                done()
+            })
+
+        });
+    })
+
     describe('#DirectLink', function () {
         it('should extract the messages from the website with success', function (done) {
             const id = 'RE845212395SE'
@@ -49,6 +72,21 @@ describe('DirectLink', function () {
                         "state": "Order delivered"
                     }
                 ].reverse())
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
+        it('should extract the messages from the website with success', function (done) {
+            const id = 'Q1845621341XX'
+            directLink.getInfo(id, (err, info) => {
+                assert.isNotNull(info)
+                assert.isNull(err)
+
+                assert.equal(info.id, 'RE845621341SE')
+                assert(info.states.length > 3)
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
