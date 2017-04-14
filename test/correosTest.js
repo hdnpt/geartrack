@@ -69,12 +69,12 @@ describe('Correos Express', function() {
                 assert.deepEqual(info.states, [
                     {
                         "date": "2017-04-03T22:13:00+02:00",
-                        "state": "EN ALMACÉN. Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega. Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.",
+                        "state": "ENTREGADO. Su envío está entregado.",
                         "area": "PORTUGAL - LISBOA"
                     },
                     {
                         "date": "2017-04-03T22:13:00+02:00",
-                        "state": "ENTREGADO. Su envío está entregado.",
+                        "state": "EN ALMACÉN. Su envío  no ha podido ser entregado por encontrarse el destinatario ausente en el momento de la entrega. Si desea gestionar una nueva entrega por favor pulse la opción Gestionar nueva entrega.",
                         "area": "PORTUGAL - LISBOA"
                     },
                     {

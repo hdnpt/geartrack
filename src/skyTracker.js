@@ -39,6 +39,7 @@ sky.getInfo = function (id, callback) {
                 case 'L': // Bpost is the same
                 case 'S': // Malasya Pos
                 case 'G': // Switzerland Post Unregistered
+                case 'Q': // Sweden Registered
                     entity = createNLSkyEntity(id, json)
                     break
                 default: // Spain express, correos line

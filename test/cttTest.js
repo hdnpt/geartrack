@@ -110,12 +110,12 @@ describe('CTT', function () {
                             {
                                 "time": "2017-01-13T10:00:00Z",
                                 "status": "Entregue",
-                                "local": "4480 - VILA DO CONDE"
+                                "local": "8811516"
                             },
                             {
                                 "time": "2017-01-13T09:25:00Z",
                                 "status": "Em distribuição",
-                                "local": "4480 - VILA DO CONDE"
+                                "local": "8811516"
                             }
                         ]
                     },
@@ -171,12 +171,12 @@ describe('CTT', function () {
                             {
                                 "time": "2016-08-04T17:59:00+01:00",
                                 "status": "Entregue",
-                                "local": "4480 - VILA DO CONDE"
+                                "local": "8811516"
                             },
                             {
                                 "time": "2016-08-04T08:36:00+01:00",
                                 "status": "Em distribuição",
-                                "local": "4480 - VILA DO CONDE"
+                                "local": "8811516"
                             }
                         ]
                     },
