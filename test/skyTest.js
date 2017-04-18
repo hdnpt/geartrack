@@ -390,6 +390,22 @@ describe('Sky 56', function() {
         });
     });
 
+    describe('#Sweden Registered', function() {
+        it('should extract the messages from the website with success', function (done) {
+            const id = 'Q1845621341XX'
+            sky.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+
+                assert(info.messages.length >= 2)
+                assert.equal(info.messages[0].status, 'Item received for processing')
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+    })
 
     it('should fail to extract', function(done) {
         const id = '423423424'
