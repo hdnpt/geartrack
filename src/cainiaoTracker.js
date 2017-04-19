@@ -68,7 +68,8 @@ cainiao.getInfo = function (id, callback) {
  */
 function createCainiaoEntity(id, json) {
 
-    let msgs = json.data[0].section2.detailList.map(m => {
+    let section = json.data[0].section3 || json.data[0].section2;
+    let msgs = section.detailList.map(m => {
         return {
             state: fixStateName(m.desc),
             date: moment.tz(m.time, "YYYY-MM-DD HH:mm:ss", zone).format()
