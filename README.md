@@ -151,9 +151,17 @@ geartrack.yanwen.getInfo(id, (err, YanwenInfo) => {
 
     console.log(YanwenInfo.state) // see YanwenInfo entity for more fields
 })
+
+// Get http://www.pos.com.my/ info
+geartrack.malaysiaPos.getInfo(id, (err, MalaysiaPosInfo) => {
+	if(err) { return  }
+
+    console.log(MalaysiaPosInfo.state) // see MalaysiaPosInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 19/04/2017 - Added support for Malaysia POS through www.pos.com.my
 - 05/04/2017 - Added support for ebay ids through yanwen.com.cn
 - 01/04/2017 - Added support for R..NL Ali express ids through postNL
 - 31/03/2017 - Added support for R..CN Ali express ids through track-chinapost
