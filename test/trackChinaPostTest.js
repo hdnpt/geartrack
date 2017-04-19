@@ -69,6 +69,49 @@ describe('TrackChinaPost', function () {
 
         });
 
+        it('should extract the messages from the website with success 2', function (done) {
+            this.retries(6); // Track china post may be busy
+
+            const id = '04698596039'
+            trackChinaPost.getInfo(id, (err, info) => {
+                assert.isNotNull(info)
+                assert.isNull(err)
+
+                assert.equal(info.id, '04698596039')
+                assert.equal(info.state, "going to next airport/seaport")
+                assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-03-13T18:27:30+08:00",
+                        "state": "going to next airport/seaport"
+                    },
+                    {
+                        "date": "2017-03-11T18:47:37+08:00",
+                        "state": "Guangzhou Transit Station export security scan"
+                    },
+                    {
+                        "date": "2017-03-11T18:30:03+08:00",
+                        "state": "leaving Dongguan city Post Office eCommerce dept. international parcel process dept. ,next station Dongguan center"
+                    },
+                    {
+                        "date": "2017-03-11T18:27:30+08:00",
+                        "state": "Dongguan city Post Office eCommerce dept. international parcel process dept. customs scan"
+                    },
+                    {
+                        "date": "2017-03-11T17:32:54+08:00",
+                        "state": "Dongguan city Post Office eCommerce dept. international parcel process dept. received"
+                    },
+                    {
+                        "date": "2017-03-10T13:11:54+08:00",
+                        "state": "Electronic Data Received"
+                    }
+                ])
+
+                console.log(id + ' attempts: ' + info.retries + ' busy_count: ' + info.busy_count)
+                done()
+            })
+
+        });
+
         it('should fail to extract', function (done) {
             this.retries(6);
 
