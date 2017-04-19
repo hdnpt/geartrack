@@ -15,8 +15,12 @@ describe('TrackChinaPost', function () {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'RF622875135CN')
-                assert.equal(info.state, "leaving Shanghai Int'l Airport going to next airport/seaport")
+                assert.equal(info.state, "arrive Portugal Lisbon Transit Station")
                 assert.deepEqual(info.states, [
+                    {
+                        "date": "2017-04-15T10:48:00+08:00",
+                        "state": "arrive Portugal Lisbon Transit Station"
+                    },
                     {
                         "date": "2017-04-02T12:41:30+08:00",
                         "state": "leaving Shanghai Int'l Airport going to next airport/seaport"

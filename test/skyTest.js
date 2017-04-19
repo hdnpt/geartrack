@@ -398,7 +398,28 @@ describe('Sky 56', function() {
 
 
                 assert(info.messages.length >= 2)
-                assert.equal(info.messages[0].status, 'Item received for processing')
+                assert.deepEqual(info.messages, [
+                    {
+                        "date": "2017-04-12T13:29:00+08:00",
+                        "area": "",
+                        "status": "Order departed from sorting hub"
+                    },
+                    {
+                        "date": "2017-04-08T16:37:00+08:00",
+                        "area": "",
+                        "status": "Order departed on flight from origin"
+                    },
+                    {
+                        "date": "2017-04-05T11:48:00+08:00",
+                        "area": "",
+                        "status": "Item received for processing"
+                    },
+                    {
+                        "date": "2017-04-05T10:05:00+08:00",
+                        "area": "",
+                        "status": "Item pre-advice received"
+                    }
+                ])
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
