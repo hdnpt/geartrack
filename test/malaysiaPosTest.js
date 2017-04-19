@@ -32,8 +32,8 @@ describe('Malaysia Pos', function() {
         });
 
         it('should fail to extract', function(done) {
-            const id = 'AB', code = 1750
-            correos.getInfo(id, code, (err, info) => {
+            const id = 'AB'
+            correos.getInfo(id, (err, info) => {
                 assert.isNotNull(err)
 
                 done()

@@ -158,9 +158,17 @@ geartrack.malaysiaPos.getInfo(id, (err, MalaysiaPosInfo) => {
 
     console.log(MalaysiaPosInfo.state) // see MalaysiaPosInfo entity for more fields
 })
+
+// Get http://pts.cjah.co/ info
+geartrack.cjah.getInfo(id, (err, CjahInfo) => {
+	if(err) { return  }
+
+    console.log(CjahInfo.state) // see CjahInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 19/04/2017 - Added support for SB.. through pts.cjah.co
 - 19/04/2017 - Added support for Malaysia POS through www.pos.com.my
 - 05/04/2017 - Added support for ebay ids through yanwen.com.cn
 - 01/04/2017 - Added support for R..NL Ali express ids through postNL
