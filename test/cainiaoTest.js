@@ -128,69 +128,21 @@ describe('Cainiao', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.states.length, 15)
-                // assert.deepEqual(info.states, [
-                //     {
-                //         "state": "Attempted delivery",
-                //         "date": "2017-04-19T11:00:00+08:00"
-                //     },
-                //     {
-                //         "state": "In distribution",
-                //         "date": "2017-04-19T08:21:00+08:00"
-                //     },
-                //     {
-                //         "state": "Released by customs without duties",
-                //         "date": "2017-04-18T10:04:00+08:00"
-                //     },
-                //     {
-                //         "state": "Released from Customs",
-                //         "date": "2017-04-18T10:04:00+08:00"
-                //     },
-                //     {
-                //         "state": "Handed over to Customs",
-                //         "date": "2017-04-17T11:53:00+08:00"
-                //     },
-                //     {
-                //         "state": "International reception",
-                //         "date": "2017-04-17T10:48:00+08:00"
-                //     },
-                //     {
-                //         "state": "Arrival at Sorting Center",
-                //         "date": "2017-04-17T10:48:00+08:00"
-                //     },
-                //     {
-                //         "state": "Despatch from Sorting Center",
-                //         "date": "2017-04-03T10:16:32+08:00"
-                //     },
-                //     {
-                //         "state": "International dispatch",
-                //         "date": "2017-04-03T00:10:00+08:00"
-                //     },
-                //     {
-                //         "state": "Arrival at Sorting Center",
-                //         "date": "2017-04-02T04:55:00+08:00"
-                //     },
-                //     {
-                //         "state": "Despatch from Sorting Center",
-                //         "date": "2017-04-02T01:31:00+08:00"
-                //     },
-                //     {
-                //         "state": "Arrival at Sorting Center",
-                //         "date": "2017-04-01T00:29:00+08:00"
-                //     },
-                //     {
-                //         "state": "Despatch from Sorting Center",
-                //         "date": "2017-03-31T23:26:00+08:00"
-                //     },
-                //     {
-                //         "state": "Arrival at Sorting Center",
-                //         "date": "2017-03-31T19:55:13+08:00"
-                //     },
-                //     {
-                //         "state": "Posting",
-                //         "date": "2017-03-31T17:19:00+08:00"
-                //     }
-                // ])
+                assert.equal(info.states.length, 17)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
+        it('S... - must pass', function(done) {
+            const id = 'S000011731855'
+            cainiao.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.states.length, 10)
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()

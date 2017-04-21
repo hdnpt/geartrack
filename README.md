@@ -165,9 +165,17 @@ geartrack.cjah.getInfo(id, (err, CjahInfo) => {
 
     console.log(CjahInfo.state) // see CjahInfo entity for more fields
 })
+
+// Get http://pts.cjah.co/ info
+geartrack.winit.getInfo(id, (err, WinitInfo) => {
+	if(err) { return  }
+
+    console.log(WinitInfo.state) // see WinitInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 19/04/2017 - Added support for ID.. through track.winit.com.cn
 - 19/04/2017 - Added support for SB.. through pts.cjah.co
 - 19/04/2017 - Added support for Malaysia POS through www.pos.com.my
 - 05/04/2017 - Added support for ebay ids through yanwen.com.cn
