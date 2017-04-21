@@ -128,7 +128,7 @@ describe('Cainiao', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.states.length, 15)
+                assert.equal(info.states.length, 17)
                 // assert.deepEqual(info.states, [
                 //     {
                 //         "state": "Attempted delivery",
