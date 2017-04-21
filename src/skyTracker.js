@@ -45,8 +45,8 @@ sky.getInfo = function (id, callback) {
                 default: // Spain express, correos line
                     entity = createSkyEntity(id, json)
 
-                    if(entity.messages.length == 0) // we should have messages!
-                        return callback(utils.getError('EMPTY'))
+                    // if(entity.messages.length == 0) // we should have messages!
+                    //     return callback(utils.getError('EMPTY'))
 
                     break
             }
