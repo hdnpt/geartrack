@@ -36,7 +36,7 @@ correos.getInfo = function (id, postalcode, cb) {
 
         let entity = null
         try {
-            entity = createCorreosEntity(body)
+            entity = createCorreosEntity(body, id, postalcode)
             entity.retries = response.attempts
         } catch (error) {
             console.log(error);
@@ -51,7 +51,7 @@ correos.getInfo = function (id, postalcode, cb) {
  * Create correos entity from html
  * @param html
  */
-function createCorreosEntity(html) {
+function createCorreosEntity(html, id, postalcode) {
     let $ = parser.load(html)
 
     let states = []
@@ -87,7 +87,9 @@ function createCorreosEntity(html) {
         'parcels': $('#parcels').val(),
         'ref': $('#reference').val(),
         'observations': $('#observations').val(),
-        'states': states
+        'states': states,
+        'id': id,
+        'postalcode': postalcode
     })
 }
 
@@ -127,6 +129,8 @@ function CorreosInfo(obj) {
 
     //States
     this.states = obj.states.reverse()
+
+    this.trackerWebsite = sprintf(URL, obj.postalcode, obj.id)
 }
 
 module.exports = correos

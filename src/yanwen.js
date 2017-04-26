@@ -119,6 +119,7 @@ function YanwenInfo(obj) {
 
         return dateA < dateB
     })
+    this.trackerWebsite = URL
 }
 
 /*

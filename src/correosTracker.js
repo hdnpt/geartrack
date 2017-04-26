@@ -133,6 +133,7 @@ function CorreosInfo(obj) {
     this.states = obj.states.reverse()
     this.origin = obj.origin,
     this.destiny = obj.destiny
+    this.trackerWebsite = "https://s.correosexpress.com"
 }
 
 module.exports = correos

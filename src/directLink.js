@@ -11,6 +11,8 @@ const URL = 'https://tracking.directlink.com/responseStatus.php?json=1&site_cd=A
 
 const orderURL = 'https://tracking.directlink.com/multipletrack-client2.php?lang=en&postal_ref_mode=0&order_no={{order}}'
 
+const directURL = 'https://tracking.directlink.com/multipletrack-client2.php?lang=en&postal_ref_mode=1&postal_ref_no='
+
 const directLink = {}
 
 /**
@@ -152,6 +154,7 @@ function DirectLinkInfo(obj) {
     this.id = obj.tracking_no
     this.state = obj.status
     this.states = obj.states.reverse()
+    this.trackerWebsite = directURL + obj.tracking_no
 }
 
 module.exports = directLink
