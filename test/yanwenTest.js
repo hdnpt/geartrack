@@ -66,23 +66,39 @@ describe('yanwen', function () {
                 assert.equal(info.id, 'UR848385766YP')
                 assert.equal(info.origin, 'China')
                 assert.equal(info.destiny, 'Portugal')
-                assert.equal(info.state, 'LISBOA International reception')
+                assert.equal(info.state, 'PINHAL DE FRADES Delivery success')
                 assert.deepEqual(info.states, [
                     {
-                        "date": "2017-04-05T18:16:00+08:00",
-                        "state": "Shanghai Interchange has been opened for export"
+                        "date": "2017-04-26T12:44:00+08:00",
+                        "state": "PINHAL DE FRADES Delivery success"
+                    },
+                    {
+                        "date": "2017-04-26T09:49:00+08:00",
+                        "state": "PINHAL DE FRADES Available to collect"
+                    },
+                    {
+                        "date": "2017-04-24T20:09:00+08:00",
+                        "state": "2840 SEIXAL National dispatch"
+                    },
+                    {
+                        "date": "2017-04-24T11:00:00+08:00",
+                        "state": "2840 - SEIXAL Delivery failure, Addressee not at address indicated; Addressee's office close, Addressee contacted - awaiting reply PINHAL DE FRADES"
+                    },
+                    {
+                        "date": "2017-04-24T09:23:00+08:00",
+                        "state": "2840 - SEIXAL In distribution"
                     },
                     {
                         "date": "2017-04-13T03:47:00+08:00",
                         "state": "LISBOA International reception"
                     },
                     {
-                        "date": "2017-04-13T03:47:00+08:00",
-                        "state": "葡萄牙里斯本 到达互换局"
+                        "date": "2017-04-03T20:08:00+08:00",
+                        "state": "Non-defined location Acceptance by the Post Services"
                     },
                     {
-                        "date": "2017-04-03T22:22:00+08:00",
-                        "state": "Canton business international package to leave, the next stop [Canton business bulk]"
+                        "date": "2017-04-13T03:47:00+08:00",
+                        "state": "葡萄牙里斯本 到达互换局"
                     },
                     {
                         "date": "2017-04-07T13:47:00+08:00",
@@ -101,12 +117,16 @@ describe('yanwen', function () {
                         "state": "Shanghai Exchange Bureau has been export direct seal"
                     },
                     {
-                        "date": "2017-04-03T20:51:00+08:00",
-                        "state": "Guangshang international package has been closed"
+                        "date": "2017-04-05T18:16:00+08:00",
+                        "state": "Shanghai Interchange has been opened for export"
                     },
                     {
-                        "date": "2017-04-03T20:08:00+08:00",
-                        "state": "Non-defined location Acceptance by the Post Services"
+                        "date": "2017-04-03T22:22:00+08:00",
+                        "state": "Canton business international package to leave, the next stop [Canton business bulk]"
+                    },
+                    {
+                        "date": "2017-04-03T20:51:00+08:00",
+                        "state": "Guangshang international package has been closed"
                     },
                     {
                         "date": "2017-04-03T20:08:00+08:00",
