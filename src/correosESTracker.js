@@ -112,6 +112,7 @@ function CorreosESInfo(obj) {
     this.id = obj.id
     this.state = obj.state
     this.states = obj.states
+    this.trackerWebsite = URL.replace('{{id}}', obj.id)
 }
 
 module.exports = correos

@@ -40,7 +40,7 @@ module.exports.getPostalCode = function (id) {
     return code
 }
 
-function lineParser(elem, fields){
+function lineParser(elem, fields) {
     if (elem.children !== undefined) {
         let line = {}
         Object.keys(fields).forEach(function (key) {
@@ -69,14 +69,25 @@ module.exports.tableParser = function (trs, fields, elemValidation) {
     let lines = []
 
     let _lineParser = (elem, fields) => {
-        if(elemValidation(elem)) lines.push(lineParser(elem, fields))
+        if (elemValidation(elem)) lines.push(lineParser(elem, fields))
     }
 
-    if(trs.each){
+    if (trs.each) {
         trs.each((i, elem) => _lineParser(elem, fields))
-    } else if (trs.forEach){
+    } else if (trs.forEach) {
         trs.forEach(elem => _lineParser(elem, fields))
     }
 
     return lines;
+}
+
+/**
+ * Remove all Chinese chars from the string
+ * @param str
+ * @returns {XML|string}
+ */
+module.exports.removeChineseChars = function (str) {
+    return str
+            .replace(/\p{Han}+/, '')
+            .replace(/[\u3400-\u9FBF]/g, '')
 }

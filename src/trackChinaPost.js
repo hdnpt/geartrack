@@ -97,6 +97,8 @@ function TrackChinaPostInfo(obj) {
     this.id = obj.id
     this.state = obj.states[obj.states.length - 1].state
     this.states = obj.states.reverse()
+
+    this.trackerWebsite = "http://track-chinapost.com/startairmail.php"
 }
 
 module.exports = directLink

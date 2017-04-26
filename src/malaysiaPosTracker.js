@@ -103,6 +103,7 @@ function MalaysiaInfo(obj) {
     this.id = obj.id
     this.state = obj.state
     this.states = obj.states
+    this.trackerWebsite = URL
 }
 
 module.exports = malaysiaPos

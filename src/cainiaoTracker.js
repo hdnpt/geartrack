@@ -90,6 +90,7 @@ function CainiaoInfo(id, messages, destinyId) {
     this.id = id
     this.states = messages
     this.destinyId = destinyId
+    this.trackerWebsite = URL + id
 }
 
 /*

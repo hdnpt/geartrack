@@ -101,6 +101,7 @@ function SkyInfo(obj) {
     this.id = obj.id
     this.messages = obj.messages
     this.status = obj.status
+    this.trackerWebsite = "http://www.sky56.cn/english/track/index"
 
     this.isNL = () => {
         return this.id.charAt(0) == 'N'

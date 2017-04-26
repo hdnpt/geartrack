@@ -119,6 +119,7 @@ function CttInfo(id, state, messages) {
     this.id = id
     this.state = state
     this.messages = messages
+    this.trackerWebsite = URL + id
 }
 
 /*

@@ -109,16 +109,12 @@ function YanwenInfo(obj) {
     this.id = obj.id
     this.origin = obj.origin
     this.destiny = obj.destiny
-    this.state = obj.states[0].state
     this.states = obj.states.map(m => {
         m.state = replaceState(m.state)
         return m
-    }).sort((a, b) => {
-        let dateA = moment(a.date),
-            dateB = moment(b.date)
-
-        return dateA < dateB
     })
+    this.state = this.states[0].state
+    this.trackerWebsite = URL
 }
 
 /*
