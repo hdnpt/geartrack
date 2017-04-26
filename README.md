@@ -8,10 +8,10 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/hdnpt/geartrack/badge.svg)](https://snyk.io/test/github/hdnpt/geartrack)
 [![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?style=plastic)](https://github.com/hdnpt/geartrack)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=plastic)](https://github.com/hdnpt/geartrack)
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://geartrack.hdn.pt/)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://geartrack.pt/)
 
 ## API to track shippments from Gearbest & Aliexpress
-Online version: [https://geartrack.hdn.pt](https://geartrack.hdn.pt)
+Online version: [https://geartrack.pt](https://geartrack.pt)
 
 This library scrapes the websites providers for shipping information.
 
@@ -37,7 +37,7 @@ This library scrapes the websites providers for shipping information.
     - R......NL ids
 
 ### Ebay
-- Yanwen
+- Winit
 
 ### Install
 - `npm install geartrack --save`
@@ -45,9 +45,6 @@ This library scrapes the websites providers for shipping information.
 ### Using Docker to run tests
 - `docker build -t geartrack .`
 - `docker run geartrack`
-
-### Watchout
-- On linux 64bits - https://github.com/vavere/htmltidy/issues/11
 
 ### API
 ```javascript
@@ -172,9 +169,17 @@ geartrack.winit.getInfo(id, (err, WinitInfo) => {
 
     console.log(WinitInfo.state) // see WinitInfo entity for more fields
 })
+
+// Get http://www.faryaa.com/user/index/package-refer/type/track
+geartrack.panasia.getInfo(id, (err, PanasiaInfo) => {
+	if(err) { return  }
+
+    console.log(PanasiaInfo.states) // see PanasiaInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 26/04/2017 - Added support for Panasia, replaces sky56 for PQ ids
 - 19/04/2017 - Added support for ID.. through track.winit.com.cn
 - 19/04/2017 - Added support for SB.. through pts.cjah.co
 - 19/04/2017 - Added support for Malaysia POS through www.pos.com.my
