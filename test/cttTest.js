@@ -363,6 +363,51 @@ describe('CTT', function () {
 
         });
 
+        it('RE845621341SE - must pass', function (done) {
+            const id = 'RE845621341SE'
+            ctt.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.state.status, 'Sem estado')
+                assert.deepEqual(info.messages, [
+                    {
+                        "day": "2017-04-26T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-04-26T19:34:00+01:00",
+                                "status": "Para apresentação à Alfândega",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-04-25T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-04-25T08:15:00+01:00",
+                                "status": "Receção internacional",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-04-12T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-04-12T13:29:00+01:00",
+                                "status": "Expedição internacional",
+                                "local": "Local não definido"
+                            }
+                        ]
+                    }
+                ])
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
         it('should fail to extract', function (done) {
             const id = '423423424'
             ctt.getInfo(id, (err, info) => {
