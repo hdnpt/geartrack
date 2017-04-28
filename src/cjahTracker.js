@@ -11,30 +11,17 @@ const URL = 'http://pts.cjah.co/Home/OMTDetailStatus/{{id}}'
 const cjah = {}
 
 /**
- * Get malaysiaPos info
- * Scraps the Correos Express website
+ * Get Cjah info
+ * Scraps the Cjah website
  * Async
  *
  * Design changes may break this code!!
  * @param id
- * @param postalcode
- * @param callback(Error, CorreosInfo)
+ * @param cb(Error, CjahInfo)
  */
-cjah.getInfo = function (id, postalcode, callback) {
-    obtainInfo(URL, id, postalcode, callback)
-}
-
-/**
- * Get info from malaysiaPos page
- *
- * @param action
- * @param id
- * @param postalcode
- * @param cb
- */
-function obtainInfo(action, id, cb) {
+cjah.getInfo = function (id, cb) {
     request.get({
-        url: action.replace('{{id}}', id),
+        url: URL.replace('{{id}}', id),
         timeout: 30000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
@@ -54,9 +41,11 @@ function obtainInfo(action, id, cb) {
     })
 }
 
+
 /**
- * Create malaysiaPos entity from html
+ * Create cjah entity from html
  * @param html
+ * @param cb
  */
 function createCjahEntity(html, cb) {
 
