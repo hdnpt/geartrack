@@ -400,6 +400,21 @@ describe('Sky 56', function() {
                 assert(info.messages.length >= 2)
                 assert.deepEqual(info.messages, [
                     {
+                        "date": "2017-04-26T21:00:52+08:00",
+                        "area": "",
+                        "status": "Status updates may be available from destination carrier"
+                    },
+                    {
+                        "date": "2017-04-26T19:34:00+08:00",
+                        "area": "",
+                        "status": "Order awaiting customs clearance"
+                    },
+                    {
+                        "date": "2017-04-25T08:15:00+08:00",
+                        "area": "",
+                        "status": "Order received into final destination country"
+                    },
+                    {
                         "date": "2017-04-12T13:29:00+08:00",
                         "area": "",
                         "status": "Order departed from sorting hub"
