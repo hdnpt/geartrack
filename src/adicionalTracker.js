@@ -26,6 +26,10 @@ adicional.getInfo = function (id, postcode, callback) {
                 return
             }
 
+            if(body.length == 0) {
+                return callback(utils.getError('NO_DATA'))
+            }
+
             const json = JSON.parse(body)
 
             // Not found
