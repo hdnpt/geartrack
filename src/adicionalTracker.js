@@ -27,7 +27,7 @@ adicional.getInfo = function (id, postcode, callback) {
             }
 
             if(body.length == 0) {
-                return callback(utils.getError('DOWN'))
+                return callback(utils.getError('EMPTY'))
             }
 
             const json = JSON.parse(body)
