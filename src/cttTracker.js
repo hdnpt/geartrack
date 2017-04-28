@@ -72,10 +72,14 @@ function createCttEntity(id, html, cb) {
                 date: moment.tz(dayAndHours, "YYYY/MM/DD HH:mm", zone).format()
             }
 
-            if(table[4].children[0].data) {
-                state['status'] = table[4].children[0].data.trim()
+            if(table[4].children.length == 0) {
+                state['status'] = 'Sem estado'
             } else {
-                state['status'] = table[4].children[0].children[0].data.trim()
+                if(table[4].children[0].data) {
+                    state['status'] = table[4].children[0].data.trim()
+                } else {
+                    state['status'] = table[4].children[0].children[0].data.trim()
+                }
             }
 
             let details = $('#details_0').find('tr')
