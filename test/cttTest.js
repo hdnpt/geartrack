@@ -288,6 +288,81 @@ describe('CTT', function () {
 
         });
 
+        it('EA358948794PT - must pass', function (done) {
+            const id = 'EA358948794PT'
+            ctt.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.equal(info.state.status, 'Objeto entregue')
+                assert.deepEqual(info.messages, [
+                    {
+                        "day": "2017-04-24T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-04-24T10:42:00+01:00",
+                                "status": "Entregue",
+                                "local": "2615 - ALVERCA"
+                            },
+                            {
+                                "time": "2017-04-24T08:06:00+01:00",
+                                "status": "Em distribuição",
+                                "local": "2615 - ALVERCA"
+                            },
+                            {
+                                "time": "2017-04-24T02:15:00+01:00",
+                                "status": "Expedição",
+                                "local": "C.O. LOURES-MARL (OLX)"
+                            },
+                            {
+                                "time": "2017-04-24T00:35:00+01:00",
+                                "status": "Receção",
+                                "local": "C.O. LOURES - MARL"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "2017-04-21T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-04-21T23:59:00+01:00",
+                                "status": "Expedição",
+                                "local": "C.O. LOURES-MARL (OLX)"
+                            },
+                            {
+                                "time": "2017-04-21T21:26:00+01:00",
+                                "status": "Receção",
+                                "local": "C.O. LOURES - MARL"
+                            },
+                            {
+                                "time": "2017-04-21T21:13:00+01:00",
+                                "status": "Expedição",
+                                "local": "C.O. COIMBRA (OCO)"
+                            },
+                            {
+                                "time": "2017-04-21T18:59:00+01:00",
+                                "status": "Receção",
+                                "local": "C. O. COIMBRA"
+                            },
+                            {
+                                "time": "2017-04-21T18:36:00+01:00",
+                                "status": "Recolha",
+                                "local": "C. O. COIMBRA"
+                            },
+                            {
+                                "time": "2017-04-21T18:36:00+01:00",
+                                "status": "Aceitação",
+                                "local": "FATURACAO AUTOMATIZADA"
+                            }
+                        ]
+                    }
+                ])
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
         it('should fail to extract', function (done) {
             const id = '423423424'
             ctt.getInfo(id, (err, info) => {
