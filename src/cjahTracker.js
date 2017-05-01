@@ -29,15 +29,7 @@ cjah.getInfo = function (id, cb) {
             return
         }
 
-        let entity = null
-        try {
-            entity = createCjahEntity(body, cb)
-        } catch (error) {
-            console.log(error);
-            return cb(utils.getError('PARSER'))
-        }
-
-        cb(null, entity)
+        createCjahEntity(body, cb)
     })
 }
 
@@ -48,30 +40,37 @@ cjah.getInfo = function (id, cb) {
  * @param cb
  */
 function createCjahEntity(html, cb) {
+    let entity = null
+    try {
+        let $ = parser.load(html)
+        let trs = $('table tbody tr')
 
-    let $ = parser.load(html)
-    let trs = $('table tbody tr')
+        // Not found
+        if (!trs || trs.length === 0) {
+            cb(utils.getError('NO_DATA'))
+            return
+        }
 
-    // Not found
-    if (!trs || trs.length === 0) {
-        cb(utils.getError('NO_DATA'))
-        return
+        let states = utils.tableParser(
+        trs,
+        {
+            'id': { 'idx': 1, 'mandatory': true },
+            'date': {'idx': 3, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'DD/MM/YYYY h:mm:ssa', 'en', zone).format()}},
+            'state': { 'idx': 5, 'mandatory': true }
+        },
+        elem => true)
+
+        entity = new CjahInfo({
+            id: states[0].id,
+            state: states[0].state,
+            states: states
+        })
+    } catch (error) {
+        console.log(error);
+        return cb(utils.getError('PARSER'))
     }
 
-    let states = utils.tableParser(
-    trs,
-    {
-        'id': { 'idx': 1, 'mandatory': true },
-        'date': {'idx': 3, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'DD/MM/YYYY h:mm:ssa', 'en', zone).format()}},
-        'state': { 'idx': 5, 'mandatory': true }
-    },
-    elem => true)
-
-    return new CjahInfo({
-        id: states[0].id,
-        state: states[0].state,
-        states: states
-    })
+    cb(null, entity)
 }
 
 /*
