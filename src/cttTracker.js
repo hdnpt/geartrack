@@ -48,6 +48,24 @@ ctt.getInfo = function (id, callback) {
 }
 
 
+function htmlBeautify(html){
+
+    let firstTableIdx = html.indexOf('<table class="full-width">')
+    let secondTableIdx = html.indexOf('<table class="full-width">', firstTableIdx + 1)
+
+    let secondTableEndIdx = html.indexOf('</table>', secondTableIdx)+8
+    let firstTableEndIdx = html.indexOf('</table>', secondTableEndIdx)+8
+
+    html = html.substring(firstTableIdx, firstTableEndIdx).replace(/\r/g, "").replace(/\n/g, "").replace(/\t/g, "")
+        .replace(/  /g, " ")
+        .replace(/<thead>/g, "").replace(/<\/thead>/g, "")
+        .replace(/<tr class="group"><td colspan="5">/g, "<td>")
+        .replace(/<\/tr><td>/g, "<td>")
+
+    return html
+
+}
+
 /**
  * Create ctt entity from html
  * @param id
@@ -55,67 +73,69 @@ ctt.getInfo = function (id, callback) {
  * @param cb
  */
 function createCttEntity(id, html, cb) {
-    tidy(html, function(err, htmlResult) {
-        if(err)
-            return cb(err)
 
-        let state = null
-        let messages = []
+    let state = null
+    let messages = []
 
-        try {
-            let $ = parser.load(htmlResult)
+    try {
+        html = htmlBeautify(html)
+        let $ = parser.load(html)
 
-            let table = $('table.full-width tr').get(1).children.filter(e => e.type == 'tag')
+        let table = $('table.full-width tr').get(1).children.filter(e => e.type == 'tag')
 
-            let dayAndHours = table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim()
-            state = {
-                date: moment.tz(dayAndHours, "YYYY/MM/DD HH:mm", zone).format()
-            }
-
-            if(table[4].children.length == 0) {
-                state['status'] = 'Sem estado'
-            } else {
-                if(table[4].children[0].data) {
-                    state['status'] = table[4].children[0].data.trim()
-                } else {
-                    state['status'] = table[4].children[0].children[0].data.trim()
-                }
-            }
-
-            let details = $('#details_0').find('tr')
-
-            let day = ""
-            let dayUnformated = ""
-            for(let i = 2; i < details.length; i++) {
-                let tr = details[i]
-                if(tr.attribs && tr.attribs.class == 'group') {
-                    day = tr.children[1].children[0].data.trim()
-                    dayUnformated = day.split(',')[1].trim()
-                    day = moment.tz(dayUnformated, "DD MMMM YYYY", 'pt', zone).format()
-                    messages.push({
-                        day: day,
-                        status: []
-                    })
-                } else {
-                    if(tr.children.length == 11) {
-                        let hours = tr.children[1].children[0].data.trim()
-                        let time = moment.tz(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt', zone).format()
-                        let add = {
-                            time: time,
-                            status: tr.children[3].children[0].data.trim(),
-                            local: tr.children[7].children[0].data.trim()
-                        }
-                        messages.filter(m => m.day == day)[0].status.push(add)
-                    }
-                }
-            }
-
-        } catch (error) {
-            return cb(error)
+        let dayAndHours = table[2].children[0].data.trim() + ' ' + table[3].children[0].data.trim()
+        state = {
+            date: moment.tz(dayAndHours, "YYYY/MM/DD HH:mm", zone).format()
         }
 
-        cb(null, new CttInfo(id, state, messages))
-    });
+        if(table[4].children.length == 0) {
+            state['status'] = 'Sem estado'
+        } else {
+            if(table[4].children[0].data) {
+                state['status'] = table[4].children[0].data.trim()
+            } else {
+                state['status'] = table[4].children[0].children[0].data.trim()
+            }
+        }
+
+        let details = $('#details_0').find('tr')
+
+        let day = ""
+        let dayUnformated = ""
+        let message = {}
+        for(let i = 0; i < details.length; i++) {
+            let tr = details.get(i)
+            if(tr.children.length >= 8){
+                let idxsum = 0
+
+                if(tr.children.length >= 9) {
+                    day = tr.children[0].children[0].data.trim()
+                    dayUnformated = day.split(',')[1].trim()
+                    day = moment.tz(dayUnformated, "DD MMMM YYYY", 'pt', zone).format()
+                    message = {
+                        day: day,
+                        status: []
+                    }
+                    messages.push(message)
+                    idxsum = 1
+                }
+
+                let hours = tr.children[0+idxsum].children[0].data.trim()
+                let time = moment.tz(dayUnformated + ' ' + hours, "DD MMMM YYYY HH:mm", 'pt', zone).format()
+                let add = {
+                    time: time,
+                    status: tr.children[2+idxsum].children[0].data.trim(),
+                    local: tr.children[6+idxsum].children[0].data.trim()
+                }
+                message.status.push(add)
+            }
+        }
+
+    } catch (error) {
+        return cb(error)
+    }
+
+    cb(null, new CttInfo(id, state, messages))
 
 }
 

@@ -372,6 +372,16 @@ describe('CTT', function () {
                 assert.equal(info.state.status, 'Sem estado')
                 assert.deepEqual(info.messages, [
                     {
+                        "day": "2017-05-02T00:00:00+01:00",
+                        "status": [
+                            {
+                                "time": "2017-05-02T14:41:00+01:00",
+                                "status": "Entrada em Armazém para Aplicação de Legislação",
+                                "local": "LISBOA"
+                            }
+                        ]
+                    },
+                    {
                         "day": "2017-04-26T00:00:00+01:00",
                         "status": [
                             {
