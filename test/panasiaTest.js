@@ -12,7 +12,7 @@ describe('Panasia', function() {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.states.length, 5)
+                assert.equal(info.states.length, 6)
                 assert.equal(info.country, 'PORTUGAL')
                 assert.equal(info.product, 'CORREOS')
                 assert.equal(info.orderNumber, 'A00A076170420008254')

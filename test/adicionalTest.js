@@ -5,7 +5,7 @@ const adicional = require('../src/adicionalTracker')
 describe('Adicional', function() {
     this.timeout(0)
 
-    /*describe('#Adicional', function() {
+    describe('#Adicional', function() {
         it('should extract the messages from the website with success', function(done) {
             const id = '2016122222240929', code = 1750
             adicional.getInfo(id, code, (err, info) => {
@@ -31,7 +31,7 @@ describe('Adicional', function() {
             })
 
         });
-    });*/
+    });
 
 
 });
