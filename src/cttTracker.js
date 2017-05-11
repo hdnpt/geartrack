@@ -2,7 +2,6 @@
 
 const request = require('requestretry')
 const parser = require('cheerio')
-const tidy = require('htmltidy2').tidy
 const utils = require('./utils')
 const moment = require('moment-timezone')
 const zone = "Europe/Lisbon"
