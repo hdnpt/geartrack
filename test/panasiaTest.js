@@ -16,8 +16,8 @@ describe('Panasia', function() {
                 assert.equal(info.country, 'PORTUGAL')
                 assert.equal(info.product, 'CORREOS')
                 assert.equal(info.orderNumber, 'A00A076170420008254')
-                assert.equal(info.states[0].state, 'Admitido')
-                assert.equal(info.states[0].date, '2017-04-26T00:00:00+08:00')
+                assert.equal(info.states[0].state, 'Entregado')
+                assert.equal(info.states[0].date, '2017-05-03T00:00:00+08:00')
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
