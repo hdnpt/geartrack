@@ -176,9 +176,17 @@ geartrack.panasia.getInfo(id, (err, PanasiaInfo) => {
 
     console.log(PanasiaInfo.states) // see PanasiaInfo entity for more fields
 })
+
+// Get https://parceltracking.pb.com/app/#/dashboard/
+geartrack.parcelTracker.getInfo(id, (err, ParcelTrackerInfo) => {
+	if(err) { return  }
+
+    console.log(ParcelTrackerInfo.states) // see ParcelTrackerInfo entity for more fields
+})
 ```
 
 ### Changelog
+- 16/05/2017 - Added support for Parcel Tracker
 - 26/04/2017 - Added support for Panasia, replaces sky56 for PQ ids
 - 19/04/2017 - Added support for ID.. through track.winit.com.cn
 - 19/04/2017 - Added support for SB.. through pts.cjah.co
