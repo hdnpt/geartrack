@@ -1,5 +1,4 @@
 const assert = require('chai').assert
-var should = require('chai').should();
 
 const correos = require('../src/parcelTracker')
 
