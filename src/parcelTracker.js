@@ -1,10 +1,8 @@
 'use strict';
 
 const request = require('requestretry')
-const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')
-const zone = "Europe/Madrid" // +1h
 
 const URL = 'https://parceltracking.pb.com/tracking/services/v1/track-packages/{{id}}'
 
@@ -103,11 +101,11 @@ function createParcelTrackerEntity(body) {
  |--------------------------------------------------------------------------
  */
 function ParcelTrackerInfo(obj) {
+    this.attempts = obj.attempts
     this.id = obj.id
     this.state = obj.state
-    this.state2 = obj.state2
     this.deliveryDate = obj.deliveryDate
-    this.states = obj.states.reverse()
+    this.states = obj.states,
     this.origin = obj.origin,
     this.destiny = obj.destiny
     this.trackerWebsite = "https://parceltracking.pb.com/app/#/dashboard/" + this.id
