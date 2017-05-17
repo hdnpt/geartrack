@@ -32,7 +32,7 @@ correos.getInfo = function (id, postalcode, callback) {
  * @param postalcode
  * @param cb
  */
-function obtainInfo(action, id, postalcode, cb) {
+function obtainInfo(action, id, cb) {
     request.post({
         url: action,
         form: {

@@ -50,142 +50,45 @@ This library scrapes the websites providers for shipping information.
 ```javascript
 const geartrack = require('geartrack')
 
-// Get Sky 56 info
-// Supports these ids: PQ, NL, LV, SY, GE, SB..
-geartrack.sky.getInfo(id, (err, SkyInfo) => {
+// Get [Traker] info
+// with exception of "adicional" tracker, all the trackers work like bellow:
+geartrack.[tracker].getInfo(id, (err, TrakerInfo) => {
 	if(err) { return  }
     
-    console.log(SkyInfo.status) // see SkyInfo entity for more fields
+    console.log(TrakerInfo.status) // see TrakerInfo entity for more fields
 })
 
-// Get correos express info (when the package is in spain)
-// ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
-// Postalcode is 4 digit like 1785 (Portuguese)
-geartrack.correos.getInfo(id, postalcode, (err, CorreosInfo) => {
-	if(err) { return  }
-    
-    console.log(CorreosInfo.state) // see CorreosInfo entity for more fields
-    console.log(CorreosInfo.lastUpdate) 
-})
+You just need to replace [Tracker] for one of the following available trackers:
+- correos
+- correosOld
+- sky
+- expresso24
+- singpost
+- ctt
+- cainiao
+- correoses
+- directlink
+- trackchinapost
+- postNL
+- yanwen
+- malaysiaPos
+- cjah
+- winit
+- panasia
+- parcelTracker
+- dhl
 
-// Get adicional.pt info (when the package is in portugal)
-// This info is only obtained after the correos express info
-// ID is the provided from the Correos Express, CorreosInfo.id
-// Postalcode is 4 digit like 1785
-geartrack.adicional.getInfo(id, postalcode, (err, AdicionalInfo) => {
-	if(err) { return  }
-    
-    console.log(AdicionalInfo.status) // see AdicionalInfo entity for more fields
-    console.log(AdicionalInfo.distributor) 
-})
-
-// Get expresso24.pt info (when the package is in portugal)
-// This info is only obtained after the correos express info
-// ID is the provided from the Correos Express, CorreosInfo.product.ref
-geartrack.expresso24.getInfo(id, (err, ExpressoInfo) => {
-    if(err) { return  }
-
-    console.log(ExpressoInfo.status) // see ExpressoInfo entity for more fields 
-})
-
-// Get www.singpost.com info (for aliexpress)
-geartrack.singpost.getInfo(id, (err, SingpostInfo) => {
-    if(err) { return  }
-
-    console.log(SingpostInfo.status) // see SingpostInfo entity for more fields 
-})
-
-// Get www.cttexpresso.pt info (used in aliexpress buys)
-geartrack.ctt.getInfo(id, (err, CttInfo) => {
-    if(err) { return  }
-
-    console.log(CttInfo.status) // see CttInfo entity for more fields 
-})
-
-// Get global.cainiao.com info (used in aliexpress buys)
-geartrack.cainiao.getInfo(id, (err, CainiaoInfo) => {
-    if(err) { return  }
-
-    console.log(CainiaoInfo.status) // see CainiaoInfo entity for more fields 
-})
-
-// Get correos.es info (when the package is in spain)
-// ID is the provided from Gearbest PQ4F6P07XXXXXXXX750Z
-geartrack.correoses.getInfo(id, (err, CorreosESInfo) => {
+// Get adicional info
+geartrack.adicional.getInfo(id, postalcode, (err, TrakerInfo) => {
 	if(err) { return  }
 
-    console.log(CorreosESInfo.state) // see CorreosESInfo entity for more fields
+    console.log(TrakerInfo.status) // see TrakerInfo entity for more fields
 })
 
-// Get directlink info
-// ID is the provided from AliExpress R..SE
-geartrack.directlink.getInfo(id, (err, DirectLinkInfo) => {
-	if(err) { return  }
-
-    console.log(DirectLinkInfo.state) // see DirectLinkInfo entity for more fields
-})
-
-// Get track-chinapost.com info
-// ID is the provided from AliExpress R..CN
-geartrack.trackchinapost.getInfo(id, (err, TrackChinaPostInfo) => {
-	if(err) { return  }
-
-    console.log(TrackChinaPostInfo.state) // see TrackChinaPostInfo entity for more fields
-})
-
-// Get postNL.com info
-// ID is the provided from AliExpress R..NL
-geartrack.postNL.getInfo(id, (err, PostNLInfo) => {
-	if(err) { return  }
-
-    console.log(PostNLInfo.state) // see PostNLInfo entity for more fields
-})
-
-// Get Yanwen.com.cn info
-// ID is the provided from Ebay
-geartrack.yanwen.getInfo(id, (err, YanwenInfo) => {
-	if(err) { return  }
-
-    console.log(YanwenInfo.state) // see YanwenInfo entity for more fields
-})
-
-// Get http://www.pos.com.my/ info
-geartrack.malaysiaPos.getInfo(id, (err, MalaysiaPosInfo) => {
-	if(err) { return  }
-
-    console.log(MalaysiaPosInfo.state) // see MalaysiaPosInfo entity for more fields
-})
-
-// Get http://pts.cjah.co/ info
-geartrack.cjah.getInfo(id, (err, CjahInfo) => {
-	if(err) { return  }
-
-    console.log(CjahInfo.state) // see CjahInfo entity for more fields
-})
-
-// Get http://pts.cjah.co/ info
-geartrack.winit.getInfo(id, (err, WinitInfo) => {
-	if(err) { return  }
-
-    console.log(WinitInfo.state) // see WinitInfo entity for more fields
-})
-
-// Get http://www.faryaa.com/user/index/package-refer/type/track
-geartrack.panasia.getInfo(id, (err, PanasiaInfo) => {
-	if(err) { return  }
-
-    console.log(PanasiaInfo.states) // see PanasiaInfo entity for more fields
-})
-
-// Get https://parceltracking.pb.com/app/#/dashboard/
-geartrack.parcelTracker.getInfo(id, (err, ParcelTrackerInfo) => {
-	if(err) { return  }
-
-    console.log(ParcelTrackerInfo.states) // see ParcelTrackerInfo entity for more fields
-})
 ```
 
 ### Changelog
+- 17/05/2017 - Added support for DHL
 - 16/05/2017 - Added support for Parcel Tracker
 - 26/04/2017 - Added support for Panasia, replaces sky56 for PQ ids
 - 19/04/2017 - Added support for ID.. through track.winit.com.cn

@@ -8,7 +8,7 @@ describe('Correos Express', function() {
     describe('#Correos Express', function() {
         it('should extract the messages from the website with success', function(done) {
             const id = 'PQ4F6P0705905960188365S', code = 1750
-            correos.getInfo(id, code, (err, info) => {
+            correos.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0705905960188365S')
@@ -27,7 +27,7 @@ describe('Correos Express', function() {
 
         it('should extract the messages from the website with success and deliveryDate', function(done) {
             const id = 'PQ4F6P0705248940181750G', code = 1750
-            correos.getInfo(id, code, (err, info) => {
+            correos.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'PQ4F6P0705248940181750G')
@@ -86,7 +86,7 @@ describe('Correos Express', function() {
 
         it('should fail to extract', function(done) {
             const id = 'PQ4F6P070524894018175000000G', code = 1750
-            correos.getInfo(id, code, (err, info) => {
+            correos.getInfo(id, (err, info) => {
                 assert.isNotNull(err)
 
                 done()

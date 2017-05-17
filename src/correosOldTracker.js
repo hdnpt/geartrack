@@ -21,8 +21,8 @@ const correos = {}
  * @param postalcode
  * @param cb(Error, CorreosInfo)
  */
-correos.getInfo = function (id, postalcode, cb) {
-    request(sprintf(URL, postalcode, id), function (error, response, body) {
+correos.getInfo = function (id, cb) {
+    request(sprintf(URL, id), function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
             return
@@ -51,7 +51,7 @@ correos.getInfo = function (id, postalcode, cb) {
  * Create correos entity from html
  * @param html
  */
-function createCorreosEntity(html, id, postalcode) {
+function createCorreosEntity(html, id) {
     let $ = parser.load(html)
 
     let states = []
