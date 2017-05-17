@@ -77,6 +77,7 @@ You just need to replace [Tracker] for one of the following available trackers:
 - panasia
 - parcelTracker
 - dhl
+- track24
 
 // Get adicional info
 geartrack.adicional.getInfo(id, postalcode, (err, TrakerInfo) => {
@@ -88,6 +89,7 @@ geartrack.adicional.getInfo(id, postalcode, (err, TrakerInfo) => {
 ```
 
 ### Changelog
+- 17/05/2017 - Added support for track24
 - 17/05/2017 - Added support for DHL
 - 16/05/2017 - Added support for Parcel Tracker
 - 26/04/2017 - Added support for Panasia, replaces sky56 for PQ ids
