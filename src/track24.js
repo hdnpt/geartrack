@@ -10,7 +10,7 @@ const URL = 'https://track24.net/ajax/tracking.ajax.php'
 const exportModule = {}
 
 /**
- * Get DHL tracker info
+ * Get Track24 tracker info
  * Async
  *
  * Design changes may break this code!!
@@ -43,10 +43,14 @@ function obtainInfo(action, id, cb) {
         }
 
         const data = JSON.parse(body)
-        if (data.status == undefined || data.status != 'ok' ) {
+        if (data.status == undefined ||
+            data.status != 'ok' ||
+            (data.data.events.length == 1 &&
+            data.data.events[0].operationAttributeTranslated == 'The track code is added to the database Track24.ru for automatic monitoring.')) {
             cb(utils.getError('NO_DATA'))
             return
         }
+
         data.gearTrackID = id
 
         let entity = null
@@ -57,7 +61,7 @@ function obtainInfo(action, id, cb) {
             return cb(utils.getError('PARSER'))
         }
 
-        if(entity != null) cb(null, entity)
+        if (entity != null) cb(null, entity)
     })
 }
 
@@ -81,6 +85,10 @@ function createTrackerEntity(data) {
                 area: elem.operationPlaceNameTranslated,
                 service: elem.serviceName
             }
+        }).filter(state => {
+            if (state.state == 'The track code is added to the database Track24.ru for automatic monitoring.')
+                return false
+            return true
         })
     })
 }
@@ -95,7 +103,7 @@ function TrackerInfo(obj) {
     this.id = obj.id
     this.states = obj.states
     this.origin = obj.origin,
-    this.destiny = obj.destiny
+        this.destiny = obj.destiny
     this.trackerWebsite = "https://track24.net/?code=" + this.id
 }
 

@@ -31,6 +31,17 @@ describe('Track 24', function() {
             })
 
         });
+
+        it('should remove the default state', function(done) {
+            const id = 'BZ012761244CN'
+            correos.getInfo(id, (err, info) => {
+                assert.isNotNull(err)
+                // should remove the "The track code is added to the database Track24.ru for automatic monitoring."
+
+                done()
+            })
+
+        });
     });
 
 

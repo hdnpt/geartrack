@@ -22,7 +22,7 @@ const correos = {}
  * @param cb(Error, CorreosInfo)
  */
 correos.getInfo = function (id, cb) {
-    request(sprintf(URL, id), function (error, response, body) {
+    request(sprintf(URL, utils.getPostalCode(id), id), function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
             return
@@ -36,7 +36,7 @@ correos.getInfo = function (id, cb) {
 
         let entity = null
         try {
-            entity = createCorreosEntity(body, id, postalcode)
+            entity = createCorreosEntity(body, id)
             entity.retries = response.attempts
         } catch (error) {
             console.log(error);
@@ -88,8 +88,7 @@ function createCorreosEntity(html, id) {
         'ref': $('#reference').val(),
         'observations': $('#observations').val(),
         'states': states,
-        'id': id,
-        'postalcode': postalcode
+        'id': id
     })
 }
 

@@ -6,7 +6,7 @@ const moment = require('moment-timezone')
 
 const URL = 'https://parceltracking.pb.com/tracking/services/v1/track-packages/{{id}}'
 
-const correos = {}
+const pitney = {}
 
 /**
  * Get parcel tracker info
@@ -16,7 +16,7 @@ const correos = {}
  * @param id
  * @param callback(Error, ParcelTrackerInfo)
  */
-correos.getInfo = function (id, callback) {
+pitney.getInfo = function (id, callback) {
     obtainInfo(URL.replace("{{id}}", id), callback)
 }
 
@@ -30,7 +30,7 @@ correos.getInfo = function (id, callback) {
 function obtainInfo(action, cb) {
     request.get({
         url: action,
-        timeout: 30000,
+        timeout: 20000,
         strictSSL: false
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
@@ -111,4 +111,4 @@ function ParcelTrackerInfo(obj) {
     this.trackerWebsite = "https://parceltracking.pb.com/app/#/dashboard/" + this.id
 }
 
-module.exports = correos
+module.exports = pitney
