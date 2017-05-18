@@ -22,7 +22,7 @@ const cjah = {}
 cjah.getInfo = function (id, cb) {
     request.get({
         url: URL.replace('{{id}}', id),
-        timeout: 30000
+        timeout: 20000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
