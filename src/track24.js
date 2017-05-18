@@ -89,6 +89,14 @@ function createTrackerEntity(data) {
             if (state.state == 'The track code is added to the database Track24.ru for automatic monitoring.')
                 return false
             return true
+        }).sort((a, b) => {
+            let dateA = moment(a.date),
+                dateB = moment(b.date)
+
+            if (dateA.isBefore(dateB))
+                return 1
+
+            return -1
         })
     })
 }
