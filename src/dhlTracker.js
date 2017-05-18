@@ -71,10 +71,11 @@ function createTrackerEntity(data) {
         origin: result.origin.value,
         destiny: result.destination.value,
         states: result.checkpoints.map((elem) => {
+            let date = elem.date.trim() + " " + elem.time.trim()
             return {
-                state: elem.description,
-                date: moment.tz(elem.date + elem.time, "LLLL", 'pt', zone),
-                area: elem.location
+                state: elem.description.trim(),
+                date: moment.tz(date, "dddd, MMMM DD, YYYY HH:mm", 'pt', zone),
+                area: elem.location.trim()
             }
         })
     })
