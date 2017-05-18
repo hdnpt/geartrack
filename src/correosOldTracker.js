@@ -129,7 +129,7 @@ function CorreosInfo(obj) {
     //States
     this.states = obj.states.reverse()
 
-    this.trackerWebsite = sprintf(URL, obj.postalcode, obj.id)
+    this.trackerWebsite = sprintf(URL, utils.getPostalCode(obj.id), obj.id)
 }
 
 module.exports = correos
