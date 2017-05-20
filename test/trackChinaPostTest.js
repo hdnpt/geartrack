@@ -127,5 +127,17 @@ describe('TrackChinaPost', function () {
             })
 
         });
+
+        it('should fail to extract - max 13 digits', function (done) {
+            this.retries(6);
+
+            const id = '2017180588830171916924'
+            trackChinaPost.getInfo(id, (err, info) => {
+                assert.isNotNull(err)
+
+                done()
+            })
+
+        });
     });
 });

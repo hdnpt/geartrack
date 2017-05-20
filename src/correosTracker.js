@@ -17,11 +17,10 @@ const correos = {}
  *
  * Design changes may break this code!!
  * @param id
- * @param postalcode
  * @param callback(Error, CorreosInfo)
  */
-correos.getInfo = function (id, postalcode, callback) {
-    obtainInfo(URL, id, postalcode, callback)
+correos.getInfo = function (id, callback) {
+    obtainInfo(URL, id, callback)
 }
 
 /**
@@ -32,7 +31,7 @@ correos.getInfo = function (id, postalcode, callback) {
  * @param postalcode
  * @param cb
  */
-function obtainInfo(action, id, postalcode, cb) {
+function obtainInfo(action, id, cb) {
     request.post({
         url: action,
         form: {

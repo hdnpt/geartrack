@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 3, retryDelay: 500})
+const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 1, retryDelay: 500})
 const sprintf = require('sprintf')
 const utils = require('./utils')
 const moment = require('moment-timezone')

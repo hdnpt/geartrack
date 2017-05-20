@@ -1,6 +1,6 @@
 const assert = require('chai').assert
 
-const correos = require('../src/parcelTracker')
+const pitney = require('../src/pitneybowesTracker')
 
 describe('Parcel Tracker', function() {
     this.timeout(0)
@@ -8,7 +8,7 @@ describe('Parcel Tracker', function() {
     describe('#Parcel Tracker', function() {
         it('should extract the messages from API with success', function(done) {
             const id = 'UPAAA000000218364455'
-            correos.getInfo(id, (err, info) => {
+            pitney.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
                 assert.equal(info.id, 'UPAAA000000218364455')
@@ -27,7 +27,7 @@ describe('Parcel Tracker', function() {
 
         it('should fail to extract', function(done) {
             const id = 'UPAAA000000'
-            correos.getInfo(id, (err, info) => {
+            pitney.getInfo(id, (err, info) => {
                 assert.isNotNull(err)
 
                 done()
