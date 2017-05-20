@@ -42,7 +42,14 @@ function obtainInfo(action, id, cb) {
             return
         }
 
-        const data = JSON.parse(body)
+        let data = null
+        try {
+            data = JSON.parse(body)
+        } catch (error) {
+            console.log(error);
+            return cb(utils.getError('PARSER'))
+        }
+
         if (data.status == undefined ||
             data.status != 'ok' ||
             (data.data.events.length == 1 &&

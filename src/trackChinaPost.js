@@ -42,7 +42,7 @@ directLink.getInfo = function (id, callback, _try = 0) {
             return setTimeout(directLink.getInfo, 2000, id, callback, ++_try)
         }
 
-        if (body.indexOf('is invalid') != -1) {
+        if (body.indexOf('is invalid') != -1 || body.indexOf('can not be longer than 13') != -1) {
             return callback(utils.getError('NO_DATA'))
         }
 
