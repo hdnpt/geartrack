@@ -6,6 +6,7 @@ const moment = require('moment-timezone')
 const zone = "GMT"
 
 const URL = 'https://track24.net/ajax/tracking.ajax.php'
+const URL_PROXY = '/ajax/tracking.ajax.php'
 
 const exportModule = {}
 
@@ -19,6 +20,10 @@ const exportModule = {}
  */
 exportModule.getInfo = function (id, callback) {
     obtainInfo(URL, id, callback)
+}
+
+exportModule.getInfoProxy = function (id, proxy, callback) {
+    obtainInfo(proxy + URL_PROXY, id, callback)
 }
 
 /**
