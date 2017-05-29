@@ -102,9 +102,13 @@ function createWinitEntity(id, html) {
     let states = utils.tableParser(
         lines,
         {
-            'date': {'idx': 2, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'YYYY-MM-DD HH:mm:ss', 'en', zone).format()}},
-            'state': { 'idx': 3, 'mandatory': true },
-            'area': { 'idx': 4, 'mandatory': true }
+            'date': {
+                'idx': 2, 'mandatory': true, 'parser': elem => {
+                    return moment.tz(elem, 'YYYY-MM-DD HH:mm:ss', 'en', zone).format()
+                }
+            },
+            'state': {'idx': 3, 'mandatory': true},
+            'area': {'idx': 4, 'mandatory': false}
         },
         elem => true)
 
