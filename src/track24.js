@@ -38,7 +38,8 @@ function obtainInfo(action, id, cb) {
         url: action,
         form: {
             code: id,
-            lng: 'en'
+            lng: 'en',
+            type: 'update'
         },
         timeout: 30000
     }, function (error, response, body) {
