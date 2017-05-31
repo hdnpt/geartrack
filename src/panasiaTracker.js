@@ -75,7 +75,7 @@ function createPanasiaEntity(html, id) {
 
     for(let i = 0; i < td44.length; ++i) {
         let s = td44[i].children[0].data
-        states.push(s.replace('，', ', '))
+        states.push(s.replace('，', ', ').replace('En tr?nsito', 'En transito'))
     }
 
     let finalStates = []

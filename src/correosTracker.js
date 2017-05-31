@@ -37,7 +37,7 @@ function obtainInfo(action, id, cb) {
         form: {
             shippingNumber: id
         },
-        timeout: 30000
+        timeout: 10000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
