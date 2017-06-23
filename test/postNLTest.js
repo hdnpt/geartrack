@@ -53,7 +53,21 @@ describe('PostNL', function () {
                 console.log(id + ' attempts: ' + info.retries + ' busy_count: ' + info.busy_count)
                 done()
             })
+        });
 
+        it('should be ok', function (done) {
+            const id = 'RS882674034NL'
+            postNL.getInfo(id, (err, info) => {
+                assert.isNotNull(info)
+                assert.isNull(err)
+
+                assert.equal(info.id, 'RS882674034NL')
+                assert.equal(info.states[info.states.length-1].state, 'The item is pre-advised')
+                assert.isAtLeast(info.states.length, 1)
+
+                console.log(id + ' attempts: ' + info.retries + ' busy_count: ' + info.busy_count)
+                done()
+            })
         });
 
         it('should fail to extract', function (done) {

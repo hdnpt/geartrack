@@ -48,7 +48,11 @@ function lineParser(elem, fields) {
                 if (fields[key].parser) {
                     line[key] = fields[key].parser(elem.children[fields[key].idx].children[0].data.trim())
                 } else {
-                    line[key] = elem.children[fields[key].idx].children[0].data.trim()
+                    if(line[key] = elem.children[fields[key].idx].children.length > 0){
+                        line[key] = elem.children[fields[key].idx].children[0].data.trim()
+                    } else {
+                        line[key] = "" // we dont have the field :/ is an empty tag
+                    }
                 }
             }
         })

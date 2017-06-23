@@ -5,7 +5,7 @@ const utils = require('./utils')
 const moment = require('moment-timezone')
 const zone = "GMT"
 
-const URL = 'https://track24.net/ajax/tracking.ajax.php'
+const URL = 'https://track24.net/ajax/tracking100500.ajax.php'
 
 const exportModule = {}
 
@@ -15,10 +15,14 @@ const exportModule = {}
  *
  * Design changes may break this code!!
  * @param id
- * @param callback(Error, DHLTrackerInfo)
+ * @param callback(Error, Track24TrackerInfo)
  */
 exportModule.getInfo = function (id, callback) {
     obtainInfo(URL, id, callback)
+}
+
+exportModule.getInfoProxy = function (id, proxyUrl, callback) {
+    obtainInfo(proxyUrl, id, callback)
 }
 
 /**
@@ -33,9 +37,11 @@ function obtainInfo(action, id, cb) {
         url: action,
         form: {
             code: id,
-            lng: 'en'
+            lng: 'en',
+            type: 'update'
         },
-        timeout: 30000
+        timeout: 20000,
+        maxAttempts: 1,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))

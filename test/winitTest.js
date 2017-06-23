@@ -52,6 +52,20 @@ describe('Winit Tracking and Trace', function() {
 
         });
 
+        it('should extract the messages from the website with success 2', function(done) {
+            const id = 'ID18130739928357CN'
+            winit.getInfo(id, (err, info) => {
+                assert.isNull(err)
+
+                assert.equal(info.id, id)
+                assert.isAtLeast(info.states.length, 7)
+
+                console.log(id + ' attempts: ' + info.retries)
+                done()
+            })
+
+        });
+
         it('should fail to extract', function(done) {
             const id = 'safafsa'
             winit.getInfo(id, (err, info) => {
