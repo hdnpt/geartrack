@@ -15,7 +15,8 @@
     "directlink"
   ],
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "parallel": "mocha-parallel-tests test --max-parallel 5"
   },
   "author": "Carlos Florencio <Carlos Florencio>",
   "license": "MIT",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.4.2",
+    "mocha-parallel-tests": "^1.2.9"
   }
 }

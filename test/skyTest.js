@@ -312,60 +312,19 @@ describe('Sky 56', function() {
     });
 
     describe('#Switzerland Post Unregistered', function() {
-        it('should extract the messages from the website with success', function(done) {
+        it('should extract the messages from the website with success 1', function(done) {
             const id = 'GEGMY00054570'
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
                 assert.equal(info.id, id)
-                assert.equal(info.messages, null)
-                assert.deepEqual(info.status, [
-                    {
-                        "area": "PORTUGAL",
-                        "status": "The transfer of customs",
-                        "date": "2017-03-24T14:44:00+08:00"
-                    },
-                    {
-                        "area": "PORTUGAL",
-                        "status": "Arrived",
-                        "date": "2017-03-24T11:04:00+08:00"
-                    },
-                    {
-                        "area": "Transit Center",
-                        "status": "Left hand navigation",
-                        "date": "2017-03-12T11:04:00+08:00"
-                    },
-                    {
-                        "area": "Exchange Bureau",
-                        "status": "Have been exported directly",
-                        "date": "2017-03-12T05:30:00+08:00"
-                    },
-                    {
-                        "area": "Exchange Bureau",
-                        "status": "Have been exported to open",
-                        "date": "2017-03-11T11:27:00+08:00"
-                    },
-                    {
-                        "area": "Small package Center",
-                        "status": "Left",
-                        "date": "2017-03-10T03:27:00+08:00"
-                    },
-                    {
-                        "area": "Parcel centre",
-                        "status": "Sealing",
-                        "date": "2017-03-10T01:54:00+08:00"
-                    },
-                    {
-                        "area": "Small package Center",
-                        "status": "Receive",
-                        "date": "2017-03-09T22:54:00+08:00"
-                    },
-                    {
-                        "area": "Electronic information",
-                        "status": "Receive",
-                        "date": "2017-03-09T20:54:00+08:00"
-                    }
-                ])
+                assert.isAtLeast(info.status.length, 9) // number of states at this time
+
+                // assert the first state
+                let states = info.status.reverse() // order from the oldest state to the newest
+                assert.equal(states[0].area, "Electronic information")
+                assert.include(states[0].date, "2017-03-09") // only date because timezone
+                assert.equal(states[0].status, "Receive")
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
@@ -373,15 +332,25 @@ describe('Sky 56', function() {
 
         });
 
-        it('should extract the messages from the website with success', function(done) {
+        it('should extract the messages from the website with success 2', function(done) {
             const id = 'SB3000050456'
             sky.getInfo(id, (err, info) => {
                 assert.isNull(err)
 
-                assert.equal(info.messages, null)
+                assert.equal(info.id, id)
+                assert.isAtLeast(info.status.length, 7) // number of states at this time
 
-                assert(info.status.length >= 5)
-                assert.equal(info.status[0].area, 'PORTUGAL')
+                // assert the first state
+                let states = info.status.reverse() // order from the oldest state to the newest
+                assert.equal(states[0].area, "Parcel centre")
+                assert.include(states[0].date, "2017-03-14") // only date because timezone
+                assert.equal(states[0].status, "Sealing")
+
+                assert.isAtLeast(info.messages.length, 6)
+                let messages = info.messages.reverse() // order from the oldest state to the newest
+                assert.equal(messages[0].area, "")
+                assert.include(messages[0].date, "2017-03-17") // only date because timezone
+                assert.equal(messages[0].status, "Pre-Check to PORTUGAL")
 
                 console.log(id + ' attempts: ' + info.retries)
                 done()
