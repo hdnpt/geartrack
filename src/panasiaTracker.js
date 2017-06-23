@@ -28,7 +28,7 @@ panasia.getInfo = function (id, cb) {
         }
 
         // Not found
-        if (body.indexOf('Order does not exist') != -1) {
+        if (body.indexOf('Order does not exist') != -1 || body.indexOf('one-parcel') == -1) {
             cb(utils.getError('NO_DATA'))
             return
         }

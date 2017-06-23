@@ -58,6 +58,7 @@ directLink.getItemNumber = function(id, callback) {
             let endIdx = body.indexOf('"', idx)
 
             if(idx == -1 || endIdx == -1) {
+                console.log(id, error)
                 return callback(utils.getError('PARSER'))
             }
 
@@ -66,6 +67,7 @@ directLink.getItemNumber = function(id, callback) {
 
             return callback(null, item)
         } catch (error) {
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 
@@ -118,7 +120,7 @@ function getByItemNumber(id, callback) {
                 })
                 entity.retries = response.attempts
             } catch (error) {
-                console.log(error);
+                console.log(id, error)
                 return callback(utils.getError('PARSER'))
             }
 

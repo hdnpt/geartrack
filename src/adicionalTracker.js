@@ -44,7 +44,7 @@ adicional.getInfo = function (id, postcode, callback) {
                 entity.retries = response.attempts
 
             } catch (error) {
-                console.log(error);
+                console.log(id, error)
                 return callback(utils.getError('PARSER'))
             }
 

@@ -35,6 +35,16 @@ describe('Panasia', function() {
             })
 
         });
+
+        it('empty website, should return no data', function(done) {
+            const id = 'PQ4F6P0707716180184715Y'
+            panasia.getInfo(id, (err, info) => {
+                assert.isNotNull(err)
+
+                done()
+            })
+
+        });
     });
 
 

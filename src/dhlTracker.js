@@ -18,7 +18,7 @@ const exportModule = {}
  * @param callback(Error, DHLTrackerInfo)
  */
 exportModule.getInfo = function (id, callback) {
-    obtainInfo(URL.replace("{{id}}", id), callback)
+    obtainInfo(id, URL.replace("{{id}}", id), callback)
 }
 
 /**
@@ -28,7 +28,7 @@ exportModule.getInfo = function (id, callback) {
  * @param id
  * @param cb
  */
-function obtainInfo(action, cb) {
+function obtainInfo(id, action, cb) {
     request.get({
         url: action,
         timeout: 20000
@@ -48,7 +48,7 @@ function obtainInfo(action, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 

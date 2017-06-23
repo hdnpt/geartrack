@@ -52,7 +52,7 @@ cainiao.getInfo = function (id, callback) {
             entity = createCainiaoEntity(id, val)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

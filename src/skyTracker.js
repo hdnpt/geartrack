@@ -53,7 +53,7 @@ sky.getInfo = function (id, callback) {
 
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

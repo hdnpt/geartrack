@@ -37,8 +37,10 @@ ctt.getInfo = function (id, callback) {
         }
 
         createCttEntity(id, body, (err, result) => {
-            if(err)
+            if(err) {
+                console.log(id, error)
                 return callback(utils.getError('PARSER'))
+            }
 
             result.retries = response.attempts
             callback(null, result)

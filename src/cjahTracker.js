@@ -29,17 +29,18 @@ cjah.getInfo = function (id, cb) {
             return
         }
 
-        createCjahEntity(body, cb)
+        createCjahEntity(id, body, cb)
     })
 }
 
 
 /**
  * Create cjah entity from html
+ * @param id
  * @param html
  * @param cb
  */
-function createCjahEntity(html, cb) {
+function createCjahEntity(id, html, cb) {
     let entity = null
     try {
         let $ = parser.load(html)
@@ -66,7 +67,7 @@ function createCjahEntity(html, cb) {
             states: states
         })
     } catch (error) {
-        console.log(error);
+        console.log(id, error)
         return cb(utils.getError('PARSER'))
     }
 

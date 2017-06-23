@@ -39,7 +39,7 @@ correos.getInfo = function (id, cb) {
             entity = createCorreosEntity(body, id)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 
