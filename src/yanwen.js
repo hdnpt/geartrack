@@ -50,7 +50,7 @@ yanwen.getInfo = function (id, callback, _try = 0) {
             entity.retries = response.attempts
             entity.busy_count = _try
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

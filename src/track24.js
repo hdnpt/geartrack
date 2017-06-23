@@ -70,7 +70,7 @@ function obtainInfo(action, id, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 

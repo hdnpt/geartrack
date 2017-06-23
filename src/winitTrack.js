@@ -36,6 +36,7 @@ winit.getInfo = function (id, callback) {
         let $ = parser.load(html)
         let hidden = $('input[name="__hash__"]');
         if (!hidden) {
+            console.log(id, error)
             callback(utils.getError('PARSER'))
             return
         }
@@ -82,7 +83,7 @@ function obtainInfo(action, id, hash, cb) {
                 trs[1].children[0].children[0].data,
                 $('.center_table table tbody tr td a.poptips')[0].attribs['data-id'])
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 
