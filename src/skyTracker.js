@@ -25,7 +25,14 @@ sky.getInfo = function (id, callback) {
             return callback(utils.getError('DOWN'))
         }
 
-        const json = JSON.parse(body)
+        let json = null
+        try {
+            json = JSON.parse(body)
+        } catch (e) {
+            console.log(id, error)
+            return callback(utils.getError('PARSER'))
+        }
+
 
         // Not found
         if (json.message.indexOf('No result found for your query.') != -1) {
