@@ -24,7 +24,6 @@
     "bluebird": "^3.5.0",
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
-    "htmltidy2": "^0.2.1",
     "moment-timezone": "^0.5.11",
     "request": "^2.81.0",
     "requestretry": "^1.12.0",
