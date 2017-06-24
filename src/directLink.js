@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
+const request = require('requestretry').defaults({ maxAttempts: 2, retryDelay: 1000 })
 const sprintf = require('sprintf')
 const utils = require('./utils')
 const moment = require('moment-timezone')
@@ -26,7 +26,7 @@ directLink.getInfo = function (id, callback) {
     if (/Q.+XX$/.test(id)) { // order number Q24324234XX
         // get the item number from the order number
 
-        this.getItemNumber(id, (err, item) => {
+        directLink.getItemNumber(id, (err, item) => {
             if(err)
                 return callback(err)
 

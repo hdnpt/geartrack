@@ -1,7 +1,7 @@
 'use strict';
 
 const sprintf = require('sprintf')
-const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
+const request = require('requestretry').defaults({ maxAttempts: 2, retryDelay: 1000 })
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')

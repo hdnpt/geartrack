@@ -38,7 +38,7 @@ function obtainInfo(action, id, cb) {
         form: {
             trackingNo03: id
         },
-        timeout: 30000
+        timeout: 20000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))

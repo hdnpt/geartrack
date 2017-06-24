@@ -25,7 +25,7 @@ const winit = {}
 winit.getInfo = function (id, callback) {
     request.get({
         url: URL,
-        timeout: 30000,
+        timeout: 20000,
         jar: j
     }, function (error, response, html) {
         if (error || response.statusCode != 200) {

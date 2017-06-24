@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry')
+const request = require('request')
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')

@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 3, retryDelay: 500})
+const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 2, retryDelay: 500})
 const parser = require('cheerio')
 const utils = require('./utils')
 const sprintf = require('sprintf')

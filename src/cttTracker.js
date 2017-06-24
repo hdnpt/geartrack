@@ -22,8 +22,8 @@ const ctt = {}
 ctt.getInfo = function (id, callback) {
     request.get({
         url: URL + id,
-        timeout: 30000,
-        maxAttempts: 3,
+        timeout: 10000,
+        maxAttempts: 2,
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {

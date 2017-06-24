@@ -27,7 +27,7 @@ directLink.getInfo = function (id, callback, _try = 0) {
         form: {
             order_no: id
         },
-        timeout: 30000
+        timeout: 20000
     }, function (error, response, body) {
         if (error) {
             console.log('error:', error)

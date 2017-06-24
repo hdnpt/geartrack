@@ -27,8 +27,8 @@ singpost.getInfo = function (id, callback) {
             op: "Check item status",
             captoken: "",
         },
-        timeout: 30000,
-        maxAttempts: 3,
+        timeout: 20000,
+        maxAttempts: 2,
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {

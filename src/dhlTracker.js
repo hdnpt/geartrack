@@ -31,7 +31,8 @@ exportModule.getInfo = function (id, callback) {
 function obtainInfo(id, action, cb) {
     request.get({
         url: action,
-        timeout: 20000
+        timeout: 10000,
+        maxAttempts: 2
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
@@ -74,7 +75,7 @@ function createTrackerEntity(data) {
             let date = elem.date.trim() + " " + elem.time.trim()
             return {
                 state: elem.description.trim(),
-                date: moment.tz(date, "dddd, MMMM DD, YYYY HH:mm", 'pt', zone),
+                date: moment.tz(date, "dddd, MMMM DD, YYYY HH:mm", 'pt', zone).format(),
                 area: elem.location.trim()
             }
         })
