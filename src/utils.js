@@ -40,10 +40,47 @@ module.exports.getPostalCode = function (id) {
     return code
 }
 
+/**
+ * Parse values from table rows
+ *
+ * @param trs table rows to parse an array or an object returned by cheerio
+ *            must an each(function(i, elem)) or forEach(function(elem))
+ * @param fields object which keys are the name of the fields returned,
+ *               value is an object with the field index and parser function(elem)
+ * @param elemValidation function that should return true if tr is to process, true by default
+ *
+ * Example:
+ *
+ * const states = tableParser(trs, {
+ *                  date: {
+ *                      idx: 3,
+ *                      mandatory: true
+ *                   },
+ *                }, e => true) // default is already true
+ *
+ * @returns [] Array of lines objects
+ */
+module.exports.tableParser = function (trs, fields, elemValidation = e => true) {
+    let lines = []
+
+    let _lineParser = (elem, fields) => {
+        if (elemValidation(elem)) lines.push(lineParser(elem, fields))
+    }
+
+    if (trs.each) {
+        trs.each((i, elem) => _lineParser(elem, fields))
+    } else if (trs.forEach) {
+        trs.forEach(elem => _lineParser(elem, fields))
+    }
+
+    return lines;
+}
+
 function lineParser(elem, fields) {
     if (elem.children !== undefined) {
         let line = {}
-        Object.keys(fields).forEach(function (key) {
+        let keys = Object.keys(fields)
+        keys.forEach(function (key) {
             if (elem.children[fields[key].idx] || fields[key].mandatory) {
                 if (fields[key].parser) {
                     line[key] = fields[key].parser(elem.children[fields[key].idx].children[0].data.trim())
@@ -58,31 +95,6 @@ function lineParser(elem, fields) {
         })
         return line
     }
-}
-
-/**
- * Parse values from table rows
- *
- * @param trs table rows to parse an array or an object returned by cheerio
- *      must an each(function(i, elem)) or forEach(function(elem))
- * @param fields associative array, key are the name of the field returned, value is an object with the field index and parser function(elem)
- * @param trValidation function should return true if tr is to process
- * @returns {[]} of lines
- */
-module.exports.tableParser = function (trs, fields, elemValidation) {
-    let lines = []
-
-    let _lineParser = (elem, fields) => {
-        if (elemValidation(elem)) lines.push(lineParser(elem, fields))
-    }
-
-    if (trs.each) {
-        trs.each((i, elem) => _lineParser(elem, fields))
-    } else if (trs.forEach) {
-        trs.forEach(elem => _lineParser(elem, fields))
-    }
-
-    return lines;
 }
 
 /**
