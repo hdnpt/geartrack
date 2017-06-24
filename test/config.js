@@ -1,0 +1,1 @@
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000; // 60 seconds timeout

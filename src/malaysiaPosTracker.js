@@ -38,7 +38,7 @@ function obtainInfo(action, id, cb) {
         form: {
             trackingNo03: id
         },
-        timeout: 30000
+        timeout: 20000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
@@ -55,7 +55,7 @@ function obtainInfo(action, id, cb) {
         try {
             entity = createMalaysiaPosEntity(body)
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 

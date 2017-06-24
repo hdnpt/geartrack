@@ -24,8 +24,8 @@ const cainiao = {}
 cainiao.getInfo = function (id, callback) {
     request.get({
         url: URL + id,
-        timeout: 20000,
-        maxAttempts: 3,
+        timeout: 10000,
+        maxAttempts: 2,
         retryDelay: 500,
         pool: false,
         agent: false,
@@ -52,7 +52,7 @@ cainiao.getInfo = function (id, callback) {
             entity = createCainiaoEntity(id, val)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

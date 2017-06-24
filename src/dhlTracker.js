@@ -18,7 +18,7 @@ const exportModule = {}
  * @param callback(Error, DHLTrackerInfo)
  */
 exportModule.getInfo = function (id, callback) {
-    obtainInfo(URL.replace("{{id}}", id), callback)
+    obtainInfo(id, URL.replace("{{id}}", id), callback)
 }
 
 /**
@@ -28,10 +28,11 @@ exportModule.getInfo = function (id, callback) {
  * @param id
  * @param cb
  */
-function obtainInfo(action, cb) {
+function obtainInfo(id, action, cb) {
     request.get({
         url: action,
-        timeout: 20000
+        timeout: 10000,
+        maxAttempts: 2
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
@@ -48,7 +49,7 @@ function obtainInfo(action, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 
@@ -74,7 +75,7 @@ function createTrackerEntity(data) {
             let date = elem.date.trim() + " " + elem.time.trim()
             return {
                 state: elem.description.trim(),
-                date: moment.tz(date, "dddd, MMMM DD, YYYY HH:mm", 'pt', zone),
+                date: moment.tz(date, "dddd, MMMM DD, YYYY HH:mm", 'pt', zone).format(),
                 area: elem.location.trim()
             }
         })

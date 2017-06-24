@@ -22,8 +22,8 @@ const ctt = {}
 ctt.getInfo = function (id, callback) {
     request.get({
         url: URL + id,
-        timeout: 30000,
-        maxAttempts: 3,
+        timeout: 10000,
+        maxAttempts: 2,
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
@@ -37,8 +37,10 @@ ctt.getInfo = function (id, callback) {
         }
 
         createCttEntity(id, body, (err, result) => {
-            if(err)
+            if(err) {
+                console.log(id, error)
                 return callback(utils.getError('PARSER'))
+            }
 
             result.retries = response.attempts
             callback(null, result)

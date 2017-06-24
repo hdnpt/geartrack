@@ -15,12 +15,13 @@
     "directlink"
   ],
   "scripts": {
-    "test": "mocha"
+    "test": "jest test"
   },
   "author": "Carlos Florencio <Carlos Florencio>",
   "license": "MIT",
   "homepage": "https://geartrack.hdn.pt",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "cheerio": "^0.22.0",
     "html-entities": "^1.2.0",
     "htmltidy2": "^0.2.1",
@@ -34,7 +35,6 @@
     "url": "https://github.com/hdnpt/geartrack.git"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "jest": "^20.0.4"
   }
 }

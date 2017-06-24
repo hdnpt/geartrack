@@ -22,24 +22,26 @@ const cjah = {}
 cjah.getInfo = function (id, cb) {
     request.get({
         url: URL.replace('{{id}}', id),
-        timeout: 20000
+        timeout: 10000,
+        maxAttempts: 2
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
             cb(utils.getError('DOWN'))
             return
         }
 
-        createCjahEntity(body, cb)
+        createCjahEntity(id, body, cb)
     })
 }
 
 
 /**
  * Create cjah entity from html
+ * @param id
  * @param html
  * @param cb
  */
-function createCjahEntity(html, cb) {
+function createCjahEntity(id, html, cb) {
     let entity = null
     try {
         let $ = parser.load(html)
@@ -66,7 +68,7 @@ function createCjahEntity(html, cb) {
             states: states
         })
     } catch (error) {
-        console.log(error);
+        console.log(id, error)
         return cb(utils.getError('PARSER'))
     }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({ maxAttempts: 3, retryDelay: 1000 })
+const request = require('requestretry').defaults({ maxAttempts: 2, retryDelay: 1000 })
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')
@@ -50,7 +50,7 @@ yanwen.getInfo = function (id, callback, _try = 0) {
             entity.retries = response.attempts
             entity.busy_count = _try
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 3, retryDelay: 500})
+const request = require('requestretry').defaults({timeout: 10000, maxAttempts: 2, retryDelay: 500})
 const parser = require('cheerio')
 const utils = require('./utils')
 const sprintf = require('sprintf')
@@ -28,7 +28,7 @@ panasia.getInfo = function (id, cb) {
         }
 
         // Not found
-        if (body.indexOf('Order does not exist') != -1) {
+        if (body.indexOf('Order does not exist') != -1 || body.indexOf('one-parcel') == -1) {
             cb(utils.getError('NO_DATA'))
             return
         }

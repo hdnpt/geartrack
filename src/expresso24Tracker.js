@@ -25,8 +25,8 @@ expresso.getInfo = function (id, callback) {
         form: {
             ref_cliente: id
         },
-        timeout: 30000,
-        maxAttempts: 3,
+        timeout: 10000,
+        maxAttempts: 2,
         retryDelay: 1000,
         encoding: 'latin1'
     }, function (error, response, body) {
@@ -44,7 +44,7 @@ expresso.getInfo = function (id, callback) {
             entity = createExpressoEntity(body)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return callback(utils.getError('PARSER'))
         }
 

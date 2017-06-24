@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('requestretry')
+const request = require('request')
 const parser = require('cheerio')
 const utils = require('./utils')
 const moment = require('moment-timezone')
@@ -55,7 +55,7 @@ function obtainInfo(action, id, cb) {
             entity = createCorreosEntity(body)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
+            console.log(id, error)
             return cb(utils.getError('PARSER'))
         }
 
@@ -74,7 +74,7 @@ function createCorreosEntity(html) {
     var state = $('.status').get(0).children[2].data.trim()
     var state2 = $('.status-desc .status-message').get(0).children[0].data.trim()
     var deliveryDate = $('.status').get(0).children[4]
-    if(deliveryDate !== undefined){
+    if (deliveryDate !== undefined) {
         deliveryDate = deliveryDate.data.trim()
         deliveryDate = deliveryDate.substring(deliveryDate.indexOf(',') + 1)
         deliveryDate = getDeliveryDate(deliveryDate.trim())
@@ -88,9 +88,13 @@ function createCorreosEntity(html) {
     let states = utils.tableParser(
         $('table tbody tr'),
         {
-            'date': {'idx': 1, 'mandatory': true, 'parser': elem => { return moment.tz( elem, ', DD/MM/YYYY HH:mm', 'es', zone).format()}},
-            'state': { 'idx': 5, 'mandatory': true },
-            'area': { 'idx': 3 }
+            'date': {
+                'idx': 1, 'mandatory': true, 'parser': elem => {
+                    return moment.tz(elem, ', DD/MM/YYYY HH:mm', 'es', zone).format()
+                }
+            },
+            'state': {'idx': 5, 'mandatory': true},
+            'area': {'idx': 3}
         },
         elem => true)
 
@@ -112,7 +116,7 @@ function getDeliveryDate(date) {
 
     let monthNumber = monthsShort.indexOf(d[1].toLowerCase()) + 1
 
-    if(monthNumber < 10)
+    if (monthNumber < 10)
         monthNumber = '0' + monthNumber
 
     let newDate = d[0] + '/' + monthNumber + '/' + d[2]
@@ -131,7 +135,7 @@ function CorreosInfo(obj) {
     this.deliveryDate = obj.deliveryDate
     this.states = obj.states.reverse()
     this.origin = obj.origin,
-    this.destiny = obj.destiny
+        this.destiny = obj.destiny
     this.trackerWebsite = "https://s.correosexpress.com"
 }
 
