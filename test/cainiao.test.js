@@ -34,7 +34,7 @@ test('Kuala Lumpur', () => {
     const id = 'RQ062471279MY'
     return getInfo(id).then(info => {
         expect(info.id).toBe(id)
-        expect(info.states.length).toBeGreaterThanOrEqual(16)
+        expect(info.states.length).toBeGreaterThanOrEqual(15)
 
         let firstState = info.states[info.states.length - 2]
         expect(firstState.date).toBe("2016-12-22T09:20:26+08:00")
