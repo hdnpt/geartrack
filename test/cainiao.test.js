@@ -38,7 +38,7 @@ test('Kuala Lumpur', () => {
 
         let firstState = info.states[info.states.length - 2]
         expect(firstState.date).toBe("2016-12-22T22:52:13+08:00")
-        expect(firstState.state).toBe("Waiting for pick up")
+        expect(firstState.state).toBe("Accepted by carrier")
     })
 })
 
