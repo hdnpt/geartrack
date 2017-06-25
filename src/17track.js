@@ -27,7 +27,7 @@ async function fetchInfo(id) {
     const options = {
         method: 'POST',
         uri: POST_URL,
-        body: '{"guid":"","data":[{"num":"'+id+'"}]}',
+        body: '{"guid":"","data":[{"num":"' + id + '"}]}',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -35,21 +35,27 @@ async function fetchInfo(id) {
 
     const maxTries = 3
     let tries = maxTries // sometimes the website returns an error (seems random :/)
-    while(tries > 0) {
+    while (tries > 0) {
         --tries
+
+        let info = null
         try {
-            const info = await rp(options).then(body => JSON.parse(body))
+            info = await rp(options).then(body => JSON.parse(body))
+        } catch (e) {
+            continue
+        }
 
-            if(info.msg != "Ok") continue
+        if (info.msg != "Ok") continue
 
-            if(info.dat[0].yt != null) {
-                throw utils.getError('ACTION_REQUIRED')
-            }
+        if (info.dat[0].yt != null) {
+            throw utils.getError('ACTION_REQUIRED')
+        }
 
-            if(info.dat[0].track == null) {
-                throw utils.getError('NO_DATA')
-            }
+        if (info.dat[0].track == null) {
+            throw utils.getError('NO_DATA')
+        }
 
+        try {
             let entity = createEntity(id, info)
             entity.retries = maxTries - tries
             return entity
