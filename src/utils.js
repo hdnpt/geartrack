@@ -14,7 +14,8 @@ module.exports.getError = function (type) {
         'UNAVAILABLE': 'The server providing the info is unavailable right now. Try again later.',
         'EMPTY': 'The provider server was parsed correctly, but has no data to show. Try Again later.',
         'DOWN': 'The provider server is currently down. Try Again later.',
-        'PARSER': 'Something went wrong when parsing the provider website.'
+        'PARSER': 'Something went wrong when parsing the provider website.',
+        'ACTION_REQUIRED': 'That tracker requires an aditional step in their website.'
     }
 
     return new Error(type + ' - ' + errors[type])
