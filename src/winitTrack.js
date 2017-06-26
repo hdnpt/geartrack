@@ -35,10 +35,9 @@ winit.getInfo = function (id, callback) {
 
         let $ = parser.load(html)
         let hidden = $('input[name="__hash__"]');
-        if (!hidden) {
+        if (hidden.length == 0) {
             console.log(id, error)
-            callback(utils.getError('PARSER'))
-            return
+            return callback(utils.getError('PARSER'))
         }
 
         obtainInfo(URL, id, hidden[0].attribs.value, callback)
