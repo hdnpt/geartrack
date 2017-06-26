@@ -71,20 +71,34 @@ function createMalaysiaPosEntity(html) {
     let $ = parser.load(html)
     let id = $('#trackingNo03').get(0).children[0].data.trim()
     let init = html.indexOf("var strTD")
-    init = html.indexOf('"', init+1)
-    let fin = html.indexOf('"', init+1)
+    init = html.indexOf('"', init + 1)
+    let fin = html.indexOf('"', init + 1)
     let strTD = html.substring(init, fin)
 
     $ = parser.load(strTD)
     let trs = $('#tbDetails tbody tr')
     let states = utils.tableParser(
-    trs,
-    {
-        'date': {'idx': 0, 'mandatory': true, 'parser': elem => { return moment.tz( elem, 'DD MMM YYYY HH:mm:ss', 'en', zone).format()}},
-        'state': { 'idx': 1, 'mandatory': true },
-        'area': { 'idx': 2 }
-    },
-    elem => true)
+        trs,
+        {
+            'date': {
+                'idx': 0,
+                'mandatory': true,
+                'parser': elem => {
+                    return moment.tz(elem, 'DD MMM YYYY HH:mm:ss', 'en', zone).format()
+                }
+            },
+            'state': {'idx': 1, 'mandatory': true},
+            'area': {'idx': 2}
+        },
+        elem => {
+            // On Maintenance there is a row with a td colspan=4, we want to skip it
+            if(elem.children[0].attribs && elem.children[0].attribs.colspan &&
+                elem.children[0].attribs.colspan == 4) {
+                return false
+            }
+
+            return true
+        })
 
     return new MalaysiaInfo({
         id: id,
