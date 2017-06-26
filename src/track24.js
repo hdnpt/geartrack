@@ -23,7 +23,7 @@ exportModule.getInfo = function (id, callback) {
 }
 
 exportModule.getInfoProxy = function (id, proxyUrl, callback) {
-    obtainInfo(proxyUrl + URL_BASE, id, callback)
+    obtainInfo(proxyUrl + URL_PATH, id, callback)
 }
 
 /**
