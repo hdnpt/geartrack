@@ -4,16 +4,16 @@ require('./config') // global test config
 
 const getInfo = Promise.promisify(tracker.getInfo)
 
-// test('extract info with success', () => {
-//     const id = 'BZ012761245CN'
-//     return getInfo(id).then(info => {
-//         expect(info.id).toBe(id)
-//         expect(info.destiny).toBe('Portugal')
-//         expect(info.origin).toBe('China')
-//
-//         expect(info.states.length).toBeGreaterThanOrEqual(2)
-//     })
-// })
+test('extract info with success', () => {
+    const id = 'BZ012761245CN'
+    return getInfo(id).then(info => {
+        expect(info.id).toBe(id)
+        expect(info.destiny).toBe('Portugal')
+        expect(info.origin).toBe('China')
+
+        expect(info.states.length).toBeGreaterThanOrEqual(2)
+    })
+})
 
 test('id not found', () => {
     const id = 'BZ01275CN'
