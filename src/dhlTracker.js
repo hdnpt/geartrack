@@ -35,13 +35,13 @@ function obtainInfo(id, action, cb) {
         maxAttempts: 2
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
         const data = JSON.parse(body)
         if (data.errors != undefined) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -49,8 +49,7 @@ function obtainInfo(id, action, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if(entity != null) cb(null, entity)

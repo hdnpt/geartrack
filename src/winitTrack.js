@@ -29,15 +29,14 @@ winit.getInfo = function (id, callback) {
         jar: j
     }, function (error, response, html) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
+            callback(utils.errorDown())
             return
         }
 
         let $ = parser.load(html)
         let hidden = $('input[name="__hash__"]');
         if (hidden.length == 0) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, "No hidden input __hash__"))
         }
 
         obtainInfo(URL, id, hidden[0].attribs.value, callback)
@@ -64,7 +63,7 @@ function obtainInfo(action, id, hash, cb) {
         timeout: 30000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
@@ -72,7 +71,7 @@ function obtainInfo(action, id, hash, cb) {
         let trs = $('.center_table table tbody tr');
         // Not found
         if (trs.length < 2) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -82,8 +81,7 @@ function obtainInfo(action, id, hash, cb) {
                 trs[1].children[0].children[0].data,
                 $('.center_table table tbody tr td a.poptips')[0].attribs['data-id'])
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         cb(null, entity)

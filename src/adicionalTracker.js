@@ -22,19 +22,19 @@ adicional.getInfo = function (id, postcode, callback) {
     request(sprintf(URL, id, postcode),
         function (error, response, body) {
             if (error || response.statusCode != 200) {
-                callback(utils.getError('DOWN'))
+                callback(utils.errorDown())
                 return
             }
 
             if(body.length == 0) {
-                return callback(utils.getError('EMPTY'))
+                return callback(utils.errorNoData())
             }
 
             const json = JSON.parse(body)
 
             // Not found
             if (json.length == 0) {
-                callback(utils.getError('NO_DATA'))
+                callback(utils.errorNoData())
                 return
             }
 
@@ -44,8 +44,7 @@ adicional.getInfo = function (id, postcode, callback) {
                 entity.retries = response.attempts
 
             } catch (error) {
-                console.log(id, error)
-                return callback(utils.getError('PARSER'))
+                return callback(utils.errorParser(id, error.message))
             }
 
             callback(null, entity)

@@ -40,13 +40,13 @@ function obtainInfo(action, id, cb) {
         timeout: 10000
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
         // Not found
         if (body.indexOf('errorMessage') != -1) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -55,8 +55,7 @@ function obtainInfo(action, id, cb) {
             entity = createCorreosEntity(body)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         cb(null, entity)

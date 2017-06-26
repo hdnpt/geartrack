@@ -23,13 +23,13 @@ const panasia = {}
 panasia.getInfo = function (id, cb) {
     request(URL.replace('{{id}}', id), function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
         // Not found
         if (body.indexOf('Order does not exist') != -1 || body.indexOf('one-parcel') == -1) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -38,8 +38,7 @@ panasia.getInfo = function (id, cb) {
             entity = createPanasiaEntity(body, id)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(error);
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         cb(null, entity)

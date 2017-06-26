@@ -45,7 +45,7 @@ function obtainInfo(action, id, cb) {
         maxAttempts: 2,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
@@ -53,15 +53,14 @@ function obtainInfo(action, id, cb) {
         try {
             data = JSON.parse(body)
         } catch (error) {
-            console.log(error);
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if (data.status == undefined ||
             data.status != 'ok' ||
             (data.data.events.length == 1 &&
             data.data.events[0].operationAttributeTranslated == 'The track code is added to the database Track24.ru for automatic monitoring.')) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -71,8 +70,7 @@ function obtainInfo(action, id, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if (entity != null) cb(null, entity)

@@ -34,13 +34,13 @@ function obtainInfo(id, action, cb) {
         strictSSL: false
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
         // Not found
         if (body.indexOf('errorMessage') != -1) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -48,8 +48,7 @@ function obtainInfo(id, action, cb) {
         try {
             entity = createParcelTrackerEntity(body)
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if(entity != null) cb(null, entity)

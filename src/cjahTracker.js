@@ -26,7 +26,7 @@ cjah.getInfo = function (id, cb) {
         maxAttempts: 2
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
@@ -49,7 +49,7 @@ function createCjahEntity(id, html, cb) {
 
         // Not found
         if (!trs || trs.length === 0) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -68,8 +68,7 @@ function createCjahEntity(id, html, cb) {
             states: states
         })
     } catch (error) {
-        console.log(id, error)
-        return cb(utils.getError('PARSER'))
+        return cb(utils.errorParser(id, error.message))
     }
 
     cb(null, entity)

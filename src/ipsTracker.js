@@ -20,12 +20,12 @@ const tracker = {}
 tracker.getInfo = function (id, cb) {
     request(URL + id, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            return cb(utils.getError('DOWN'))
+            return cb(utils.errorDown())
         }
 
         // Not found
         if (body.indexOf('No information, please check your item identifier') !== -1) {
-            return cb(utils.getError('NO_DATA'))
+            return cb(utils.errorNoData())
         }
 
         let entity = null
@@ -33,8 +33,7 @@ tracker.getInfo = function (id, cb) {
             entity = createEntity(body, id)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         cb(null, entity)

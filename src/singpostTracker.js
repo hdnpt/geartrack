@@ -32,16 +32,16 @@ singpost.getInfo = function (id, callback) {
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-           return callback(utils.getError('DOWN'))
+           return callback(utils.errorDown())
         }
 
         // Not found
         if (body.indexOf('Item status not found in the system.') != -1) {
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         if(body.indexOf('This function is currently unavailable.') != -1) {
-            return callback(utils.getError('UNAVAILABLE'))
+            return callback(utils.errorUnavailable())
         }
 
         let entity = null
@@ -49,8 +49,7 @@ singpost.getInfo = function (id, callback) {
             entity = createSingpostEntity(id, body)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)
