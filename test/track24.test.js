@@ -15,15 +15,15 @@ if(!process.env.CI) { // this test fails in Travis CI
             expect(info.states.length).toBeGreaterThanOrEqual(2)
         })
     })
-
-    test('id not found', () => {
-        const id = 'BZ01275CN'
-        return expect(getInfo(id)).rejects.toBeDefined()
-    })
-
-    test('should remove the default state', () => {
-        const id = 'BZ012761144CN'
-        return expect(getInfo(id)).rejects.toBeDefined()
-    })
 }
+
+test('id not found', () => {
+    const id = 'BZ01275CN'
+    return expect(getInfo(id)).rejects.toBeDefined()
+})
+
+test('should remove the default state', () => {
+    const id = 'BZ012761144CN'
+    return expect(getInfo(id)).rejects.toBeDefined()
+})
 
