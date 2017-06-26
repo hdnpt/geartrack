@@ -110,3 +110,6 @@ fabric.properties
 ### VisualStudioCode ###
 .vscode
 typings.json
+
+### NPM Lock file (having some problems when updating on production server)
+package-lock.json
