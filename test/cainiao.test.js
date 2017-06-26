@@ -35,7 +35,7 @@ if (!process.env.CI) { // this test fails in Travis CI
         const id = 'RQ062471279MY'
         return getInfo(id).then(info => {
             expect(info.id).toBe(id)
-            expect(info.states.length).toBeGreaterThanOrEqual(14)
+            expect(info.states.length).toBeGreaterThanOrEqual(13)
 
             // cannot test the states, cainiao is providing some wrong states
         })
