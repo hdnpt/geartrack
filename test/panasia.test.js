@@ -20,8 +20,6 @@ test('extract info with success', () => {
 })
 
 
-
-
 test('id not found', () => {
     const id = '423423424'
     return expect(getInfo(id)).rejects.toBeDefined()

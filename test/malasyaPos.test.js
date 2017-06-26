@@ -15,9 +15,17 @@ test('extract info with success', () => {
         expect(firstState.area).toBe("In Transit")
         expect(firstState.state).toContain("Initial item information received")
     })
-});
+})
+
+test('extract info with success 2', () => {
+    const id = 'RC104828886MY'
+    return getInfo(id).then(info => {
+        expect(info.id).toBe(id)
+        expect(info.states.length).toBeGreaterThanOrEqual(3)
+    })
+})
 
 test('id not found', () => {
     const id = 'AB'
     return expect(getInfo(id)).rejects.toBeDefined()
-});
+})
