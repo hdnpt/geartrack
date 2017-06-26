@@ -1,6 +1,6 @@
 {
   "name": "geartrack",
-  "version": "2.7.18",
+  "version": "2.7.19",
   "description": "Tracking providers for Gearbest and AliExpress Orders.",
   "main": "index.js",
   "keywords": [
