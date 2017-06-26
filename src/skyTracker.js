@@ -34,7 +34,7 @@ sky.getInfo = function (id, callback) {
 
         // Not found
         if (json.message.indexOf('No result found for your query.') != -1 ||
-            (json.message == '<br/>' && json.List.row == null )) {
+            (json.message == '<br/>' && json.List && json.List && json.List.row == null )) {
            return callback(utils.errorNoData())
         }
 
