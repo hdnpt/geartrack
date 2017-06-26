@@ -4,9 +4,10 @@
  * Get the Error message by Type
  *
  * @param type
+ * @param error Error message
  * @returns {Error}
  */
-module.exports.getError = function (type) {
+const getErrorMessage = function(type, error = null, id = null) {
     type = type.toUpperCase()
     let errors = {
         'NO_DATA': 'No info for that id yet. Or maybe the data provided was wrong.',
@@ -18,8 +19,41 @@ module.exports.getError = function (type) {
         'ACTION_REQUIRED': 'That tracker requires an aditional step in their website.'
     }
 
-    return new Error(type + ' - ' + errors[type])
+    let message = error != null ? error : errors[type]
+    message = id != null ? message + ' ID:' + id : message
+    return new Error(type + ' - ' + message)
 }
+
+module.exports.getError = getErrorMessage // old compatibility
+
+module.exports.errorParser = function(id = null, error = null) {
+    return getErrorMessage('PARSER', error, id)
+}
+
+module.exports.errorEmpty = function(id = null, error = null) {
+    return getErrorMessage('EMPTY', error, id)
+}
+
+module.exports.errorNoData = function(id = null, error = null) {
+    return getErrorMessage('NO_DATA', error, id)
+}
+
+module.exports.errorBusy = function(id = null, error = null) {
+    return getErrorMessage('BUSY', error, id)
+}
+
+module.exports.errorUnavailable = function(id = null, error = null) {
+    return getErrorMessage('UNAVAILABLE', error, id)
+}
+
+module.exports.errorDown = function(id = null, error = null) {
+    return getErrorMessage('DOWN', error, id)
+}
+
+module.exports.errorActionRequired = function(id = null, error = null) {
+    return getErrorMessage('ACTION_REQUIRED', error, id)
+}
+
 
 /**
  * Extract postal code from an id

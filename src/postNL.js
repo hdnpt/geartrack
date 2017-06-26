@@ -6,7 +6,8 @@ const utils = require('./utils')
 const moment = require('moment-timezone')
 const zone = "Europe/Amsterdam"
 
-const URL = 'http://www.postnl.post/details/'
+const URL_BASE = 'http://www.postnl.post'
+const URL_PATH = '/details/'
 
 const postNL = {}
 
@@ -17,12 +18,17 @@ const postNL = {}
  * @param id
  * @param callback(Error, DirectLinkInfo)
  */
-postNL.getInfo = function (id, callback, _try = 0) {
-    if(_try >= 3){
-        return callback(utils.getError('BUSY'))
-    }
+postNL.getInfo = function (id, callback) {
+    obtainInfo(id, URL_BASE + URL_PATH, callback)
+}
+
+postNL.getInfoProxy = function (id, proxyUrl, callback) {
+    obtainInfo(id, proxyUrl + URL_PATH, callback)
+}
+
+function obtainInfo(id, actionUrl, callback) {
     request.post({
-        url: URL,
+        url: actionUrl,
         form: {
             barcodes: id
         },
@@ -30,32 +36,29 @@ postNL.getInfo = function (id, callback, _try = 0) {
     }, function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         if (body.indexOf('The shipment barcode was not found.') != -1){
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         let entity = null
         try {
             entity = createPostNLEntity(id, body)
             if (!entity) {
-                return callback(utils.getError('NO_DATA'))
+                return callback(utils.errorNoData())
             }
             entity.retries = response.attempts
-            entity.busy_count = _try
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)
-
     })
 }
 

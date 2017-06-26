@@ -41,16 +41,16 @@ directLink.getItemNumber = function(id, callback) {
     request(orderURL.replace('{{order}}', id), function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         if(body.indexOf('Sorry order number') !== -1) {
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         try {
@@ -58,8 +58,7 @@ directLink.getItemNumber = function(id, callback) {
             let endIdx = body.indexOf('"', idx)
 
             if(idx == -1 || endIdx == -1) {
-                console.log(id, error)
-                return callback(utils.getError('PARSER'))
+                return callback(utils.errorParser(id))
             }
 
             let idxStart = idx + 'ordernum'.length
@@ -67,8 +66,7 @@ directLink.getItemNumber = function(id, callback) {
 
             return callback(null, item)
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
     })
@@ -82,15 +80,15 @@ function getByItemNumber(id, callback) {
         request(URL.replace('{{id}}', id), function (error, response, body) {
             if (error) {
                 console.log('error:', error)
-                return callback(utils.getError('DOWN'))
+                return callback(utils.errorDown())
             }
             if (response.statusCode != 200) {
                 console.log('response.statusCode: ', response.statusCode)
-                return callback(utils.getError('DOWN'))
+                return callback(utils.errorDown())
             }
 
             if (body.length == 0) {
-                return callback(utils.getError('NO_DATA'))
+                return callback(utils.errorNoData())
             }
 
             let entity = null
@@ -120,8 +118,7 @@ function getByItemNumber(id, callback) {
                 })
                 entity.retries = response.attempts
             } catch (error) {
-                console.log(id, error)
-                return callback(utils.getError('PARSER'))
+                return callback(utils.errorParser(id, error.message))
             }
 
             callback(null, entity)
@@ -133,12 +130,12 @@ function obtainTexts(cb){
     request(textsURL, function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            return cb(utils.getError('DOWN'))
+            return cb(utils.errorDown())
         }
 
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return cb(utils.getError('DOWN'))
+            return cb(utils.errorDown())
         }
 
         let info = body.substring(body.indexOf('global_status_struct'), body.length-2)

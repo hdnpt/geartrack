@@ -31,12 +31,12 @@ expresso.getInfo = function (id, callback) {
         encoding: 'latin1'
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         // Not found
         if (body.indexOf('Nenhuma guia encontrada com esta') != -1) {
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         let entity = null
@@ -44,8 +44,7 @@ expresso.getInfo = function (id, callback) {
             entity = createExpressoEntity(body)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)

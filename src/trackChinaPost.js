@@ -20,7 +20,7 @@ const directLink = {}
  */
 directLink.getInfo = function (id, callback, _try = 0) {
     if (_try >= 4) {
-        return callback(utils.getError('BUSY'))
+        return callback(utils.errorBusy())
     }
     request.post({
         url: URL,
@@ -30,12 +30,11 @@ directLink.getInfo = function (id, callback, _try = 0) {
         timeout: 20000
     }, function (error, response, body) {
         if (error) {
-            console.log('error:', error)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         if (body.indexOf('server is busy') != -1) {
@@ -43,20 +42,19 @@ directLink.getInfo = function (id, callback, _try = 0) {
         }
 
         if (body.indexOf('is invalid') != -1 || body.indexOf('can not be longer than 13') != -1) {
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         let entity = null
         try {
             entity = createTrackChinaPostEntity(id, body)
             if (!entity) {
-                return callback(utils.getError('NO_DATA'))
+                return callback(utils.errorNoData())
             }
             entity.retries = response.attempts
             entity.busy_count = _try
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)

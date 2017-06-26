@@ -17,10 +17,7 @@ const yanwen = {}
  * @param id
  * @param callback(Error, DirectLinkInfo)
  */
-yanwen.getInfo = function (id, callback, _try = 0) {
-    if(_try >= 3){
-        return callback(utils.getError('BUSY'))
-    }
+yanwen.getInfo = function (id, callback) {
     request.post({
         url: URL,
         form: {
@@ -30,28 +27,26 @@ yanwen.getInfo = function (id, callback, _try = 0) {
     }, function (error, response, body) {
         if (error) {
             console.log('error:', error)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
         if (response.statusCode != 200) {
             console.log('response.statusCode: ', response.statusCode)
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         if (body.indexOf('The shipment barcode was not found.') != -1){
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         let entity = null
         try {
             entity = createYanwenEntity(id, body)
             if (!entity) {
-                return callback(utils.getError('NO_DATA'))
+                return callback(utils.errorNoData())
             }
             entity.retries = response.attempts
-            entity.busy_count = _try
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)

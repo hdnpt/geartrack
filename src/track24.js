@@ -5,7 +5,8 @@ const utils = require('./utils')
 const moment = require('moment-timezone')
 const zone = "GMT"
 
-const URL = 'https://track24.net/ajax/tracking100500.ajax.php'
+const URL_BASE = 'https://track24.net'
+const URL_PATH = '/ajax/tracking118.ajax.php'
 
 const exportModule = {}
 
@@ -18,11 +19,11 @@ const exportModule = {}
  * @param callback(Error, Track24TrackerInfo)
  */
 exportModule.getInfo = function (id, callback) {
-    obtainInfo(URL, id, callback)
+    obtainInfo(URL_BASE + URL_PATH, id, callback)
 }
 
 exportModule.getInfoProxy = function (id, proxyUrl, callback) {
-    obtainInfo(proxyUrl, id, callback)
+    obtainInfo(proxyUrl + URL_PATH, id, callback)
 }
 
 /**
@@ -44,7 +45,7 @@ function obtainInfo(action, id, cb) {
         maxAttempts: 2,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            cb(utils.getError('DOWN'))
+            cb(utils.errorDown())
             return
         }
 
@@ -52,15 +53,14 @@ function obtainInfo(action, id, cb) {
         try {
             data = JSON.parse(body)
         } catch (error) {
-            console.log(error);
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if (data.status == undefined ||
             data.status != 'ok' ||
             (data.data.events.length == 1 &&
             data.data.events[0].operationAttributeTranslated == 'The track code is added to the database Track24.ru for automatic monitoring.')) {
-            cb(utils.getError('NO_DATA'))
+            cb(utils.errorNoData())
             return
         }
 
@@ -70,8 +70,7 @@ function obtainInfo(action, id, cb) {
         try {
             entity = createTrackerEntity(data)
         } catch (error) {
-            console.log(id, error)
-            return cb(utils.getError('PARSER'))
+            return cb(utils.errorParser(id, error.message))
         }
 
         if (entity != null) cb(null, entity)
@@ -124,7 +123,7 @@ function TrackerInfo(obj) {
     this.id = obj.id
     this.states = obj.states
     this.origin = obj.origin,
-        this.destiny = obj.destiny
+    this.destiny = obj.destiny
     this.trackerWebsite = "https://track24.net/?code=" + this.id
 }
 

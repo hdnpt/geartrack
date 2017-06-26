@@ -27,19 +27,18 @@ ctt.getInfo = function (id, callback) {
         retryDelay: 1000,
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown())
         }
 
         // Not found
         if (body.indexOf('Não foi possível obter mais informação sobre o objeto.') != -1 ||
             body.indexOf('Insira pelo menos 10 caracteres') != -1) {
-            return callback(utils.getError('NO_DATA'))
+            return callback(utils.errorNoData())
         }
 
         createCttEntity(id, body, (err, result) => {
             if(err) {
-                console.log(id, error)
-                return callback(utils.getError('PARSER'))
+                return callback(utils.errorParser(id, err.message))
             }
 
             result.retries = response.attempts

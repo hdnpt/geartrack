@@ -28,11 +28,11 @@ correos.getInfo = function (id, callback) {
         function (error, response, body) {
             if (error) {
                 console.log('error:', error)
-                return callback(utils.getError('DOWN'))
+                return callback(utils.errorDown())
             }
             if (response.statusCode != 200) {
                 console.log('response.statusCode: ', response.statusCode)
-                return callback(utils.getError('DOWN'))
+                return callback(utils.errorDown())
             }
 
             let entity = null
@@ -40,13 +40,12 @@ correos.getInfo = function (id, callback) {
             try {
                 entity = createCorreosEsEntity(id, body)
                 if (!entity) {
-                    return callback(utils.getError('NO_DATA'))
+                    return callback(utils.errorNoData())
                 }
                 entity.retries = response.attempts
 
             } catch (error) {
-                console.log(id, error)
-                return callback(utils.getError('PARSER'))
+                return callback(utils.errorParser(id, error.message))
             }
 
             callback(null, entity)

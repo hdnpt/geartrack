@@ -22,21 +22,20 @@ const sky = {}
 sky.getInfo = function (id, callback) {
     request(sprintf(URL, id), function (error, response, body) {
         if (error || response.statusCode != 200) {
-            return callback(utils.getError('DOWN'))
+            return callback(utils.errorDown(id))
         }
 
         let json = null
         try {
             json = JSON.parse(body)
         } catch (e) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, e.message))
         }
 
         // Not found
         if (json.message.indexOf('No result found for your query.') != -1 ||
             (json.message == '<br/>' && json.List.row == null )) {
-           return callback(utils.getError('NO_DATA'))
+           return callback(utils.errorNoData())
         }
 
         let entity = null
@@ -53,15 +52,14 @@ sky.getInfo = function (id, callback) {
                     entity = createSkyEntity(id, json)
 
                     // if(entity.messages.length == 0) // we should have messages!
-                    //     return callback(utils.getError('EMPTY'))
+                    //     return callback(utils.errorEmpty())
 
                     break
             }
 
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)

@@ -48,11 +48,11 @@ async function fetchInfo(id) {
         if (info.msg != "Ok") continue
 
         if (info.dat[0].yt != null) {
-            throw utils.getError('ACTION_REQUIRED')
+            throw utils.errorActionRequired()
         }
 
         if (info.dat[0].track == null) {
-            throw utils.getError('NO_DATA')
+            throw utils.errorNoData()
         }
 
         try {
@@ -61,11 +61,11 @@ async function fetchInfo(id) {
             return entity
         } catch (error) {
             console.log(id, error)
-            throw utils.getError('PARSER')
+            throw utils.errorParser(id, error.message)
         }
     }
 
-    throw utils.getError('BUSY')
+    throw utils.errorBusy()
 }
 
 

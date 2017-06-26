@@ -34,7 +34,7 @@ cainiao.getInfo = function (id, callback) {
         gzip: true
     }, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(utils.getError('DOWN'))
+            callback(utils.errorDown())
             return
         }
 
@@ -43,7 +43,7 @@ cainiao.getInfo = function (id, callback) {
 
         // Not found
         if (val.data[0].errorCode == "ORDER_NOT_FOUND" || val.data[0].errorCode == "RESULT_EMPTY") {
-            callback(utils.getError('NO_DATA'))
+            callback(utils.errorNoData())
             return
         }
 
@@ -52,8 +52,7 @@ cainiao.getInfo = function (id, callback) {
             entity = createCainiaoEntity(id, val)
             entity.retries = response.attempts
         } catch (error) {
-            console.log(id, error)
-            return callback(utils.getError('PARSER'))
+            return callback(utils.errorParser(id, error.message))
         }
 
         callback(null, entity)
