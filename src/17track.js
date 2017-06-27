@@ -46,8 +46,11 @@ async function fetchInfo(id) {
             continue
         }
 
+        if(info.ret == -8 && info.msg == 'abN')
+            throw utils.errorUnavailable() // we are blocked?
+
         if (info.msg != "Ok" || info.dat[0].delay == -1) {
-            await utils.sleep(2000)
+            await utils.sleep(3000)
             continue
         }
 
