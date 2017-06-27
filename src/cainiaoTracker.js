@@ -115,6 +115,7 @@ function fixStateName(state) {
 
     res = res.replace(']', "] ") // add space after ]
     res = res.replace('交接成功', 'Successful transfer')
+    res = res.replace('中国 深圳', 'Shenzhen, China')
     res = res.replace('上海市', 'Shanghai')
     res = res.replace('宁波市', 'Ningbo City')
     res = res.replace('电子信息已收到', 'Electronic information has been received')
