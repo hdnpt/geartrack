@@ -71,7 +71,13 @@ function createCorreosEntity(html) {
 
     var id = $('.shipping span').get(0).children[0].data.trim()
     var state = $('.status').get(0).children[2].data.trim()
-    var state2 = $('.status-desc .status-message').get(0).children[0].data.trim()
+    var state2 = ""
+    try {
+        state2 = $('.status-desc .status-message').get(0).children[0].data.trim()
+    } catch (e) {
+        // sometimes there is no state2
+    }
+
     var deliveryDate = $('.status').get(0).children[4]
     if (deliveryDate !== undefined) {
         deliveryDate = deliveryDate.data.trim()
@@ -133,8 +139,8 @@ function CorreosInfo(obj) {
     this.state2 = obj.state2
     this.deliveryDate = obj.deliveryDate
     this.states = obj.states.reverse()
-    this.origin = obj.origin,
-        this.destiny = obj.destiny
+    this.origin = obj.origin
+    this.destiny = obj.destiny
     this.trackerWebsite = correos.getLink(null)
 }
 
