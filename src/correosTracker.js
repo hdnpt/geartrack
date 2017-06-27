@@ -135,7 +135,11 @@ function CorreosInfo(obj) {
     this.states = obj.states.reverse()
     this.origin = obj.origin,
         this.destiny = obj.destiny
-    this.trackerWebsite = "https://s.correosexpress.com"
+    this.trackerWebsite = correos.getLink(null)
+}
+
+correos.getLink = function (id) {
+    return "https://s.correosexpress.com"
 }
 
 module.exports = correos

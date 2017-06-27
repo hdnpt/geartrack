@@ -153,7 +153,11 @@ function DirectLinkInfo(obj) {
     this.id = obj.tracking_no
     this.state = obj.status
     this.states = obj.states.reverse()
-    this.trackerWebsite = directURL + obj.tracking_no
+    this.trackerWebsite = directLink.getLink(obj.tracking_no)
+}
+
+directLink.getLink = function (id) {
+    return directURL + id
 }
 
 module.exports = directLink

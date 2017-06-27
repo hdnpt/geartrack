@@ -5,15 +5,19 @@ require('./config') // global test config
 const getInfo = Promise.promisify(tracker.getInfo)
 
 if(!process.env.CI) { // this test fails in Travis CI
-    test('extract info with success', () => {
+    test('extract info with success', async () => {
         const id = 'BZ012761245CN'
-        return getInfo(id).then(info => {
+
+        try {
+            const info = await getInfo(id)
             expect(info.id).toBe(id)
             expect(info.destiny).toBe('Portugal')
             expect(info.origin).toBe('China')
 
             expect(info.states.length).toBeGreaterThanOrEqual(2)
-        })
+        } catch (e) {
+            expect(e.message).toContain('DOWN') // only allow down exceptions
+        }
     })
 }
 

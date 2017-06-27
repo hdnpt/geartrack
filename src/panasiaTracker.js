@@ -111,6 +111,11 @@ function PanasiaInfo(obj) {
     this.orderNumber = obj.orderNumber
     this.product = obj.product
     this.country = obj.country
-    this.trackerWebsite = URL.replace('{{id}}', obj.id)
+    this.trackerWebsite = panasia.getLink(obj.id)
 }
+
+panasia.getLink = function (id) {
+    return URL.replace('{{id}}', id)
+}
+
 module.exports = panasia

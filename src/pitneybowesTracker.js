@@ -107,7 +107,11 @@ function ParcelTrackerInfo(obj) {
     this.states = obj.states,
     this.origin = obj.origin,
     this.destiny = obj.destiny
-    this.trackerWebsite = "https://parceltracking.pb.com/app/#/dashboard/" + this.id
+    this.trackerWebsite = pitney.getLink(this.id)
+}
+
+pitney.getLink = function (id) {
+    return "https://parceltracking.pb.com/app/#/dashboard/" + id
 }
 
 module.exports = pitney

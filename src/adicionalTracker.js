@@ -67,7 +67,11 @@ function AdicionalInfo(obj) {
     this.phone1 = obj.Phone1
     this.phone2 = obj.Phone2.trim()
     this.notes = obj.Notes
-    this.trackerWebsite = "http://www.adicional.pt"
+    this.trackerWebsite = adicional.getLink(null)
+}
+
+adicional.getLink = function (id) {
+    return "http://www.adicional.pt"
 }
 
 module.exports = adicional

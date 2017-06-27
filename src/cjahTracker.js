@@ -83,7 +83,11 @@ function CjahInfo(obj) {
     this.id = obj.id
     this.state = obj.state
     this.states = obj.states
-    this.trackerWebsite = URL.replace('{{id}}', obj.id)
+    this.trackerWebsite = cjah.getLink(obj.id)
+}
+
+cjah.getLink = function (id) {
+    return URL.replace('{{id}}', id)
 }
 
 module.exports = cjah

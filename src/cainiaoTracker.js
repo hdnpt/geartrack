@@ -89,7 +89,11 @@ function CainiaoInfo(id, messages, destinyId) {
     this.id = id
     this.states = messages
     this.destinyId = destinyId
-    this.trackerWebsite = URL + id
+    this.trackerWebsite = cainiao.getLink(id)
+}
+
+cainiao.getLink = function (id) {
+    return URL + id
 }
 
 /*

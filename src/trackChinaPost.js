@@ -8,17 +8,17 @@ const zone = "Asia/Shanghai" // +8h
 
 const URL = 'http://track-chinapost.com/result_china.php'
 
-const directLink = {}
+const trackchinapost = {}
 
 /**
- * Get DirectLink info
+ * Get China Post info
  * Async
  *
  * @param id
- * @param callback(Error, DirectLinkInfo)
+ * @param callback(Error, ChinaPostInfo)
  * @param _try
  */
-directLink.getInfo = function (id, callback, _try = 0) {
+trackchinapost.getInfo = function (id, callback, _try = 0) {
     if (_try >= 4) {
         return callback(utils.errorBusy())
     }
@@ -38,7 +38,7 @@ directLink.getInfo = function (id, callback, _try = 0) {
         }
 
         if (body.indexOf('server is busy') != -1) {
-            return setTimeout(directLink.getInfo, 2000, id, callback, ++_try)
+            return setTimeout(trackchinapost.getInfo, 2000, id, callback, ++_try)
         }
 
         if (body.indexOf('is invalid') != -1 || body.indexOf('can not be longer than 13') != -1) {
@@ -96,7 +96,11 @@ function TrackChinaPostInfo(obj) {
     this.state = obj.states[obj.states.length - 1].state
     this.states = obj.states.reverse()
 
-    this.trackerWebsite = "http://track-chinapost.com/startairmail.php"
+    this.trackerWebsite = trackchinapost.getLink(null)
 }
 
-module.exports = directLink
+trackchinapost.getLink = function (id) {
+    return "http://track-chinapost.com/startairmail.php"
+}
+
+module.exports = trackchinapost

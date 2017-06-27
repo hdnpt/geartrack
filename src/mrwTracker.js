@@ -92,7 +92,11 @@ function EntityInfo(obj) {
     this.id = id
     this.states = states
 
-    this.trackerWebsite = URL + id
+    this.trackerWebsite = tracker.getLink(id)
+}
+
+tracker.getLink = function (id) {
+    return URL + id
 }
 
 module.exports = tracker

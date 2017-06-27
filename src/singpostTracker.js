@@ -95,7 +95,11 @@ function createSingpostEntity(id, html) {
 function SingpostInfo(id, messages) {
     this.id = id
     this.states = messages
-    this.trackerWebsite = URL
+    this.trackerWebsite = singpost.getLink(null)
+}
+
+singpost.getLink = function (id) {
+    return URL
 }
 
 /*

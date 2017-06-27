@@ -7,7 +7,7 @@
  * @param error Error message
  * @returns {Error}
  */
-const getErrorMessage = function(type, error = null, id = null) {
+const getErrorMessage = function (type, error = null, id = null) {
     type = type.toUpperCase()
     let errors = {
         'NO_DATA': 'No info for that id yet. Or maybe the data provided was wrong.',
@@ -26,31 +26,31 @@ const getErrorMessage = function(type, error = null, id = null) {
 
 module.exports.getError = getErrorMessage // old compatibility
 
-module.exports.errorParser = function(id = null, error = null) {
+module.exports.errorParser = function (id = null, error = null) {
     return getErrorMessage('PARSER', error, id)
 }
 
-module.exports.errorEmpty = function(id = null, error = null) {
+module.exports.errorEmpty = function (id = null, error = null) {
     return getErrorMessage('EMPTY', error, id)
 }
 
-module.exports.errorNoData = function(id = null, error = null) {
+module.exports.errorNoData = function (id = null, error = null) {
     return getErrorMessage('NO_DATA', error, id)
 }
 
-module.exports.errorBusy = function(id = null, error = null) {
+module.exports.errorBusy = function (id = null, error = null) {
     return getErrorMessage('BUSY', error, id)
 }
 
-module.exports.errorUnavailable = function(id = null, error = null) {
+module.exports.errorUnavailable = function (id = null, error = null) {
     return getErrorMessage('UNAVAILABLE', error, id)
 }
 
-module.exports.errorDown = function(id = null, error = null) {
+module.exports.errorDown = function (id = null, error = null) {
     return getErrorMessage('DOWN', error, id)
 }
 
-module.exports.errorActionRequired = function(id = null, error = null) {
+module.exports.errorActionRequired = function (id = null, error = null) {
     return getErrorMessage('ACTION_REQUIRED', error, id)
 }
 
@@ -120,7 +120,7 @@ function lineParser(elem, fields) {
                 if (fields[key].parser) {
                     line[key] = fields[key].parser(elem.children[fields[key].idx].children[0].data.trim())
                 } else {
-                    if(line[key] = elem.children[fields[key].idx].children.length > 0){
+                    if (line[key] = elem.children[fields[key].idx].children.length > 0) {
                         line[key] = elem.children[fields[key].idx].children[0].data.trim()
                     } else {
                         line[key] = "" // we dont have the field :/ is an empty tag
@@ -139,6 +139,15 @@ function lineParser(elem, fields) {
  */
 module.exports.removeChineseChars = function (str) {
     return str
-            .replace(/\p{Han}+/, '')
-            .replace(/[\u3400-\u9FBF]/g, '')
+        .replace(/\p{Han}+/, '')
+        .replace(/[\u3400-\u9FBF]/g, '')
+}
+
+/**
+ * Useful to create some delays between requests
+ * @param ms
+ * @returns {Promise}
+ */
+module.exports.sleep = function (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

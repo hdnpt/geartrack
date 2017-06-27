@@ -128,7 +128,11 @@ function TrackerInfo(obj) {
     this.states = obj.states
     this.origin = obj.origin,
     this.destiny = obj.destiny
-    this.trackerWebsite = "https://track24.net/?code=" + this.id
+    this.trackerWebsite = exportModule.getLink(this.id)
+}
+
+exportModule.getLink = function (id) {
+    return "https://track24.net/?code=" + id
 }
 
 module.exports = exportModule

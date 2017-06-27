@@ -33,7 +33,7 @@ async function fetchInfo(id) {
         }
     }
 
-    const maxTries = 3
+    const maxTries = 10
     let tries = maxTries // sometimes the website returns an error (seems random :/)
     while (tries > 0) {
         --tries
@@ -42,10 +42,14 @@ async function fetchInfo(id) {
         try {
             info = await rp(options).then(body => JSON.parse(body))
         } catch (e) {
+            await utils.sleep(2000)
             continue
         }
 
-        if (info.msg != "Ok") continue
+        if (info.msg != "Ok" || info.dat[0].delay == -1) {
+            await utils.sleep(2000)
+            continue
+        }
 
         if (info.dat[0].yt != null) {
             throw utils.errorActionRequired()
@@ -105,7 +109,11 @@ function EntityInfo(obj) {
     this.states = states
     this.destinStates = destinStates
 
-    this.trackerWebsite = URL + id
+    this.trackerWebsite = tracker.getLink(id)
+}
+
+tracker.getLink = function (id) {
+    return URL + id
 }
 
 module.exports = tracker

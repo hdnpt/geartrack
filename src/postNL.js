@@ -89,7 +89,11 @@ function PostNLInfo(obj) {
     this.id = obj.id
     this.state = obj.states[0].state
     this.states = obj.states
-    this.trackerWebsite = "http://www.postnl.post/tracktrace"
+    this.trackerWebsite = postNL.getLink(null)
+}
+
+postNL.getLink = function (id) {
+    return "http://www.postnl.post/tracktrace"
 }
 
 module.exports = postNL

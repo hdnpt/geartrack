@@ -148,7 +148,11 @@ function CttInfo(id, state, messages) {
     this.id = id
     this.state = state
     this.messages = messages
-    this.trackerWebsite = URL + id
+    this.trackerWebsite = ctt.getLink(id)
+}
+
+ctt.getLink = function (id) {
+    return URL + id
 }
 
 /*

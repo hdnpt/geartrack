@@ -109,7 +109,11 @@ function YanwenInfo(obj) {
         return m
     })
     this.state = this.states[0].state
-    this.trackerWebsite = URL
+    this.trackerWebsite = yanwen.getLink(null)
+}
+
+yanwen.getLink = function (id) {
+    return URL
 }
 
 /*

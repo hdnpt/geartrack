@@ -106,11 +106,15 @@ function SkyInfo(obj) {
     this.id = obj.id
     this.messages = obj.messages
     this.status = obj.status
-    this.trackerWebsite = "http://www.sky56.cn/english/track/index"
+    this.trackerWebsite = sky.getLink(this.id)
 
     this.isNL = () => {
         return this.id.charAt(0) == 'N'
     }
+}
+
+sky.getLink = function (id) {
+    return "http://www.sky56.cn/english/track/index"
 }
 
 /*

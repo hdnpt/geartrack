@@ -126,7 +126,11 @@ function WinitInfo(obj) {
     this.id = obj.id
     this.state = obj.state
     this.states = obj.states
-    this.trackerWebsite = URL
+    this.trackerWebsite = winit.getLink(null)
+}
+
+winit.getLink = function (id) {
+    return URL
 }
 
 module.exports = winit
