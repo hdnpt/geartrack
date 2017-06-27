@@ -7,7 +7,9 @@ const moment = require('moment-timezone')
 const zone = "Europe/Lisbon"
 
 const URL = 'http://www.17track.net/en/track?nums='
-const POST_URL = 'http://www.17track.net/restapi/handlertrack.ashx'
+
+const URL_BASE = 'http://www.17track.net'
+const URL_PATH = '/restapi/handlertrack.ashx'
 
 const tracker = {}
 
@@ -18,15 +20,21 @@ const tracker = {}
  * @param cb(Error, EntityInfo)
  */
 tracker.getInfo = function (id, cb) {
-    fetchInfo(id)
+    fetchInfo(id, URL_BASE + URL_PATH)
         .then(info => cb(null, info))
         .catch(cb)
 }
 
-async function fetchInfo(id) {
+tracker.getInfoProxy = function (id, proxyUrl, cb) {
+    fetchInfo(id, proxyUrl + URL_PATH)
+        .then(info => cb(null, info))
+        .catch(cb)
+}
+
+async function fetchInfo(id, trackerUrl) {
     const options = {
         method: 'POST',
-        uri: POST_URL,
+        uri: trackerUrl,
         body: '{"guid":"","data":[{"num":"' + id + '"}]}',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
