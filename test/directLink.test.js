@@ -30,6 +30,17 @@ test('extract info with success', () => {
     })
 })
 
+test('UF616427699SE extract info with success', () => {
+    const id = 'UF616427699SE'
+    return getInfo(id).then(info => {
+        expect(info.id).toBe(id)
+        expect(info.states.length).toBeGreaterThanOrEqual(3)
+
+        let firstState = info.states[info.states.length - 2]
+        expect(firstState.date).toContain("2017-05-27T16:38:00+02:00")
+        expect(firstState.state).toContain("Item received for processing")
+    })
+})
 
 test('extract info with success Q.. ID', () => {
     const id = 'Q1845621341XX'

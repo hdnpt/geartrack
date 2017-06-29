@@ -144,11 +144,6 @@ test('Sweden Registered', () => {
     })
 })
 
-test('Sweden Registered no data expected', () => {
-    const id = 'Q1845779490XX'
-    return expect(getInfo(id)).rejects.toBeDefined()
-})
-
 
 
 test('id not found', () => {

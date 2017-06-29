@@ -7,7 +7,7 @@ const moment = require('moment-timezone')
 const zone = "Europe/Stockholm" // +2h
 
 const textsURL = 'https://tracking.directlink.com/javascript/timeline_struct.js.php?lang=en'
-const URL = 'https://tracking.directlink.com/responseStatus.php?json=1&site_cd=AC3&lang=en&postal_ref_no={{id}}'
+const URL = 'https://tracking.directlink.com/responseStatus.php?json=1&site_cd={{type}}&lang=en&postal_ref_no={{id}}'
 
 const orderURL = 'https://tracking.directlink.com/multipletrack-client2.php?lang=en&postal_ref_mode=0&order_no={{order}}'
 
@@ -77,7 +77,10 @@ function getByItemNumber(id, callback) {
         if(err1)
             return callback(err1)
 
-        request(URL.replace('{{id}}', id), function (error, response, body) {
+        let type = 'AC3'
+        if(/^U.+SE$/.test(id)) type = 'AD2'
+
+        request(URL.replace('{{id}}', id).replace('{{type}}', type), function (error, response, body) {
             if (error) {
                 console.log('error:', error)
                 return callback(utils.errorDown())
