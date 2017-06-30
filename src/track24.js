@@ -6,7 +6,7 @@ const moment = require('moment-timezone')
 const zone = "GMT"
 
 const URL_BASE = 'https://track24.net'
-const URL_PATH = '/ajax/6ffaec5c923760221f4ea8a428aa3674.ajax.php'
+const URL_PATH = '/ajax/60a21289237ec5c4ea844f6ffaaa3674.ajax.php'
 
 const exportModule = {}
 
