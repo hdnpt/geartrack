@@ -19,6 +19,21 @@ test('extract info with success', () => {
     })
 })
 
+test('TH14982320496126 extract info with success', () => {
+    const id = 'TH14982320496126'
+    return getInfo(id).then(info => {
+        expect(info.id).toBe(id)
+        expect(info.country).toBe('PORTUGAL')
+        expect(info.product).toBe('EUTHXYH')
+        expect(info.orderNumber).toBe('A00A076170627001013')
+        expect(info.states.length).toBeGreaterThanOrEqual(1)
+
+        let firstState = info.states[info.states.length - 1]
+        expect(firstState.date).toBe("2017-06-26T19:21:50+08:00")
+        expect(firstState.state).toBe("Parcel departure in Shenzhen Sorting Centre, next station is Chengdu,China")
+    })
+})
+
 
 test('id not found', () => {
     const id = '423423424'
