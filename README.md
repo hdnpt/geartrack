@@ -1,4 +1,4 @@
-# Geartrack
+# Geartrack 1.0 (No further updates to this version)
 
 [![NPM](https://nodei.co/npm/geartrack.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/geartrack/)
 
@@ -9,6 +9,8 @@
 [![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?style=plastic)](https://github.com/hdnpt/geartrack)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=plastic)](https://github.com/hdnpt/geartrack)
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://geartrack.pt/)
+
+**Geartrack 2.0 is under development, this version will no longer be mantained. Use the online version which will always be updated :)**
 
 ## API to track shippments from Gearbest & Aliexpress
 Online version: [https://geartrack.pt](https://geartrack.pt)
